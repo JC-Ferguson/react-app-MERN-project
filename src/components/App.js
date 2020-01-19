@@ -9,7 +9,7 @@ class App extends Component {
             <> 
                 < Viewer
                     backend = {PDFJSBackend}
-                    src = "sample.pdf"
+                    pdfBlob = "/dummy.pdf"
                 />
             </>
         )
