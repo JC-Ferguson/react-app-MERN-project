@@ -11,10 +11,6 @@ class App extends Component {
                     backend = {PDFJSBackend}
                     src = "sample.pdf"
                 />
-                < Viewer
-                    backend = {PDFJSBackend}
-                    src = "practice.pdf"
-                />
             </>
         )
     }
