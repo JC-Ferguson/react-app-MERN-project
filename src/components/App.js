@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Viewer from "./PDF-embed";
-import PDFJSBackend from "./../backends/pdfjs";
 
 class App extends Component {
 
@@ -8,8 +7,7 @@ class App extends Component {
         return(
             <> 
                 < Viewer
-                    backend = {PDFJSBackend}
-                    pdfBlob = "/dummy.pdf"
+                    pdfBlob = "dummy.pdf"
                 />
             </>
         )
