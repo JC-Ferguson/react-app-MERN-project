@@ -1,9 +1,16 @@
 import React, { Component } from "react";
+import Viewer from "./PDF-embed";
 
 class App extends Component {
 
     render(){
-        return <h1>Testing</h1>
+        return(
+            <> 
+                < Viewer
+                    pdfBlob = "dummy.pdf"
+                />
+            </>
+        )
     }
 }
 
