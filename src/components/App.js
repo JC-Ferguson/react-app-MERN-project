@@ -10,8 +10,8 @@ class App extends Component {
         return(
             <BrowserRouter>
                 <div>
-                    < Route exact path = "/login" component = {RegisterPage} />
-                    {/*< Route exact path = "/register" component = {} />
+                    < Route exact path = "/register" component = {RegisterPage} />
+                    {/*< Route exact path = "/login" component = {} />
                     < Route exact path = "/home" component = {} />
                     < Route exact path = "/category" component = {} /> */}
                     < Route exact path = "/lesson/:id" component = {ShowContentPage} />

@@ -48,7 +48,9 @@ class registerForm extends Component {
                     <div>
                         <label>Confirm</label>
                         <input type='password' name='confirmPassword' onChange={this.updateInput('confirmPassword')} value={confirmPassword}  />
+                        {password !== confirmPassword ? <p>Warning: Passwords do not match</p> : null}
                     </div>
+                    
                     <input type='submit' value='Register' />
                 </form>
             </>
