@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import RegisterForm from './../forms/registerForm';
+import Blurb from './blurb';
 
 class RegisterPage extends Component {
     state = {};
@@ -9,6 +10,7 @@ class RegisterPage extends Component {
             <>
                 <h1>Register</h1>
                 <RegisterForm />
+                <Blurb />
             </>
         )
     }
