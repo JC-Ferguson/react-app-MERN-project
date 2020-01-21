@@ -10,7 +10,7 @@ class PDF_Embed extends Component {
             forcePDFJS: true
         }
 
-        PDFObject.embed(pdfBlob, `#${containerId}`, options);
+        PDFObject.embed(pdfBlob, `#${containerId}`);
         console.log(PDFObject.embed(pdfBlob, `#${containerId}`, options))
     }
 
