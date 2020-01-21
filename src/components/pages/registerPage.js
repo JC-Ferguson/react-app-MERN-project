@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import RegisterForm from './../forms/registerForm';
-import Blurb from './blurb';
+import Blurb from './../views/blurb';
 
 class RegisterPage extends Component {
-    state = {};
-
     render() {
         return (
             <>
