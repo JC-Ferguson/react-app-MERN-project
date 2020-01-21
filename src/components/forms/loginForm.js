@@ -31,7 +31,7 @@ class LoginForm extends Component {
             email,
             password
         });
-        console.log(response);
+        console.log(response.data);
     }
 
     render() {

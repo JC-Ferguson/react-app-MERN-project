@@ -9,6 +9,7 @@ class LoginPage extends Component {
                 <h1>Login</h1>
                 <LoginForm />
                 <Blurb />
+                <a href='/register'>Register an account</a>
             </>
         )
     }

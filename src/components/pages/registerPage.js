@@ -9,6 +9,7 @@ class RegisterPage extends Component {
                 <h1>Register</h1>
                 <RegisterForm />
                 <Blurb />
+                <a href='/login'>Already have an account?</a>
             </>
         )
     }
