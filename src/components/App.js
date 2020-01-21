@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { BrowserRouter, Route } from "react-router-dom";
 import ShowContentPage from "./views/show-content";
+import RegisterPage from './views/registerPage';
 
 
 class App extends Component {
@@ -9,8 +10,8 @@ class App extends Component {
         return(
             <BrowserRouter>
                 <div>
-                    {/* < Route exact path = "/login" component = {} />
-                    < Route exact path = "/register" component = {} />
+                    < Route exact path = "/login" component = {RegisterPage} />
+                    {/*< Route exact path = "/register" component = {} />
                     < Route exact path = "/home" component = {} />
                     < Route exact path = "/category" component = {} /> */}
                     < Route exact path = "/lesson/:id" component = {ShowContentPage} />
