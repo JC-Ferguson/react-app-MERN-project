@@ -5,6 +5,8 @@ import { setAuthToken } from './../actions';
 import ShowContentPage from "./views/show-content";
 import RegisterPage from './pages/registerPage';
 import LoginPage from './pages/loginPage';
+import PrivatePage from './pages/privatePage';
+import PrivateRoute from './PrivateRoute';
 
 
 class App extends Component {
@@ -14,6 +16,7 @@ class App extends Component {
                 <div>
                     < Route exact path = "/register" component = {RegisterPage} />
                     < Route exact path = "/login" component = {LoginPage} />
+                    < PrivateRoute exact path="/private" component={PrivatePage} />
                     {/*< Route exact path = "/home" component = {} />
                     < Route exact path = "/category" component = {} /> */}
                     < Route exact path = "/lesson/:id" component = {ShowContentPage} />

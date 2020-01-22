@@ -1,5 +1,5 @@
 const defaultState = { 
-    token: null
+    token: sessionStorage.getItem('token')
 };
 
 export default (state = defaultState, action) => {

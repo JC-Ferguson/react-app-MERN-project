@@ -2,6 +2,7 @@
 // export the function
 
 export const setAuthToken = (token = null) => {
+    sessionStorage.setItem('token', token);
     return {
         type: 'AUTH_TOKEN',
         payload: token
