@@ -1,24 +1,30 @@
 import React, {Component} from "react";
 import PDFObject from "pdfobject";
+import axios from "axios";
 
 class PDF_Embed extends Component {
 
     componentDidMount() {
-        const {pdfBlob, containerId} = this.props;
+        const {pdfBlob, containerId} = this.props;      
         const options = {
-            PDFJS_URL: `/pdfjs-2.2.228-dist/web/viewer.html?file=${pdfBlob}`,
-            forcePDFJS: true
+                PDFJS_URL: `http://localhost:3001/file/${pdfBlob}`,
+                forcePDFJS: true,
         }
 
-        PDFObject.embed(pdfBlob, `#${containerId}`);
-        console.log(PDFObject.embed(pdfBlob, `#${containerId}`, options))
+        PDFObject.embed(`http://localhost:3001/file/${pdfBlob}`, `#${containerId}`, options)
     }
+
+
+
+
 
     render(){
         const {width, height, containerId} = this.props;
 
         return (
-            <div id={containerId} style = {{width, height}} /> 
+            <>
+                <div id={containerId} style = {{width, height}} /> 
+          </>
         )
     }
 }
@@ -26,7 +32,8 @@ class PDF_Embed extends Component {
 PDF_Embed.defaultProps = {
     containerId: 'pdf-viewer',
     width: '75%',
-    height: '50vh',
+    height: '75vh',
+    src: `http://localhost:3001/file/dummy.pdf`
 };
 
 export default PDF_Embed;
