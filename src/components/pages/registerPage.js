@@ -7,7 +7,7 @@ class RegisterPage extends Component {
         return (
             <>
                 <h1>Register</h1>
-                <RegisterForm />
+                <RegisterForm  {...this.props}/>
                 <Blurb />
                 <a href='/login'>Already have an account?</a>
             </>

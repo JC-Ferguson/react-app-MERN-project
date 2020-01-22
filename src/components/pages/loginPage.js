@@ -7,7 +7,7 @@ class LoginPage extends Component {
         return (
             <>
                 <h1>Login</h1>
-                <LoginForm />
+                <LoginForm {...this.props} />
                 <Blurb />
                 <a href='/register'>Register an account</a>
             </>

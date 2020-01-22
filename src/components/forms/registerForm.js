@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import customAxios from './../../api/customAxios';
+import { connect } from 'react-redux';
+import { setAuthToken } from './../../actions';
 
 class RegisterForm extends Component {
     state = {
@@ -18,9 +20,10 @@ class RegisterForm extends Component {
             password,
             confirmPassword
         })
-        // after creating a user, redirect to ???
+        // after creating a user, redirect to home page
         .then((response) => {
-            
+            this.props.setAuthToken(response.data);
+            this.props.history.push('/home');
         })
         // catch block in case the axios.post throws an error
         .catch(err => console.log(err));
@@ -62,4 +65,4 @@ class RegisterForm extends Component {
     }
 }
 
-export default RegisterForm;
+export default connect(null, { setAuthToken })(RegisterForm);

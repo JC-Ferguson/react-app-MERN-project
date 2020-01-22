@@ -20,8 +20,6 @@ class LoginForm extends Component {
     }
 
     // form contents sent to backend
-    // jwt response saved into global state??
-    // try-catch for http request failure??
     onFormSubmit = async (event) => {
         // preventDefault() stops page reloading
         event.preventDefault();
@@ -34,8 +32,9 @@ class LoginForm extends Component {
                 email,
                 password
             });
-            // save the JWT using the setAuthToken function
+            // save the JWT into global state using redux
             this.props.setAuthToken(response.data);
+            this.props.history.push('/home');
         } catch(err) {
             console.log(err);
         }
