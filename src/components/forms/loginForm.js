@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import customAxios from './../../api/customAxios';
+import { connect } from 'react-redux';
+import { setAuthToken } from './../../actions';
 
 class LoginForm extends Component {
     state = {
@@ -27,11 +29,17 @@ class LoginForm extends Component {
         const { email, password } = this.state;
 
         // http POST request made using axios to express app, sending email and password
-        const response = await customAxios.post('/login', {
-            email,
-            password
-        });
-        console.log(response.data);
+        try {
+            const response = await customAxios.post('/login', {
+                email,
+                password
+            });
+            // save the JWT using the setAuthToken function
+            this.props.setAuthToken(response.data);
+        } catch(err) {
+            console.log(err);
+        }
+        
     }
 
     render() {
@@ -55,4 +63,4 @@ class LoginForm extends Component {
     }
 }
 
-export default LoginForm;
+export default connect(null, { setAuthToken })(LoginForm);

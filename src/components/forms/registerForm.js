@@ -9,16 +9,21 @@ class RegisterForm extends Component {
     };
 
     // axios used to post form contents to /newuser route in backend
-    onFormSubmit = async (event) => {
+    onFormSubmit = (event) => {
         event.preventDefault();
         const { email, password, confirmPassword } = this.state;
 
-        await customAxios.post('/newuser', {
+        customAxios.post('/newuser', {
             email,
             password,
             confirmPassword
-        });
-        // after creating a user, redirect somewhere?
+        })
+        // after creating a user, redirect to ???
+        .then((response) => {
+            
+        })
+        // catch block in case the axios.post throws an error
+        .catch(err => console.log(err));
     }
 
     // method to update state whenever entries are made in the input fields

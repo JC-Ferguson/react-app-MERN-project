@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { BrowserRouter, Route } from "react-router-dom";
+import { connect } from 'react-redux';
+import { setAuthToken } from './../actions';
 import ShowContentPage from "./views/show-content";
 import RegisterPage from './pages/registerPage';
 import LoginPage from './pages/loginPage';
@@ -24,4 +26,4 @@ class App extends Component {
     }
 }
 
-export default App;
+export default connect(null, { setAuthToken })(App);
