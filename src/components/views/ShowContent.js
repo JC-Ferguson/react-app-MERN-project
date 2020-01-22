@@ -4,12 +4,18 @@ import RelatedContent from "./../RelatedContent";
 
 class ShowContent extends Component {
 
+    // lessonToSearchQuery=(contentName)=>{
+    //     const s3Query = contentName.toLowerCase() + ".pdf";
+    //     return s3Query;
+    // }
+
     render(){
+        const { contentName } = this.props;
         return(
             <>  
                 < RelatedContent />
                 < Viewer
-                    pdfBlob = "dummy.pdf"
+                    pdfBlob = {`sample.pdf`}
                 />
             </>
         )

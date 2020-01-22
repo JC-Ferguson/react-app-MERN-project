@@ -1,6 +1,5 @@
 import React, {Component} from "react";
 import PDFObject from "pdfobject";
-import axios from "axios";
 
 class PDF_Embed extends Component {
 
@@ -33,7 +32,6 @@ PDF_Embed.defaultProps = {
     containerId: 'pdf-viewer',
     width: '75%',
     height: '75vh',
-    src: `http://localhost:3001/file/dummy.pdf`
 };
 
 export default PDF_Embed;
