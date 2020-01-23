@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import PDFObject from "pdfobject";
 
-class PDF_Embed extends Component {
+class PdfViewer extends Component {
 
     componentDidMount() {
         const {pdfBlob, containerId} = this.props;      
@@ -28,10 +28,10 @@ class PDF_Embed extends Component {
     }
 }
   
-PDF_Embed.defaultProps = {
+PdfViewer.defaultProps = {
     containerId: 'pdf-viewer',
     width: '75%',
     height: '75vh',
 };
 
-export default PDF_Embed;
+export default PdfViewer;

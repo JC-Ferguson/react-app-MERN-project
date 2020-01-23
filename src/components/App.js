@@ -1,35 +1,36 @@
 import React, { Component } from "react";
 import { BrowserRouter, Route } from "react-router-dom";
-import CategoryPage from "./views/CategoryPage";
-import ShowContentPage from "./views/ShowContent";
-
+import { connect } from 'react-redux';
+import { setAuthToken } from './../actions';
+import RegisterPage from './pages/RegisterPage';
+import LoginPage from './pages/LoginPage';
+import PrivatePage from './pages/PrivatePage';
+import PrivateRoute from './PrivateRoute';
+import HomePage from './pages/HomePage';
+import CategoryPage from "./pages/CategoryPage";
+import ShowContentPage from "./pages/ShowContentPage";
 
 class App extends Component {
-    state = {
-        contentName: ""
-    }
-
-    onLessonSelection = (data)=>{
-        console.log(data);
-        this.setState({contentName: data })
-    }
-
     render(){
-        const { contentName } = this.state;
 
         return(
             <BrowserRouter>
                 <div>
-                    {/* < Route exact path = "/login" component = {} />
-                    < Route exact path = "/register" component = {} />
-                    < Route exact path = "/home" component = {} /> */}
+                    < Route exact path = "/register" render = {(props) => {
+                        return <RegisterPage {...props} />
+                    }} />
+                    < Route exact path = "/login" render = {(props) => {
+                        return <LoginPage {...props} />
+                    }} />
+                    < PrivateRoute exact path="/private" component={PrivatePage} />
+                    < Route exact path = "/home" component = {HomePage} />
                     < Route exact path = "/category" render={(props)=>{
-                                return < CategoryPage {...props} contentName = {contentName.toLowerCase()} onLessonSelection={this.onLessonSelection} />
+                                return < CategoryPage {...props} />
                             }} 
                     />
                     < Route 
                             exact path = "/lesson/:id" render={(props)=>{
-                                return < ShowContentPage {...props} contentName = {contentName.toLowerCase()}  />
+                                return < ShowContentPage {...props} />
                             }} 
                     />
                     {/* < Route exact path = "/admin/dash" component = {} />
@@ -41,4 +42,4 @@ class App extends Component {
     }
 }
 
-export default App;
+export default connect(null, { setAuthToken })(App);

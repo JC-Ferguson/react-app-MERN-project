@@ -1,16 +1,15 @@
 import React, { Component } from "react";
 import { BrowserRouter, Route, Link } from "react-router-dom";
-import ShowContentPage from "./views/ShowContent";
+import ShowContentPage from "../pages/ShowContentPage";
 
 class SearchResult extends Component {
-
     render(){
-        const { contentName, date, desc, prereq, benefits, onLessonSelection } = this.props;
+        const { content, date, desc, prereq, benefits } = this.props;
         return(
             <>  
                 <div>
                     <BrowserRouter>
-                        <Link to={`/lesson/${contentName.toLowerCase()}.pdf`} onClick = {()=>onLessonSelection(contentName)}><h1>{contentName}</h1></Link><h3>{date}</h3>
+                        <Link to={`/lesson/${content.toLowerCase()}.pdf`}><h1>{content}</h1></Link><h3>{date}</h3>
                         <h3>Description:</h3><p>{desc}</p>
                         <h3>Prerequisites:</h3><p>{prereq}</p>
                         <h3>Who it Benefits:</h3><p>{benefits}</p>
