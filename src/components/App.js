@@ -8,6 +8,8 @@ import LoginPage from './pages/loginPage';
 import PrivatePage from './pages/privatePage';
 import PrivateRoute from './PrivateRoute';
 import HomePage from './pages/homePage';
+import AdminPage from './pages/AdminPage';
+import AdminUsersPage from './pages/AdminUsersPage';
 
 class App extends Component {
     render(){
@@ -24,9 +26,10 @@ class App extends Component {
                     < Route exact path = "/home" component = {HomePage} />
                     {/*< Route exact path = "/category" component = {} /> */}
                     < Route exact path = "/lesson/:id" component = {ShowContentPage} />
-                    {/* < Route exact path = "/admin/dash" component = {} />
-                    < Route exact path = "/admin/user-access" component = {} />
-                    < Route exact path = "/admin/content-crud" component = {} /> */}
+                    {/* < Route exact path = "/admin/dash" component = {} />*/}
+                    < Route exact path = "/admin/" component = {AdminPage} />
+                    < Route exact path = '/admin/users' component = {AdminUsersPage} />
+                    {/*< Route exact path = "/admin/content-crud" component = {} /> */}
                 </div>
             </BrowserRouter>
         )
