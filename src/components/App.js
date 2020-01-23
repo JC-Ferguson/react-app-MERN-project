@@ -26,7 +26,6 @@ class App extends Component {
                     < Route exact path = "/home" component = {HomePage} />
                     {/*< Route exact path = "/category" component = {} /> */}
                     < Route exact path = "/lesson/:id" component = {ShowContentPage} />
-                    {/* < Route exact path = "/admin/dash" component = {} />*/}
                     < Route exact path = "/admin/" component = {AdminPage} />
                     < Route exact path = '/admin/users' component = {AdminUsersPage} />
                     {/*< Route exact path = "/admin/content-crud" component = {} /> */}
