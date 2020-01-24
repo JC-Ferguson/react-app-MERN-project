@@ -15,16 +15,17 @@ class AdminUsersPage extends Component {
     getUsers =  async () => {
         let { data: users } = await customAxios.get('/users');
         users = JSON.parse(users);
-        console.log(users);
         // save users from http request into state
         this.setState({ users: users });
     }
     
     // method to toggle approval on users
-    // post the id to the /toggleApproval route in the backend
+    // closure used so that a the id of each document that will be updated can be saved
     onCheckboxToggle = (id) => {
         return async () => {
+            // post the id to the /toggleApproval route in the backend
             await customAxios.post('/toggleApproval', { id });
+            // get a new list of users
             this.getUsers();
         }
     }
@@ -48,7 +49,7 @@ class AdminUsersPage extends Component {
                             return (
                                 <tr key={item._id}>
                                     <td>{item.email}</td>
-                                    <td>Pending status</td>
+                                    <td>{item.pending ? 'Pending': null}</td>
                                     <td><input type='checkbox' checked={item.approved} onChange={this.onCheckboxToggle(item._id)} /></td>
                                 </tr>
                             )
