@@ -15,6 +15,23 @@ class AdminUsersPage extends Component {
     getUsers =  async () => {
         let { data: users } = await customAxios.get('/users');
         users = JSON.parse(users);
+        // sort users so pending users are above non-pending
+        // then users that have been waiting the longest for approval should be at the top
+        // then non-pending users are sorted alphabetically by email
+        users.sort((a, b) => {
+            if (a.pending && b.pending) {
+                return a.dateCreated - b.dateCreated; 
+            } else if (a.pending) {
+                return -1;
+            } else if (b.pending) {
+                return 1;
+            } else if (a.email < b.email) {
+                return -1;
+            } else {
+                return 1;
+            }
+        });
+
         // save users from http request into state
         this.setState({ users: users });
     }
@@ -42,6 +59,7 @@ class AdminUsersPage extends Component {
                             <th>Email</th>
                             <th></th>
                             <th>Approval</th>
+                            <th>Date created</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -51,6 +69,7 @@ class AdminUsersPage extends Component {
                                     <td>{item.email}</td>
                                     <td>{item.pending ? 'Pending': null}</td>
                                     <td><input type='checkbox' checked={item.approved} onChange={this.onCheckboxToggle(item._id)} /></td>
+                                    <td>{item.dateCreated.substr(0,10)}</td>
                                 </tr>
                             )
                         })}
