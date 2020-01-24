@@ -15,7 +15,7 @@ class CategoryPage extends Component {
                 < SearchResult
                     content = "Sample"
                     date = "22/01"
-                    desc = "This is the 1st practive pdf"
+                    desc = "This is the 1st practice pdf"
                     prereq= "dont need any"
                     benefits = "me lad"
                 />

@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter, Route, Link } from "react-router-dom";
-import ShowContentPage from "../pages/ShowContentPage";
+import { Link } from "react-router-dom";
 
 class SearchResult extends Component {
     render(){
@@ -8,7 +7,7 @@ class SearchResult extends Component {
         return(
             <>  
                 <div>
-                    <BrowserRouter>
+                    {/* <BrowserRouter> */}
                         <Link to={`/lesson/${content.toLowerCase()}.pdf`}><h1>{content}</h1></Link><h3>{date}</h3>
                         <h3>Description:</h3><p>{desc}</p>
                         <h3>Prerequisites:</h3><p>{prereq}</p>
@@ -18,7 +17,6 @@ class SearchResult extends Component {
                             <li>Lesson</li>
                             <li>Lesson</li>
                         </ul>
-                    </BrowserRouter>
                 </div>
             </>
         )
