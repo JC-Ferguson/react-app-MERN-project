@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import LoginForm from './../forms/loginForm';
-import Blurb from './../views/blurb';
+import LoginForm from '../forms/LoginForm';
+import Blurb from '../views/Blurb';
 
 class LoginPage extends Component {
     render() {

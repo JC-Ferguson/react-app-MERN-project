@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import customAxios from './../../api/customAxios';
+import customAxios from '../../api/customAxios';
 import { connect } from 'react-redux';
-import { setAuthToken } from './../../actions';
+import { setAuthToken } from '../../actions';
 
 class RegisterForm extends Component {
     state = {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import RegisterForm from './../forms/registerForm';
-import Blurb from './../views/blurb';
+import RegisterForm from '../forms/RegisterForm';
+import Blurb from '../views/Blurb';
 
 class RegisterPage extends Component {
     render() {
