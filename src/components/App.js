@@ -10,6 +10,7 @@ import PrivateRoute from './PrivateRoute';
 import HomePage from './pages/homePage';
 import AdminPage from './pages/AdminPage';
 import AdminUsersPage from './pages/AdminUsersPage';
+import AdminRoute from './AdminRoute';
 
 class App extends Component {
     render(){
@@ -26,6 +27,7 @@ class App extends Component {
                     < Route exact path = "/home" component = {HomePage} />
                     {/*< Route exact path = "/category" component = {} /> */}
                     < Route exact path = "/lesson/:id" component = {ShowContentPage} />
+                    < AdminRoute exact path = '/zadmin' component = {AdminPage} />
                     < Route exact path = "/admin/" component = {AdminPage} />
                     < Route exact path = '/admin/users' component = {AdminUsersPage} />
                     {/*< Route exact path = "/admin/content-crud" component = {} /> */}

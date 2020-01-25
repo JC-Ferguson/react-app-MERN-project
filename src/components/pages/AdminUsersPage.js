@@ -1,5 +1,12 @@
 import React, { Component } from 'react';
 import customAxios from './../../api/customAxios';
+import { connect } from 'react-redux';
+
+const mapStateToProps = (state) => {
+    return {
+        token: state.auth.token
+    }
+}
 
 class AdminUsersPage extends Component {
     state = {
@@ -13,27 +20,37 @@ class AdminUsersPage extends Component {
 
     // axios get request for users
     getUsers =  async () => {
-        let { data: users } = await customAxios.get('/users');
-        users = JSON.parse(users);
-        // sort users so pending users are above non-pending
-        // then users that have been waiting the longest for approval should be at the top
-        // then non-pending users are sorted alphabetically by email
-        users.sort((a, b) => {
-            if (a.pending && b.pending) {
-                return a.dateCreated - b.dateCreated; 
-            } else if (a.pending) {
-                return -1;
-            } else if (b.pending) {
-                return 1;
-            } else if (a.email < b.email) {
-                return -1;
-            } else {
-                return 1;
+        try{
+            const { token } = this.props;
+            let { data: users } = await customAxios.get('/users', {
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                }
             }
-        });
+            );
+            users = JSON.parse(users);
+            // sort users so pending users are above non-pending
+            // then users that have been waiting the longest for approval should be at the top
+            // then non-pending users are sorted alphabetically by email
+            users.sort((a, b) => {
+                if (a.pending && b.pending) {
+                    return a.dateCreated - b.dateCreated; 
+                } else if (a.pending) {
+                    return -1;
+                } else if (b.pending) {
+                    return 1;
+                } else if (a.email < b.email) {
+                    return -1;
+                } else {
+                    return 1;
+                }
+            });
 
-        // save users from http request into state
-        this.setState({ users: users });
+            // save users from http request into state
+            this.setState({ users: users });
+        } catch(error) {
+            console.log(error);
+        }
     }
     
     // method to toggle approval on users
@@ -80,4 +97,4 @@ class AdminUsersPage extends Component {
     }
 }
 
-export default AdminUsersPage;
+export default connect(mapStateToProps)(AdminUsersPage);

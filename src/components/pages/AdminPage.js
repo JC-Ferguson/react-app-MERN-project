@@ -1,10 +1,11 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 function AdminPage() {
     return (
         <>
             <h1>AdminPage</h1>
-            <a href='/admin/users'>User Approval</a>
+            <Link to='/admin/users'>User Approval</Link>
         </>
     )
 }
