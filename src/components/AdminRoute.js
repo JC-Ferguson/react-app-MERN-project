@@ -12,7 +12,8 @@ const mapStateToProps = (state) => {
 
 class AdminRoute extends Component {
     state = {
-        admin: false
+        admin: false,
+        loaded: false
     };
     
     getAdminStatus = async () => {
@@ -26,12 +27,13 @@ class AdminRoute extends Component {
             });
 
             if (response.status === 200) {
-                this.setState({ admin: true });
-                console.log(this.state);
+                this.setState({ admin: true, loaded: true });
+            } else {
+                this.setState({ loaded: true });
             };
-
         } catch(error) {
             console.log(error);
+            this.setState({ loaded: true });
         };
     };
 
@@ -40,16 +42,18 @@ class AdminRoute extends Component {
     };
     
     render() {
-        const { admin } = this.state;
+        const { admin, loaded } = this.state;
         const { component: Component, ...rest } = this.props;
 
-        return <Route {...rest} render={props => {
-            console.log(`Admin in render: ${admin}`);
-            if (admin) {
-                return <Component {...props} />
-            }
-            return <Redirect to='/login' />
-        }} />;
+        if (!loaded) return null;
+
+        return (
+            <Route {...rest}
+                render={props => {
+                    return admin ? <Component {...props} /> : <Redirect to='/login' />
+                }}
+            />
+        )
     };
 };
 
