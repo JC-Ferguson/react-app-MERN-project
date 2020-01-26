@@ -2,18 +2,20 @@ import React, { Component } from "react";
 import { BrowserRouter, Route } from "react-router-dom";
 import { connect } from 'react-redux';
 import { setAuthToken } from './../actions';
-import ShowContentPage from "./views/show-content";
-import RegisterPage from './pages/registerPage';
-import LoginPage from './pages/loginPage';
-import PrivatePage from './pages/privatePage';
+import RegisterPage from './pages/RegisterPage';
+import LoginPage from './pages/LoginPage';
+import PrivatePage from './pages/PrivatePage';
 import PrivateRoute from './PrivateRoute';
-import HomePage from './pages/homePage';
+import HomePage from './pages/HomePage';
+import CategoryPage from "./pages/CategoryPage";
+import ShowContentPage from "./pages/ShowContentPage";
 import AdminPage from './pages/AdminPage';
 import AdminUsersPage from './pages/AdminUsersPage';
 import AdminRoute from './AdminRoute';
 
 class App extends Component {
     render(){
+
         return(
             <BrowserRouter>
                 <div>
@@ -25,8 +27,15 @@ class App extends Component {
                     }} />
                     < PrivateRoute exact path="/private" component={PrivatePage} />
                     < Route exact path = "/home" component = {HomePage} />
-                    {/*< Route exact path = "/category" component = {} /> */}
-                    < Route exact path = "/lesson/:id" component = {ShowContentPage} />
+                    < Route exact path = "/category" render={(props)=>{
+                                return < CategoryPage {...props} />
+                            }} 
+                    />
+                    < Route 
+                            exact path = "/lesson/:id" render={(props)=>{
+                                return < ShowContentPage {...props} />
+                            }} 
+                    />
                     < AdminRoute exact path = "/admin/" component = {AdminPage} />
                     < AdminRoute exact path = '/admin/users' component = {AdminUsersPage} />
                     {/*< Route exact path = "/admin/content-crud" component = {} /> */}
