@@ -11,6 +11,7 @@ import CategoryPage from "./pages/CategoryPage";
 import ShowContentPage from "./pages/ShowContentPage";
 import AdminPage from './pages/AdminPage';
 import AdminUsersPage from './pages/AdminUsersPage';
+import AdminFilesPage from './pages/AdminFilesPage';
 import AdminRoute from './AdminRoute';
 
 class App extends Component {
@@ -36,9 +37,9 @@ class App extends Component {
                                 return < ShowContentPage {...props} />
                             }} 
                     />
-                    < AdminRoute exact path = "/admin/" component = {AdminPage} />
+                    < AdminRoute exact path = '/admin/' component = {AdminPage} />
                     < AdminRoute exact path = '/admin/users' component = {AdminUsersPage} />
-                    {/*< Route exact path = "/admin/content-crud" component = {} /> */}
+                    < Route exact path = '/admin/files' component = {AdminFilesPage} />
                 </div>
             </BrowserRouter>
         )
