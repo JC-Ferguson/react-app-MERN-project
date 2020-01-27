@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import RegisterForm from '../forms/RegisterForm';
 import Blurb from '../views/Blurb';
 
@@ -9,7 +10,7 @@ class RegisterPage extends Component {
                 <h1>Register</h1>
                 <RegisterForm  {...this.props}/>
                 <Blurb />
-                <a href='/login'>Already have an account?</a>
+                <Link to='/login'>Already have an account?</Link>
             </>
         )
     }
