@@ -26,8 +26,7 @@ class AdminUsersPage extends Component {
                 headers: {
                     'Authorization': 'Bearer ' + token
                 }
-            }
-            );
+            });
             users = JSON.parse(users);
             // sort users so pending users are above non-pending
             // then users that have been waiting the longest for approval should be at the top
@@ -57,9 +56,13 @@ class AdminUsersPage extends Component {
     // closure used so that a the id of each document that will be updated can be saved
     onCheckboxToggle = (id) => {
         return async () => {
-            // post the id to the /toggleApproval route in the backend
-            await customAxios.post('/toggleApproval', { id });
-            // get a new list of users
+            const { token } = this.props;
+            // post the id and auth header to the /toggleApproval route in the backend
+            await customAxios.post('/toggleApproval', { id }, {
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                }
+            });
             this.getUsers();
         }
     }
