@@ -38,7 +38,7 @@ class AddFilesForm extends Component {
         description: '',
         solution: '',
         prerequisites: [],
-        value: ''
+        whoItBenefits: []
     }
     
     onFormSubmit = () => {
@@ -51,15 +51,17 @@ class AddFilesForm extends Component {
         }
     }
 
-    onSelectInputChange = (event) => {
-        const options = event.target.options;
-        let prereqsSelected = [];
-        for (let i = 0, l = options.length; i < l; i++) {
-            if (options[i].selected) {
-                prereqsSelected.push(options[i].value);
+    onSelectInputChange = (fieldName) => {
+        return (event) => {
+            const options = event.target.options;
+            let newArray = [];
+            for (let i = 0, l = options.length; i < l; i++) {
+                if (options[i].selected) {
+                    newArray.push(options[i].value);
+                }
             }
+            this.setState({ [fieldName]: newArray });
         }
-        this.setState({ prerequisites: prereqsSelected });
     }
 
     render() {
@@ -70,7 +72,8 @@ class AddFilesForm extends Component {
             contentName,
             solution,
             description,
-            prerequisites 
+            prerequisites,
+            whoItBenefits
         } = this.state;
 
         return (
@@ -102,7 +105,7 @@ class AddFilesForm extends Component {
                     </div>
                     <div>
                         <label>Prerequisites</label>
-                        <select multiple={true} onChange={this.onSelectInputChange} value={prerequisites}>
+                        <select multiple={true} onChange={this.onSelectInputChange('prerequisites')} value={prerequisites}>
                             {prerequisitesList.sort().map((element) => {
                                 return <option key={element} value={element.replace(/ /g, '')}>{element}</option>
                             })}
@@ -110,7 +113,7 @@ class AddFilesForm extends Component {
                     </div>
                     <div>
                         <label>Who it benefits</label>
-                        <select multiple name='whoItBenefits'>
+                        <select multiple={true} onChange={this.onSelectInputChange('whoItBenefits')} value={whoItBenefits}>
                             {whoItBenefitsList.sort().map((element) => {
                                 return <option key={element} value={element.replace(/ /g, '')}>{element}</option>
                             })}
