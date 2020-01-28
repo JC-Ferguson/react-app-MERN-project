@@ -13,15 +13,16 @@ class AddFilesForm extends Component {
             "Other"
         ],
         prerequisites: [
-            'Has AA',
-            'Has AT',
+            'has AA',
+            'has AT',
             'has AAC',
-            'Has AdCloud',
-            'Has AEM',
-            'Has AT Premium',
-            'Has DTM', 'No AT'
+            'has AdCloud',
+            'has AEM',
+            'has AT Premium',
+            'has DTM',
+            'no AT'
         ],
-        teams: [
+        whoItBenefits: [
             "AT Owners", "Project Managers", "AT Implementation Team", "Content Team", "AEC Owners", "Stakeholders",
             "AdCloud Users", "Optimisation Team", "SEM/Media Team", "Performance Marketing Team", "Advertisers",
             "AEC Technical Team", "Project Teams", "Agile Teams", "Internal Optimisation", "Product Team", "Strategy Team",
@@ -29,7 +30,7 @@ class AddFilesForm extends Component {
             "AAM Users", "AT Users", "AT Analysts", "AT Performance/Reporting Team", "AA Developers", "Social Media Team", 
             "AT Recommendations Users", "AT Recommendations Implementation Team", "AA Users", "Tag Specialists", "Teams That Will Engage with Design Team",
             "Teams That Will Engage with PDD", "Tech Implementation Team", "Display/Media Team", "AEM Owners", "Anyone New to Programmatic",
-            "AT Implementation/QA Team", "Leads and Stakeholders", "Product Team", "NA", "Solution Specialists", "AAM Planners",
+            "AT Implementation/QA Team", "Leads and Stakeholders", "NA", "Solution Specialists", "AAM Planners",
             "AAM Tech Team", "Data, Team", "Tag Managers", "Analytics Managers", "Implementation Specialists", "Various"
         ]
     }
@@ -37,9 +38,13 @@ class AddFilesForm extends Component {
     onFormSubmit = () => {
 
     }
+
+    onInputChange = (fieldName) => {
+
+    }
     
     render() {
-        const { solutions } = this.state;
+        const { solutions, prerequisites, whoItBenefits } = this.state;
 
         return (
             <>
@@ -55,8 +60,8 @@ class AddFilesForm extends Component {
                     <div>
                         <label>Category</label>
                         <select multiple name='category'>
-                            {solutions.map((element) => {
-                                return <option value={element.match(/(?<=\().*(?=\))/)}>{element}</option>
+                            {solutions.sort().map((element) => {
+                                return <option key={element} value={element.match(/(?<=\().*(?=\))/)}>{element}</option>
                             })}
                         </select>
                     </div>
@@ -71,20 +76,17 @@ class AddFilesForm extends Component {
                     <div>
                         <label>Prerequisites</label>
                         <select multiple name='prerequisites'>
-                            <option value='hasAA'>Has AA</option>
-                            <option value='hasAT'>Has AT</option>
-                            <option value='hasAAC'>Has AAC</option>
-                            <option value='hasAdCloud'>Has AdCloud</option>
-                            <option value='hasAEM'>Has AEM</option>
-                            <option value='hasATPremium'>Has AT Premium</option>
-                            <option value='hasDTM'>Has DTM</option>
-                            <option value='hasNoAT'>No AT</option>
+                            {prerequisites.sort().map((element) => {
+                                return <option key={element} value={element.replace(/ /g, '')}>{element}</option>
+                            })}
                         </select>
                     </div>
                     <div>
                         <label>Who it benefits</label>
                         <select multiple name='whoItBenefits'>
-                            <option value='option1'>Option1</option>
+                            {whoItBenefits.sort().map((element) => {
+                                return <option key={element} value={element.replace(/ /g, '')}>{element}</option>
+                            })}
                         </select>
                     </div>
                     <input type='submit' />
