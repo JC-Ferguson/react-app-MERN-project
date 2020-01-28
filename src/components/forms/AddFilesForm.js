@@ -3,7 +3,7 @@ import customAxios from './../../api/customAxios';
 
 class AddFilesForm extends Component {
     state = {
-        solutions: [
+        solutionsList: [
             "Adobe Experience Cloud (AEC)", 
             "Adobe Analytics, Dynamic Tag Management (AA)", 
             "Adobe Target (AT)", 
@@ -12,7 +12,7 @@ class AddFilesForm extends Component {
             "Adobe Advertising Cloud, Paid Media (AAC/ADCLOUD)",
             "Other"
         ],
-        prerequisites: [
+        prerequisitesList: [
             'has AA',
             'has AT',
             'has AAC',
@@ -22,7 +22,7 @@ class AddFilesForm extends Component {
             'has DTM',
             'no AT'
         ],
-        whoItBenefits: [
+        whoItBenefitsList: [
             "AT Owners", "Project Managers", "AT Implementation Team", "Content Team", "AEC Owners", "Stakeholders",
             "AdCloud Users", "Optimisation Team", "SEM/Media Team", "Performance Marketing Team", "Advertisers",
             "AEC Technical Team", "Project Teams", "Agile Teams", "Internal Optimisation", "Product Team", "Strategy Team",
@@ -32,19 +32,38 @@ class AddFilesForm extends Component {
             "Teams That Will Engage with PDD", "Tech Implementation Team", "Display/Media Team", "AEM Owners", "Anyone New to Programmatic",
             "AT Implementation/QA Team", "Leads and Stakeholders", "NA", "Solution Specialists", "AAM Planners",
             "AAM Tech Team", "Data, Team", "Tag Managers", "Analytics Managers", "Implementation Specialists", "Various"
-        ]
+        ],
+        contentName: '',
+        fileUpload: '',
+        description: '',
+        solution: '',
+        prerequisites: [],
+        value: ''
     }
     
     onFormSubmit = () => {
-
+        // axios post request to express server
     }
 
     onInputChange = (fieldName) => {
-
+        return (event) => {
+            this.setState({ [fieldName]: event.target.value });
+        }
     }
-    
+
+    prereqs = (event) => {
+        const options = event.target.options;
+        let value = [];
+        for (let i = 0, l = options.length; i < l; i++) {
+            if (options[i].selected) {
+                value.push(options[i].value);
+            }
+        }
+        console.log(value);
+    }
+
     render() {
-        const { solutions, prerequisites, whoItBenefits } = this.state;
+        const { solutionsList, prerequisitesList, whoItBenefitsList, contentName, solution, description } = this.state;
 
         return (
             <>
@@ -55,12 +74,12 @@ class AddFilesForm extends Component {
                     </div>
                     <div>
                         <label>Content Name</label>
-                        <input type='text' name='contentName' />
+                        <input type='text' onChange={this.onInputChange('contentName')} value={contentName} />
                     </div>
                     <div>
-                        <label>Category</label>
-                        <select multiple name='category'>
-                            {solutions.sort().map((element) => {
+                        <label>Solution</label>
+                        <select onChange={this.onInputChange('solution')} value={solution}>
+                            {solutionsList.sort().map((element) => {
                                 return <option key={element} value={element.match(/(?<=\().*(?=\))/)}>{element}</option>
                             })}
                         </select>
@@ -71,12 +90,12 @@ class AddFilesForm extends Component {
                     </div>
                     <div>
                         <label>Description/goal</label>
-                        <textarea></textarea>
+                        <textarea onChange={this.onInputChange('description')} value={description}></textarea>
                     </div>
                     <div>
                         <label>Prerequisites</label>
-                        <select multiple name='prerequisites'>
-                            {prerequisites.sort().map((element) => {
+                        <select multiple={true} onChange={this.prereqs} /*value={['hasAA', 'hasAT']}*/>
+                            {prerequisitesList.sort().map((element) => {
                                 return <option key={element} value={element.replace(/ /g, '')}>{element}</option>
                             })}
                         </select>
@@ -84,7 +103,7 @@ class AddFilesForm extends Component {
                     <div>
                         <label>Who it benefits</label>
                         <select multiple name='whoItBenefits'>
-                            {whoItBenefits.sort().map((element) => {
+                            {whoItBenefitsList.sort().map((element) => {
                                 return <option key={element} value={element.replace(/ /g, '')}>{element}</option>
                             })}
                         </select>
