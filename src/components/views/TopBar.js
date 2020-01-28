@@ -1,7 +1,11 @@
 import React, { Component } from "react";
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Dropdown, Menu } from 'semantic-ui-react';
 import axios from "axios";
+import { connect } from "react-redux";
+// import setSearchResult from "./../../actions";
+
+
 
 class TopBar extends Component {
         solutions = [
@@ -25,7 +29,7 @@ class TopBar extends Component {
             "AAM Tech Team", "Data, Team", "Tag Managers", "Analytics Managers", "Implementation Specialists", "Various"
         ]
 
-        state = { querySolution: "", queryBenefits: "", learningContent: ""}
+        state = { querySolution: "", queryBenefits: ""}
 
         searchCall = async ()=>{
             const { queryBenefits, querySolution } = this.state;
@@ -34,8 +38,12 @@ class TopBar extends Component {
                   queryBenefits
                 })
                 .then(response =>{
-                    console.log(response.data);
-                    this.setState({ learningContent: response.data });
+                    this.props.setSearchResult(response.data);
+                    return response.data;
+                })
+                .then(data=>{
+                    console.log(data);
+                    sessionStorage.setItem("learningContent", JSON.stringify(data));
                     this.props.history.push("/category");
                 })
         }
@@ -43,10 +51,8 @@ class TopBar extends Component {
         onCategorySelect = (e)=>{
             const query = e.target.innerHTML
             if(this.teams.includes(query)){
-                console.log("benefits query")
                 this.setState({ queryBenefits: query, querySolution: "" }, this.searchCall)
             } else {
-                console.log("solution query")
                 this.setState( { querySolution: query, queryBenefits: "" }, this.searchCall )
             }
         }
@@ -55,46 +61,49 @@ class TopBar extends Component {
         
         
     render(){
-
         return (
             <>
                 <div>
                     <Link to="/home">Accordant</Link>
                 </div>
                 <div>
-                    {/* <form action = "http://localhost:3001/category" method= "GET"> */}
-                        <Menu>
-                            <Dropdown text='Categories' pointing className='link item'>
+                    <Menu>
+                        <Dropdown text='Categories' pointing className='link item'>
                             <Dropdown.Menu>
                                 <Dropdown.Header>Categories</Dropdown.Header>
                                 <Dropdown.Item ref={this.searchInput}>
-                                <Dropdown text="Solutions">
-                                    <Dropdown.Menu>
-                                    <Dropdown.Header >Solutions</Dropdown.Header>
-                                    {this.solutions.map(solution =>{
-                                        return(<Dropdown.Item onClick = {this.onCategorySelect} >{solution}</Dropdown.Item>)
-                                    })}
-                                    </Dropdown.Menu>
-                                </Dropdown>
+                                    <Dropdown text="Solutions">
+                                        <Dropdown.Menu>
+                                            <Dropdown.Header >Solutions</Dropdown.Header>
+                                            {this.solutions.map(solution =>{
+                                                return(<Dropdown.Item onClick = {this.onCategorySelect} >{solution}</Dropdown.Item>)
+                                            })}
+                                        </Dropdown.Menu>
+                                    </Dropdown>
                                 </Dropdown.Item>
                                 <Dropdown.Item>
-                                <Dropdown text='Teams'>
-                                    <Dropdown.Menu>
-                                    <Dropdown.Header>Teams</Dropdown.Header>
-                                    {this.teams.sort().map(team =>{
-                                        return(<Dropdown.Item onClick = {this.onCategorySelect} >{team}</Dropdown.Item>)
-                                    })}
-                                    </Dropdown.Menu>
-                                </Dropdown>
+                                    <Dropdown text='Teams'>
+                                        <Dropdown.Menu>
+                                        <Dropdown.Header>Teams</Dropdown.Header>
+                                        {this.teams.sort().map(team =>{
+                                            return(<Dropdown.Item onClick = {this.onCategorySelect} >{team}</Dropdown.Item>)
+                                        })}
+                                        </Dropdown.Menu>
+                                    </Dropdown>
                                 </Dropdown.Item>
                             </Dropdown.Menu>
-                            </Dropdown>
-                        </Menu>
-                    {/* </form> */}
+                        </Dropdown>
+                    </Menu>
                 </div>
             </>
         )
     }
 }
 
-export default TopBar;
+const mapDispatchToProps = (dispatch)=>{
+    return {
+        setSearchResult: (result) => dispatch( { type: "SEARCH_RESULT", payload: result })
+    }
+}
+
+export default connect(null, mapDispatchToProps)(TopBar);

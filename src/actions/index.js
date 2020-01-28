@@ -2,9 +2,16 @@
 // export the function
 
 export const setAuthToken = (token = null) => {
-    sessionStorage.setItem('token', token);
+    sessionStorage.setItem("token", token);
     return {
-        type: 'AUTH_TOKEN',
+        type: "AUTH_TOKEN",
         payload: token
     };
 };
+
+export const setSearchResult = ( result = "" ) =>{
+    return {
+        type: "SEARCH_RESULT",
+        payload: result
+    }
+}
