@@ -9,6 +9,7 @@ import PrivateRoute from './PrivateRoute';
 import HomePage from './pages/HomePage';
 import CategoryPage from "./pages/CategoryPage";
 import ShowContentPage from "./pages/ShowContentPage";
+import TopBar from "./views/TopBar";
 
 class App extends Component {
     render(){
@@ -16,6 +17,7 @@ class App extends Component {
         return(
             <BrowserRouter>
                 <div>
+                    < Route path = "/" component={TopBar} />
                     < Route exact path = "/register" render = {(props) => {
                         return <RegisterPage {...props} />
                     }} />

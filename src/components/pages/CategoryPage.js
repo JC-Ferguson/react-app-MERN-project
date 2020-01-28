@@ -4,8 +4,9 @@ import SearchResult from "../views/SearchResult";
 class CategoryPage extends Component {
     render(){
         return(
-            <>  
-                < SearchResult
+            <> 
+                	<h1>Category Page</h1> 
+                {/* < SearchResult
                     content = "Dummy"
                     date = "22/01"
                     desc = "This is the 1st practice pdf"
@@ -18,7 +19,7 @@ class CategoryPage extends Component {
                     desc = "This is the 1st practice pdf"
                     prereq= "dont need any"
                     benefits = "me lad"
-                />
+                /> */}
             </>
         )
     }
