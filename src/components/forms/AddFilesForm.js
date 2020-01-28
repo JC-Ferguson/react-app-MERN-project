@@ -33,10 +33,11 @@ class AddFilesForm extends Component {
             "AT Implementation/QA Team", "Leads and Stakeholders", "NA", "Solution Specialists", "AAM Planners",
             "AAM Tech Team", "Data, Team", "Tag Managers", "Analytics Managers", "Implementation Specialists", "Various"
         ],
-        contentName: '',
         fileUpload: '',
-        description: '',
+        contentName: '',
         solution: '',
+        dateCreated: '',
+        description: '',
         prerequisites: [],
         whoItBenefits: []
     }
@@ -47,6 +48,7 @@ class AddFilesForm extends Component {
 
     onInputChange = (fieldName) => {
         return (event) => {
+            console.log(event.target.value);
             this.setState({ [fieldName]: event.target.value });
         }
     }
@@ -71,6 +73,7 @@ class AddFilesForm extends Component {
             whoItBenefitsList,
             contentName,
             solution,
+            dateCreated,
             description,
             prerequisites,
             whoItBenefits
@@ -97,7 +100,7 @@ class AddFilesForm extends Component {
                     </div>
                     <div>
                         <label>Date created</label>
-                        <input type='date' name='dateCreated' />
+                        <input type='date' onChange={this.onInputChange('dateCreated')} value={dateCreated} />
                     </div>
                     <div>
                         <label>Description/goal</label>
