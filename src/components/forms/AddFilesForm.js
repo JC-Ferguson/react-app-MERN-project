@@ -51,19 +51,27 @@ class AddFilesForm extends Component {
         }
     }
 
-    prereqs = (event) => {
+    onSelectInputChange = (event) => {
         const options = event.target.options;
-        let value = [];
+        let prereqsSelected = [];
         for (let i = 0, l = options.length; i < l; i++) {
             if (options[i].selected) {
-                value.push(options[i].value);
+                prereqsSelected.push(options[i].value);
             }
         }
-        console.log(value);
+        this.setState({ prerequisites: prereqsSelected });
     }
 
     render() {
-        const { solutionsList, prerequisitesList, whoItBenefitsList, contentName, solution, description } = this.state;
+        const { 
+            solutionsList,
+            prerequisitesList,
+            whoItBenefitsList,
+            contentName,
+            solution,
+            description,
+            prerequisites 
+        } = this.state;
 
         return (
             <>
@@ -94,7 +102,7 @@ class AddFilesForm extends Component {
                     </div>
                     <div>
                         <label>Prerequisites</label>
-                        <select multiple={true} onChange={this.prereqs} /*value={['hasAA', 'hasAT']}*/>
+                        <select multiple={true} onChange={this.onSelectInputChange} value={prerequisites}>
                             {prerequisitesList.sort().map((element) => {
                                 return <option key={element} value={element.replace(/ /g, '')}>{element}</option>
                             })}
