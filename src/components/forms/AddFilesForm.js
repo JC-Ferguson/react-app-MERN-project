@@ -1,9 +1,17 @@
 import React, { Component } from 'react';
 import customAxios from './../../api/customAxios';
+import { connect } from 'react-redux';
+
+const mapStateToProps = (state) => {
+    return {
+        token: state.auth.token
+    }
+}
 
 class AddFilesForm extends Component {
     state = {
         solutionsList: [
+            '',
             "Adobe Experience Cloud (AEC)", 
             "Adobe Analytics, Dynamic Tag Management (AA)", 
             "Adobe Target (AT)", 
@@ -42,8 +50,36 @@ class AddFilesForm extends Component {
         whoItBenefits: []
     }
     
-    onFormSubmit = () => {
+    onFormSubmit = async (event) => {
+        event.preventDefault();
+        // pull data we need off state
+        const { 
+            fileUpload,
+            contentName,
+            solution,
+            dateCreated,
+            description,
+            prerequisites,
+            whoItBenefits
+        } = this.state;
+
+        const fileData = new FormData();
+        fileData.append('file', fileUpload);
+
         // axios post request to express server
+        // axios post form data only
+        await customAxios.post(
+            '/file/upload',
+            {
+                fileData,
+                contentName,
+                solution,
+                dateCreated,
+                description,
+                prerequisites,
+                whoItBenefits
+            } 
+        );
     }
 
     onInputChange = (fieldName) => {
@@ -66,6 +102,10 @@ class AddFilesForm extends Component {
         }
     }
 
+    onFileUploadChange = (event) => {
+        this.setState({ fileUpload: event.target.files[0] });
+    }
+
     render() {
         const { 
             solutionsList,
@@ -84,7 +124,7 @@ class AddFilesForm extends Component {
                 <h1>AddFilesForm</h1>
                 <form onSubmit={this.onFormSubmit}>
                     <div>
-                        <input type='file' name='fileUploaded' />
+                        <input type='file' onChange={this.onFileUploadChange} />
                     </div>
                     <div>
                         <label>Content Name</label>
@@ -129,4 +169,4 @@ class AddFilesForm extends Component {
     }
 }
 
-export default AddFilesForm;
+export default connect(mapStateToProps)(AddFilesForm);
