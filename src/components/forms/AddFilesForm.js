@@ -11,7 +11,6 @@ const mapStateToProps = (state) => {
 class AddFilesForm extends Component {
     state = {
         solutionsList: [
-            '',
             "Adobe Experience Cloud (AEC)", 
             "Adobe Analytics, Dynamic Tag Management (AA)", 
             "Adobe Target (AT)", 
@@ -41,10 +40,15 @@ class AddFilesForm extends Component {
             "AT Implementation/QA Team", "Leads and Stakeholders", "NA", "Solution Specialists", "AAM Planners",
             "AAM Tech Team", "Data, Team", "Tag Managers", "Analytics Managers", "Implementation Specialists", "Various"
         ],
+        proficiencyList: [
+            "NA", "1", "2", "3", "4", "5"
+        ],
         selectedFile: null,
         contentName: '',
-        solution: '',
+        solution: 'AAC/ADCLOUD',
         dateCreated: '',
+        proficiency: 'NA',
+        lessonContent: '', 
         description: '',
         prerequisites: [],
         whoItBenefits: []
@@ -58,6 +62,8 @@ class AddFilesForm extends Component {
             contentName,
             solution,
             dateCreated,
+            proficiency, 
+            lessonContent, 
             description,
             prerequisites,
             whoItBenefits
@@ -68,6 +74,8 @@ class AddFilesForm extends Component {
         fileData.append('name', contentName);
         fileData.append('solution', solution);
         fileData.append('dateCreated', dateCreated);
+        fileData.append('proficiency', proficiency);
+        fileData.append('lessonContent', lessonContent)
         fileData.append('description', description);
         fileData.append('prerequisites', prerequisites);
         fileData.append('whoItBenefits', whoItBenefits);
@@ -106,9 +114,12 @@ class AddFilesForm extends Component {
             solutionsList,
             prerequisitesList,
             whoItBenefitsList,
+            proficiencyList,
             contentName,
             solution,
             dateCreated,
+            proficiency,
+            lessonContent, 
             description,
             prerequisites,
             whoItBenefits
@@ -136,6 +147,18 @@ class AddFilesForm extends Component {
                     <div>
                         <label>Date created</label>
                         <input type='date' onChange={this.onInputChange('dateCreated')} value={dateCreated} />
+                    </div>
+                    <div>
+                        <label>Lesson Proficiency</label>
+                        <select onChange={this.onInputChange('proficiency')} value={proficiency}>
+                            {proficiencyList.map((element) => {
+                                return <option key={element} value={element}>{element}</option>
+                            })}
+                        </select>
+                    </div>
+                    <div>
+                        <label>Lesson Content</label>
+                        <textarea onChange={this.onInputChange('lessonContent')} value={lessonContent}></textarea>
                     </div>
                     <div>
                         <label>Description/goal</label>
