@@ -41,8 +41,8 @@ class AddFilesForm extends Component {
             "AT Implementation/QA Team", "Leads and Stakeholders", "NA", "Solution Specialists", "AAM Planners",
             "AAM Tech Team", "Data, Team", "Tag Managers", "Analytics Managers", "Implementation Specialists", "Various"
         ],
-        fileUpload: '',
-        contentName: '',
+        selectedFile: null,
+        name: '',
         solution: '',
         dateCreated: '',
         description: '',
@@ -50,11 +50,11 @@ class AddFilesForm extends Component {
         whoItBenefits: []
     }
     
-    onFormSubmit = async (event) => {
+    onFormSubmit = (event) => {
         event.preventDefault();
         // pull data we need off state
         const { 
-            fileUpload,
+            selectedFile,
             contentName,
             solution,
             dateCreated,
@@ -63,28 +63,23 @@ class AddFilesForm extends Component {
             whoItBenefits
         } = this.state;
 
-        const fileData = new FormData();
-        fileData.append('file', fileUpload);
+        let fileData = new FormData();
+        fileData.append('file', selectedFile);
+        fileData.append('name', contentName);
+        fileData.append('solution', solution);
+        fileData.append('dateCreated', dateCreated);
+        fileData.append('description', description);
+        fileData.append('prerequisites', prerequisites);
+        fileData.append('whoItBenefits', whoItBenefits);
 
         // axios post request to express server
         // axios post form data only
-        await customAxios.post(
-            '/file/upload',
-            {
-                fileData,
-                contentName,
-                solution,
-                dateCreated,
-                description,
-                prerequisites,
-                whoItBenefits
-            } 
-        );
+        customAxios.post('/file/upload', fileData)
+            .then(res => console.log(res))
     }
 
     onInputChange = (fieldName) => {
         return (event) => {
-            console.log(event.target.value);
             this.setState({ [fieldName]: event.target.value });
         }
     }
@@ -103,7 +98,7 @@ class AddFilesForm extends Component {
     }
 
     onFileUploadChange = (event) => {
-        this.setState({ fileUpload: event.target.files[0] });
+        this.setState({ selectedFile: event.target.files[0] });
     }
 
     render() {
@@ -150,7 +145,7 @@ class AddFilesForm extends Component {
                         <label>Prerequisites</label>
                         <select multiple={true} onChange={this.onSelectInputChange('prerequisites')} value={prerequisites}>
                             {prerequisitesList.sort().map((element) => {
-                                return <option key={element} value={element.replace(/ /g, '')}>{element}</option>
+                                return <option key={element} value={element}>{element}</option>
                             })}
                         </select>
                     </div>
@@ -158,7 +153,7 @@ class AddFilesForm extends Component {
                         <label>Who it benefits</label>
                         <select multiple={true} onChange={this.onSelectInputChange('whoItBenefits')} value={whoItBenefits}>
                             {whoItBenefitsList.sort().map((element) => {
-                                return <option key={element} value={element.replace(/ /g, '')}>{element}</option>
+                                return <option key={element} value={element}>{element}</option>
                             })}
                         </select>
                     </div>
