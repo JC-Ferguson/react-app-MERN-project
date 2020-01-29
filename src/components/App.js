@@ -39,7 +39,7 @@ class App extends Component {
                     />
                     < AdminRoute exact path = '/admin/' component = {AdminPage} />
                     < AdminRoute exact path = '/admin/users' component = {AdminUsersPage} />
-                    < Route exact path = '/admin/files' component = {AdminFilesPage} />
+                    < AdminRoute exact path = '/admin/files' component = {AdminFilesPage} />
                 </div>
             </BrowserRouter>
         )
