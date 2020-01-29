@@ -42,7 +42,7 @@ class AddFilesForm extends Component {
             "AAM Tech Team", "Data, Team", "Tag Managers", "Analytics Managers", "Implementation Specialists", "Various"
         ],
         selectedFile: null,
-        name: '',
+        contentName: '',
         solution: '',
         dateCreated: '',
         description: '',
