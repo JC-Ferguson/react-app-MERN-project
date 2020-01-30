@@ -9,6 +9,10 @@ import PrivateRoute from './PrivateRoute';
 import HomePage from './pages/HomePage';
 import CategoryPage from "./pages/CategoryPage";
 import ShowContentPage from "./pages/ShowContentPage";
+import AdminPage from './pages/AdminPage';
+import AdminUsersPage from './pages/AdminUsersPage';
+import AdminFilesPage from './pages/AdminFilesPage';
+import AdminRoute from './AdminRoute';
 import TopBar from "./views/TopBar";
 
 class App extends Component {
@@ -35,9 +39,9 @@ class App extends Component {
                                 return < ShowContentPage {...props} />
                             }} 
                     />
-                    {/* < Route exact path = "/admin/dash" component = {} />
-                    < Route exact path = "/admin/user-access" component = {} />
-                    < Route exact path = "/admin/content-crud" component = {} /> */}
+                    < AdminRoute exact path = '/admin/' component = {AdminPage} />
+                    < AdminRoute exact path = '/admin/users' component = {AdminUsersPage} />
+                    < AdminRoute exact path = '/admin/files' component = {AdminFilesPage} />
                 </div>
             </BrowserRouter>
         )
