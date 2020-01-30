@@ -20,7 +20,7 @@ class TopBar extends Component {
         teams = [
             "AT Owners", "Project Managers", "AT Implementation Team", "Content Team", "AEC Owners", "Stakeholders",
             "AdCloud Users", "Optimisation Team", "SEM/Media Team", "Performance Marketing Team", "Advertisers",
-            "AEC Technical Team", "Project Teams", "Agile Teams", "Internal Optimisation", "Product Team", "Strategy Team",
+            "AEC Technical Team", "Project Teams", "Agile Teams", "Internal Optimisation", "Strategy Team",
             "Tech Team", "Developers", "AA Analysts", "AA Owners", "AEC Owners and Managers",
             "AAM Users", "AT Users", "AT Analysts", "AT Performance/Reporting Team", "AA Developers", "Social Media Team", 
             "AT Recommendations Users", "AT Recommendations Implementation Team", "AA Users", "Tag Specialists", "Teams That Will Engage with Design Team",
@@ -42,7 +42,6 @@ class TopBar extends Component {
                     return response.data;
                 })
                 .then(data=>{
-                    console.log(data);
                     sessionStorage.setItem("learningContent", JSON.stringify(data));
                     this.props.history.push("/category");
                 })
@@ -53,7 +52,8 @@ class TopBar extends Component {
             if(this.teams.includes(query)){
                 this.setState({ queryBenefits: query, querySolution: "" }, this.searchCall)
             } else {
-                this.setState( { querySolution: query, queryBenefits: "" }, this.searchCall )
+                const shortenedQuery = query.match(/(?<=\().*(?=\))/);
+                this.setState( { querySolution: shortenedQuery, queryBenefits: "" }, this.searchCall )
             }
         }
 
@@ -76,7 +76,7 @@ class TopBar extends Component {
                                         <Dropdown.Menu>
                                             <Dropdown.Header >Solutions</Dropdown.Header>
                                             {this.solutions.map(solution =>{
-                                                return(<Dropdown.Item onClick = {this.onCategorySelect} >{solution}</Dropdown.Item>)
+                                                return(<Dropdown.Item key={solution} onClick = {this.onCategorySelect} >{solution}</Dropdown.Item>)
                                             })}
                                         </Dropdown.Menu>
                                     </Dropdown>
@@ -86,7 +86,7 @@ class TopBar extends Component {
                                         <Dropdown.Menu>
                                         <Dropdown.Header>Teams</Dropdown.Header>
                                         {this.teams.sort().map(team =>{
-                                            return(<Dropdown.Item onClick = {this.onCategorySelect} >{team}</Dropdown.Item>)
+                                            return(<Dropdown.Item key={team} onClick = {this.onCategorySelect} >{team}</Dropdown.Item>)
                                         })}
                                         </Dropdown.Menu>
                                     </Dropdown>

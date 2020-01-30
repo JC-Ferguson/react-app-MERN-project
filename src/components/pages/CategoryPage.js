@@ -12,8 +12,10 @@ class CategoryPage extends Component {
                 {learningContent.map(content =>{
                     return(
                         < SearchResult
+                            key ={content.location}
                             title = {content.name}
                             date = {content.tags.createdOn}
+                            solution = {content.tags.solution}
                             proficiency = {content.tags.proficiency}
                             content = {content.tags.content}
                             desc = {content.tags.description}
