@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import customAxios from './../../api/customAxios';
 import { connect } from 'react-redux';
+import './../../styles/table.css';
 
 const mapStateToProps = (state) => {
     return {
@@ -72,29 +73,31 @@ class AdminUsersPage extends Component {
 
         return (
             <>
-                <h1>User Approval</h1>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Email</th>
-                            <th></th>
-                            <th>Approval</th>
-                            <th>Date created</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {users.map((item) => {
-                            return (
-                                <tr key={item._id}>
-                                    <td>{item.email}</td>
-                                    <td>{item.pending ? 'Pending': null}</td>
-                                    <td><input type='checkbox' checked={item.approved} onChange={this.onCheckboxToggle(item._id)} /></td>
-                                    <td>{item.dateCreated.substr(0,10)}</td>
-                                </tr>
-                            )
-                        })}
-                    </tbody>
-                </table>
+                <h1 className='centered'>User Approval</h1>
+                <div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Email</th>
+                                <th></th>
+                                <th>Approval</th>
+                                <th>Date created</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {users.map((item) => {
+                                return (
+                                    <tr className='tr-hover-highlight' key={item._id}>
+                                        <td>{item.email}</td>
+                                        <td className='warning'>{item.pending ? 'Pending': null}</td>
+                                        <td><input type='checkbox' checked={item.approved} onChange={this.onCheckboxToggle(item._id)} /></td>
+                                        <td>{item.dateCreated.substr(0,10)}</td>
+                                    </tr>
+                                )
+                            })}
+                        </tbody>
+                    </table>
+                </div>
             </>
         )
     }
