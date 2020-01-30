@@ -5,6 +5,8 @@ class HomePage extends Component {
         return (
             <>
                 <h1>Home Page</h1>
+                <h2>Available Solutions</h2>
+                
             </>
         )
     }
