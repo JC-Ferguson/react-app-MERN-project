@@ -1,0 +1,60 @@
+h1, label, input, p {
+    color: rgb(51, 65, 72);
+    font-family: Helvetica;
+}
+
+label {
+    display: inline-block;
+    margin-bottom: 10px;
+    margin-right: 30px;
+    width: 200px;
+}
+
+input {
+    border: 0 solid;
+    border-bottom: 1px solid rgb(51, 65, 72);
+    display: inline-block;
+    font-size: 16px;
+    height: 30px;
+    margin-right: 30px;
+    width: 200px;
+}
+
+input:focus {
+    outline-width: 0;
+}
+
+.centered {
+    text-align: center;
+}
+
+.div-email {
+    height: 100px;
+}
+
+.label-email {
+    display: block;
+}
+
+.input-email {
+    width: 430px;
+}
+
+.input-submit {
+    background-color: rgb(51, 65, 72);
+    border: 2px solid rgb(51, 65, 72);
+    border-radius: 16px;
+    color: white;
+    margin-top: 30px;
+    margin-bottom: 10px;
+    width: 430px;
+}
+
+.input-submit:hover {
+    background-color: white;
+    color: rgb(51, 65, 72);
+}
+
+.warning {
+    color: red;
+}
