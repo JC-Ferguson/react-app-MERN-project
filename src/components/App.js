@@ -13,6 +13,7 @@ import AdminPage from './pages/AdminPage';
 import AdminUsersPage from './pages/AdminUsersPage';
 import AdminFilesPage from './pages/AdminFilesPage';
 import AdminRoute from './AdminRoute';
+import TopBar from "./views/TopBar";
 
 class App extends Component {
     render(){
@@ -20,6 +21,7 @@ class App extends Component {
         return(
             <BrowserRouter>
                 <div>
+                    < Route path = "/" component={TopBar} />
                     < Route exact path = "/register" render = {(props) => {
                         return <RegisterPage {...props} />
                     }} />

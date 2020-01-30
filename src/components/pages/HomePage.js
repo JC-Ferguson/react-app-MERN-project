@@ -5,7 +5,6 @@ class HomePage extends Component {
         return (
             <>
                 <h1>Home Page</h1>
-                
             </>
         )
     }
