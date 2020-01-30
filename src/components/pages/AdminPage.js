@@ -6,6 +6,7 @@ function AdminPage() {
         <>
             <h1>AdminPage</h1>
             <Link to='/admin/users'>User Approval</Link>
+            <Link to='./admin/files'>Manage Files</Link>
         </>
     )
 }
