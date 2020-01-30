@@ -6,12 +6,10 @@ import './../../styles/registerLogin.css';
 class RegisterPage extends Component {
     render() {
         return (
-            <>
-                <div className='flex'>
-                    <Blurb />
-                    <RegisterForm  {...this.props}/>
-                </div>
-            </>
+            <div className='flex'>
+                <Blurb />
+                <RegisterForm  {...this.props}/>
+            </div>
         )
     }
 }

@@ -32,11 +32,11 @@ input:focus {
     height: 100px;
 }
 
-.label-email {
+.label-block {
     display: block;
 }
 
-.input-email {
+.input-wide {
     width: 430px;
 }
 

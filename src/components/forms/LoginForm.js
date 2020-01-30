@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import customAxios from '../../api/customAxios';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { setAuthToken } from '../../actions';
+import './../../styles/form.css';
 
 class LoginForm extends Component {
     state = {
@@ -45,19 +47,21 @@ class LoginForm extends Component {
         const { email, password } = this.state;
 
         return (
-            <>
+            <div>
+                <h1 className='centered'>Login</h1>
                 <form onSubmit={this.onFormSubmit}>
-                    <div>
-                        <label>Email</label>
-                        <input type='text' name='email' onChange={this.onInputChange('email')} value={email} />
+                    <div className='div-email'>
+                        <label className='label-block'>Email</label>
+                        <input className='input-wide' type='text' name='email' onChange={this.onInputChange('email')} value={email} />
                     </div>
                     <div>
-                        <label>Password</label>
-                        <input type='password' name='password' onChange={this.onInputChange('password')} value={password} />
+                        <label className='label-block'>Password</label>
+                        <input className='input-wide' type='password' name='password' onChange={this.onInputChange('password')} value={password} />
                     </div>
-                    <input type='submit' value='Login' />
+                    <input className='input-submit' type='submit' value='Login' />
                 </form>
-            </>
+                <Link to='/register'>Register an account</Link>
+            </div>
         )
     }
 }

@@ -48,8 +48,8 @@ class RegisterForm extends Component {
                 <h1 className='centered'>Register</h1>
                 <form onSubmit={this.onFormSubmit}>
                     <div className='div-email'>
-                        <label className='label-email'>Email</label>
-                        <input className='input-email' type='text' name='email' onChange={this.onInputChange('email')} value={email} />
+                        <label className='label-block'>Email</label>
+                        <input className='input-wide' type='text' name='email' onChange={this.onInputChange('email')} value={email} />
                     </div>
                     <div>
                         <label>Password</label>
