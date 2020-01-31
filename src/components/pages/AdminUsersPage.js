@@ -68,6 +68,10 @@ class AdminUsersPage extends Component {
             this.getUsers();
         }
     }
+
+    toggle = event => {
+        console.log('toggle ran');
+    }
     
     render() {
         const { users } = this.state;
@@ -91,19 +95,19 @@ class AdminUsersPage extends Component {
                                     <tr className='tr-hover-highlight' key={item._id}>
                                         <td>{item.email}</td>
                                         <td className={`${styles.warning} ${styles.centered}`}>{item.pending ? 'Pending': null}</td>
-                                        <td className={styles.centered}><input type='checkbox' checked={item.approved} onChange={this.onCheckboxToggle(item._id)} /></td>
+                                        <td className={styles.centered}>
+                                            <label className={toggleStyles.switch}>
+                                                <input type='checkbox' checked={item.approved} onChange={this.onCheckboxToggle(item._id)} className={toggleStyles.input} />
+                                                <span className={`${toggleStyles.slider} ${toggleStyles.round}`}></span>
+                                            </label>
+                                            {/* <input type='checkbox' checked={item.approved} onChange={this.onCheckboxToggle(item._id)} /> */}
+                                        </td>
                                         <td className={styles.centered}>{item.dateCreated.substr(0,10)}</td>
                                     </tr>
                                 )
                             })}
                         </tbody>
                     </table>
-                </div>
-                <div>
-                    <label className={toggleStyles.switch}>
-                        <input className={toggleStyles.input} type="checkbox"/>
-                        <span className={`${toggleStyles.slider} ${toggleStyles.round}`}></span>
-                    </label>
                 </div>
             </>
         )
