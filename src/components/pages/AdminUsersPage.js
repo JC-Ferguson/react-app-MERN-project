@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import customAxios from './../../api/customAxios';
 import { connect } from 'react-redux';
 import styles from './../../styles/adminUsers.module.css';
+import toggleStyles from './../../styles/toggleSwitch.module.css';
 
 const mapStateToProps = (state) => {
     return {
@@ -97,6 +98,12 @@ class AdminUsersPage extends Component {
                             })}
                         </tbody>
                     </table>
+                </div>
+                <div>
+                    <label className={toggleStyles.switch}>
+                        <input className={toggleStyles.input} type="checkbox"/>
+                        <span className={`${toggleStyles.slider} ${toggleStyles.round}`}></span>
+                    </label>
                 </div>
             </>
         )
