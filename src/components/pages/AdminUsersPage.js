@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import customAxios from './../../api/customAxios';
 import { connect } from 'react-redux';
-import './../../styles/table.css';
+import styles from './../../styles/adminUsers.module.css';
 
 const mapStateToProps = (state) => {
     return {
@@ -73,12 +73,12 @@ class AdminUsersPage extends Component {
 
         return (
             <>
-                <h1 className='centered'>User Approval</h1>
+                <h1 className={styles.centered}>User Approval</h1>
                 <div>
-                    <table>
+                    <table className={styles.table}>
                         <thead>
-                            <tr>
-                                <th>Email</th>
+                            <tr className={styles.th}>
+                                <th className={styles.left}>Email</th>
                                 <th></th>
                                 <th>Approval</th>
                                 <th>Date created</th>
@@ -89,9 +89,9 @@ class AdminUsersPage extends Component {
                                 return (
                                     <tr className='tr-hover-highlight' key={item._id}>
                                         <td>{item.email}</td>
-                                        <td className='warning'>{item.pending ? 'Pending': null}</td>
-                                        <td><input type='checkbox' checked={item.approved} onChange={this.onCheckboxToggle(item._id)} /></td>
-                                        <td>{item.dateCreated.substr(0,10)}</td>
+                                        <td className={`${styles.warning} ${styles.centered}`}>{item.pending ? 'Pending': null}</td>
+                                        <td className={styles.centered}><input type='checkbox' checked={item.approved} onChange={this.onCheckboxToggle(item._id)} /></td>
+                                        <td className={styles.centered}>{item.dateCreated.substr(0,10)}</td>
                                     </tr>
                                 )
                             })}

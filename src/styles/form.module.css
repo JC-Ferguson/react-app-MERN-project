@@ -9,6 +9,7 @@
     margin-bottom: 10px;
     margin-right: 30px;
     width: 200px;
+    vertical-align: top;
 }
 
 .labelBlock {
@@ -25,6 +26,16 @@
     width: 200px;
 }
 
+/* to style the input with type='file' */
+.inputFile {
+    margin-bottom: 10px;
+}
+
+/* to style other inputs on the admin files form */
+.inputFilesForm {
+    border-radius: 5px;
+}
+
 .inputSubmit {
     background-color: rgb(51, 65, 72);
     border: 2px solid rgb(51, 65, 72);
@@ -34,6 +45,11 @@
     margin-top: 30px;
     margin-bottom: 10px;
     width: 430px;
+}
+
+.inputSubmitAdmin {
+    text-align: center;
+    width: 150px;
 }
 
 .inputSubmit:hover {
@@ -47,6 +63,11 @@
 
 .input:focus {
     outline-width: 0;
+}
+
+.select {
+    border-radius: 5px;
+    margin-bottom: 10px;
 }
 
 .centered {
