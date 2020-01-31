@@ -1,16 +1,19 @@
-h1, label, input, p {
+.h1, .label, .input {
     color: rgb(51, 65, 72);
     font-family: Helvetica;
 }
-
-label {
+.label {
     display: inline-block;
     margin-bottom: 10px;
     margin-right: 30px;
     width: 200px;
 }
 
-input {
+.labelBlock {
+    display: block;
+}
+
+.input {
     border: 0 solid;
     border-bottom: 1px solid rgb(51, 65, 72);
     display: inline-block;
@@ -20,27 +23,7 @@ input {
     width: 200px;
 }
 
-input:focus {
-    outline-width: 0;
-}
-
-.centered {
-    text-align: center;
-}
-
-.div-email {
-    height: 100px;
-}
-
-.label-block {
-    display: block;
-}
-
-.input-wide {
-    width: 430px;
-}
-
-.input-submit {
+.inputSubmit {
     background-color: rgb(51, 65, 72);
     border: 2px solid rgb(51, 65, 72);
     border-radius: 16px;
@@ -50,11 +33,28 @@ input:focus {
     width: 430px;
 }
 
-.input-submit:hover {
+.inputSubmit:hover {
     background-color: white;
     color: rgb(51, 65, 72);
 }
 
+.inputWide {
+    width: 430px;
+}
+
+.input:focus {
+    outline-width: 0;
+}
+
+.centered {
+    text-align: center;
+}
+
+.divEmail {
+    height: 100px;
+}
+
 .warning {
     color: red;
+    font-family: Helvetica;
 }
