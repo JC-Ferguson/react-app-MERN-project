@@ -1,0 +1,21 @@
+.topBar {
+    display: flex;
+    justify-content: space-between;
+}
+
+.topBar img {
+    height: 80px;
+}
+
+.logo {
+    margin: 0 30px;
+}
+
+.searchMenu {
+    height: 40px;
+    margin: 14pm 30px;
+}
+
+.logout {
+    margin: 30px 50px;
+} 

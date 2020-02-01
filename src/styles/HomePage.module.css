@@ -1,0 +1,13 @@
+.title {
+    padding: 1em 0.5em;
+    margin: 0 15vw;
+}
+
+.solutionsContainer {
+    margin: 2.5em 20vw;
+}
+
+.solutionsContainer div{
+    margin-bottom: 2.5em;
+    padding: 1em;
+}

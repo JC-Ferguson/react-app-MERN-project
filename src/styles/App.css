@@ -1,0 +1,9 @@
+h1, h2, h3, input, label, p {
+    font-family: Helvetica;
+    color: rgb(51,65,72);
+}
+
+input,label,p {
+    font-size: 20px;
+    line-height: 1.5;
+}
