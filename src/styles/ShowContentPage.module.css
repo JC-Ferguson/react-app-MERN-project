@@ -1,0 +1,12 @@
+.container {
+    display: flex;
+}
+
+.relatedContainer {
+    width: 25vw;
+    border: solid 2px black;
+}
+
+.pdfViewer {
+    margin: 0 5vw;
+}

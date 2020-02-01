@@ -3,7 +3,9 @@ import { Link } from "react-router-dom";
 import { Dropdown, Menu } from 'semantic-ui-react';
 import axios from "axios";
 import { connect } from "react-redux";
-// import setSearchResult from "./../../actions";
+import {setSearchResult} from "./../../actions";
+import Logo from "./../../images/accordant-logo.png";
+import styles from "./../../styles/TopBar.module.css"
 
 
 
@@ -62,48 +64,49 @@ class TopBar extends Component {
         
     render(){
         return (
-            <>
-                <div>
-                    <Link to="/home">Accordant</Link>
+            <section className={styles.topBar}>
+                <div className={styles.logo}>
+                    <Link to="/home"><img src={Logo} alt="Accordant Logo" /></Link>
                 </div>
-                <div>
-                    <Menu>
-                        <Dropdown text='Categories' pointing className='link item'>
-                            <Dropdown.Menu>
-                                <Dropdown.Header>Categories</Dropdown.Header>
-                                <Dropdown.Item ref={this.searchInput}>
-                                    <Dropdown text="Solutions">
-                                        <Dropdown.Menu>
-                                            <Dropdown.Header >Solutions</Dropdown.Header>
-                                            {this.solutions.map(solution =>{
-                                                return(<Dropdown.Item key={solution} onClick = {this.onCategorySelect} >{solution}</Dropdown.Item>)
-                                            })}
-                                        </Dropdown.Menu>
-                                    </Dropdown>
-                                </Dropdown.Item>
-                                <Dropdown.Item>
-                                    <Dropdown text='Teams'>
-                                        <Dropdown.Menu>
-                                        <Dropdown.Header>Teams</Dropdown.Header>
-                                        {this.teams.sort().map(team =>{
-                                            return(<Dropdown.Item key={team} onClick = {this.onCategorySelect} >{team}</Dropdown.Item>)
+                <Menu className={styles.searchMenu}>
+                    <Dropdown text='Categories' pointing className='link item'>
+                        <Dropdown.Menu>
+                            <Dropdown.Header>Categories</Dropdown.Header>
+                            <Dropdown.Item ref={this.searchInput}>
+                                <Dropdown text="Solutions">
+                                    <Dropdown.Menu>
+                                        <Dropdown.Header >Solutions</Dropdown.Header>
+                                        {this.solutions.map(solution =>{
+                                            return(
+                                                // <Link to="/category">
+                                                    <Dropdown.Item key={solution} onClick = {this.onCategorySelect} >{solution}</Dropdown.Item>
+                                                // </Link>
+                                            )
                                         })}
-                                        </Dropdown.Menu>
-                                    </Dropdown>
-                                </Dropdown.Item>
-                            </Dropdown.Menu>
-                        </Dropdown>
-                    </Menu>
+                                    </Dropdown.Menu>
+                                </Dropdown>
+                            </Dropdown.Item>
+                            <Dropdown.Item>
+                                <Dropdown text='Teams'>
+                                    <Dropdown.Menu>
+                                    <Dropdown.Header>Teams</Dropdown.Header>
+                                    {this.teams.sort().map(team =>{
+                                        return(<Dropdown.Item key={team} onClick = {this.onCategorySelect} >{team}</Dropdown.Item>)
+                                    })}
+                                    </Dropdown.Menu>
+                                </Dropdown>
+                            </Dropdown.Item>
+                        </Dropdown.Menu>
+                    </Dropdown>
+                    <div>Searchbar</div>
+                </Menu>
+                <div className={styles.logout}>
+                    Logout
                 </div>
-            </>
+            </section>
+
         )
     }
 }
 
-const mapDispatchToProps = (dispatch)=>{
-    return {
-        setSearchResult: (result) => dispatch( { type: "SEARCH_RESULT", payload: result })
-    }
-}
-
-export default connect(null, mapDispatchToProps)(TopBar);
+export default connect(null, {setSearchResult})(TopBar);

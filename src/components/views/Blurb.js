@@ -1,10 +1,10 @@
 import React from 'react';
 
-function Blurb() {
-    const { heading, blurb } = this.props;
+function Blurb(props) {
+    const { heading, blurb, onCategorySelect } = props;
     return (
         <>
-            <h3>{heading}</h3>
+            <h3 onClick = {onCategorySelect} >{heading}</h3>
             <p>{blurb}</p>
         </>
     )
