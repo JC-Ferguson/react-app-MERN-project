@@ -68,10 +68,6 @@ class AdminUsersPage extends Component {
             this.getUsers();
         }
     }
-
-    toggle = event => {
-        console.log('toggle ran');
-    }
     
     render() {
         const { users } = this.state;
@@ -100,7 +96,6 @@ class AdminUsersPage extends Component {
                                                 <input type='checkbox' checked={item.approved} onChange={this.onCheckboxToggle(item._id)} className={toggleStyles.input} />
                                                 <span className={`${toggleStyles.slider} ${toggleStyles.round}`}></span>
                                             </label>
-                                            {/* <input type='checkbox' checked={item.approved} onChange={this.onCheckboxToggle(item._id)} /> */}
                                         </td>
                                         <td className={styles.centered}>{item.dateCreated.substr(0,10)}</td>
                                     </tr>

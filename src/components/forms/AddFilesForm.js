@@ -181,7 +181,9 @@ class AddFilesForm extends Component {
                             })}
                         </select>
                     </div>
-                    <input className={`${styles.inputSubmit} ${styles.inputSubmitAdmin}`} type='submit' />
+                    <div className={styles.centered}>
+                        <input className={`${styles.inputSubmit} ${styles.inputSubmitAdmin}`} type='submit' />
+                    </div>
                 </form>
             </div>
         );

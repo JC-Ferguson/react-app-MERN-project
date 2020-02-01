@@ -58,7 +58,9 @@ class RegisterForm extends Component {
                     <div>
                         <input className={styles.input} type='password' name='password' onChange={this.onInputChange('password')} value={password} />
                         <input className={styles.input} type='password' name='confirmPassword' onChange={this.onInputChange('confirmPassword')} value={confirmPassword}  />
-                        {password !== confirmPassword ? <p className='warning'>Warning: Passwords do not match</p> : null}
+                        <div className={styles.height}>
+                            {password !== confirmPassword ? <p className={styles.warning}>Warning: Passwords do not match</p> : null}
+                        </div>
                     </div>
                     <input className={styles.inputSubmit} type='submit' value='Sign up' />
                 </form>

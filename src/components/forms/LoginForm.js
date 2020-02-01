@@ -8,7 +8,8 @@ import styles from './../../styles/form.module.css';
 class LoginForm extends Component {
     state = {
         email: '',
-        password: ''
+        password: '',
+        invalidDetails: false
     };
     
     // method to control elements
@@ -38,13 +39,14 @@ class LoginForm extends Component {
             this.props.setAuthToken(response.data);
             this.props.history.push('/home');
         } catch(err) {
-            console.log(err);
+            console.log(err)
+            this.setState({ invalidDetails: true });
         }
         
     }
 
     render() {
-        const { email, password } = this.state;
+        const { email, password, invalidDetails } = this.state;
 
         return (
             <div>
@@ -57,6 +59,9 @@ class LoginForm extends Component {
                     <div>
                         <label className={`${styles.label} ${styles.labelBlock}`}>Password</label>
                         <input className={`${styles.input} ${styles.inputWide}`} type='password' name='password' onChange={this.onInputChange('password')} value={password} />
+                    </div>
+                    <div className={styles.height}>
+                        {invalidDetails ? <p className={styles.warning}>Invalid username or password</p> : null}
                     </div>
                     <input className={styles.inputSubmit} type='submit' value='Login' />
                 </form>
