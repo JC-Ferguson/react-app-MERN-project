@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import customAxios from '../../api/customAxios';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { setAuthToken } from '../../actions';
+import styles from './../../styles/form.module.css';
 
 class RegisterForm extends Component {
     state = {
@@ -42,25 +44,28 @@ class RegisterForm extends Component {
         const { email, password, confirmPassword } = this.state;
 
         return (
-            <>
+            <div>
+                <h1 className={`${styles.h1} ${styles.centered}`}>Register</h1>
                 <form onSubmit={this.onFormSubmit}>
-                    <div>
-                        <label>Email</label>
-                        <input type='text' name='email' onChange={this.onInputChange('email')} value={email} />
+                    <div className={styles.divEmail}>
+                        <label className={`${styles.label} ${styles.labelBlock}`}>Email</label>
+                        <input className={`${styles.input} ${styles.inputWide}`} type='text' name='email' onChange={this.onInputChange('email')} value={email} />
                     </div>
                     <div>
-                        <label>Password</label>
-                        <input type='password' name='password' onChange={this.onInputChange('password')} value={password}  />
+                        <label className={styles.label}>Password</label>
+                        <label className={styles.label}>Confirm</label>
                     </div>
                     <div>
-                        <label>Confirm</label>
-                        <input type='password' name='confirmPassword' onChange={this.onInputChange('confirmPassword')} value={confirmPassword}  />
-                        {password !== confirmPassword ? <p>Warning: Passwords do not match</p> : null}
+                        <input className={styles.input} type='password' name='password' onChange={this.onInputChange('password')} value={password} />
+                        <input className={styles.input} type='password' name='confirmPassword' onChange={this.onInputChange('confirmPassword')} value={confirmPassword}  />
+                        <div className={styles.height}>
+                            {password !== confirmPassword ? <p className={styles.warning}>Warning: Passwords do not match</p> : null}
+                        </div>
                     </div>
-                    
-                    <input type='submit' value='Register' />
+                    <input className={styles.inputSubmit} type='submit' value='Sign up' />
                 </form>
-            </>
+                <Link to='/login'>Already have an account?</Link>
+            </div>
         )
     }
 }

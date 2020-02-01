@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import customAxios from '../../api/customAxios';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { setAuthToken } from '../../actions';
+import styles from './../../styles/form.module.css';
 
 class LoginForm extends Component {
     state = {
         email: '',
-        password: ''
+        password: '',
+        invalidDetails: false
     };
     
     // method to control elements
@@ -36,28 +39,34 @@ class LoginForm extends Component {
             this.props.setAuthToken(response.data);
             this.props.history.push('/home');
         } catch(err) {
-            console.log(err);
+            console.log(err)
+            this.setState({ invalidDetails: true });
         }
         
     }
 
     render() {
-        const { email, password } = this.state;
+        const { email, password, invalidDetails } = this.state;
 
         return (
-            <>
+            <div>
+                <h1 className={`${styles.h1} ${styles.centered}`}>Login</h1>
                 <form onSubmit={this.onFormSubmit}>
-                    <div>
-                        <label>Email</label>
-                        <input type='text' name='email' onChange={this.onInputChange('email')} value={email} />
+                    <div className={styles.divEmail}>
+                        <label className={`${styles.label} ${styles.labelBlock}`}>Email</label>
+                        <input className={`${styles.input} ${styles.inputWide}`} type='text' name='email' onChange={this.onInputChange('email')} value={email} />
                     </div>
                     <div>
-                        <label>Password</label>
-                        <input type='password' name='password' onChange={this.onInputChange('password')} value={password} />
+                        <label className={`${styles.label} ${styles.labelBlock}`}>Password</label>
+                        <input className={`${styles.input} ${styles.inputWide}`} type='password' name='password' onChange={this.onInputChange('password')} value={password} />
                     </div>
-                    <input type='submit' value='Login' />
+                    <div className={styles.height}>
+                        {invalidDetails ? <p className={styles.warning}>Invalid username or password</p> : null}
+                    </div>
+                    <input className={styles.inputSubmit} type='submit' value='Login' />
                 </form>
-            </>
+                <Link to='/register'>Register an account</Link>
+            </div>
         )
     }
 }
