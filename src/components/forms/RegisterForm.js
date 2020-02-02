@@ -21,31 +21,32 @@ class RegisterForm extends Component {
     }
 
     // axios used to post form contents to /newuser route in backend
+    // if unsuccessful use state to display a message to user
+    // if successful, save jwt into global state, redirect to home
     onFormSubmit = async (event) => {
         event.preventDefault();
         const { email, password, confirmPassword } = this.state;
 
-        if (await this.checkEmailAvailable(email)) {
-            customAxios.post('/newuser', {
+        try {
+            const response = await customAxios.post('/newuser', {
                 email,
                 password,
                 confirmPassword
-            })
-            // after creating a user, redirect to home page
-            .then((response) => {
+            });
+
+            if (response.data === false) {
+                this.setState({ emailAvailable: false });
+            } else {
                 this.props.setAuthToken(response.data);
                 this.props.history.push('/home');
-            })
-            // catch block in case the axios.post throws an error
-            .catch(err => console.log(err));
-        } else {
-            this.setState({ emailAvailable: false });
-        };
+            }
+        } catch(error) {
+            console.log(error);
+        }
     };
 
     // method to update state whenever entries are made in the input fields
     // closure used to allow a single method to handle multiple input fields
-    // via different arguments
     onInputChange = (fieldName) => {
         return (event) => {
             this.setState({ [fieldName]: event.target.value });
