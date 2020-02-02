@@ -24,7 +24,6 @@ class SearchResult extends Component {
 
     render(){
         const { title, date, solution, proficiency, content, desc, prereq, benefits, s3FileName } = this.props;
-        console.log(this.props.mostRecentDocument);
 
         return(
             <>  

@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 import Blurb from '../views/Blurb';
 import styles from "./../../styles/HomePage.module.css";
+import RelatedContent from './../views/RelatedContent';
+import SearchResult from "./../views/SearchResult";
 
 
 class HomePage extends Component {
@@ -17,7 +20,8 @@ class HomePage extends Component {
 
         const solutionKeys = Object.keys(solutionsDesc);
 
-        const { onCategorySelect } = this.props;
+        const { onCategorySelect, mostRecentDocument } = this.props;
+        console.log(mostRecentDocument);
 
         return (
             <>
@@ -25,18 +29,44 @@ class HomePage extends Component {
                 <div className={styles.solutionsContainer}>
                     {solutionKeys.map((key, index) => {
                         return (
-                            <section>
-                                {/* <Link to="/category" > */}
-                                    <Blurb heading= {solutionKeys[index]} blurb= {solutionsDesc[key]} onCategorySelect={onCategorySelect} />
-                                {/* </Link> */}
-                            </section>
+                            <>
+                                <section>
+                                    {/* <Link to="/category" > */}
+                                        <Blurb heading= {solutionKeys[index]} blurb= {solutionsDesc[key]} onCategorySelect={onCategorySelect} />
+                                    {/* </Link> */}
+                                </section>
+                            </>
                         )
                         })
                     }  
-                </div>   
+                </div>
+                < section >
+                    <h3>Last Viewed</h3>
+                    < SearchResult 
+                        title = {mostRecentDocument.name}
+                        date = {mostRecentDocument.tags.createdOn}
+                        solution = {mostRecentDocument.tags.solution}
+                        proficiency = {mostRecentDocument.tags.proficiency}
+                        content = {mostRecentDocument.tags.content}
+                        desc = {mostRecentDocument.tags.description}
+                        prereq= {mostRecentDocument.tags.prerequisites}
+                        benefits = {mostRecentDocument.tags.benefits}
+                        s3FileName = {mostRecentDocument.location}
+                    />   
+                </section>
+                < section >
+                    < RelatedContent styles = {styles.homeContainer} />
+                </section>
             </>
         )
     }
 }
 
-export default HomePage;
+const mapStateToProps=(state)=>{
+    const { mostRecentDocument } = state.lastViewed;
+    return {
+        mostRecentDocument: mostRecentDocument
+    }
+}
+
+export default connect(mapStateToProps)(HomePage);
