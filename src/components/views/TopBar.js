@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Dropdown, Menu } from 'semantic-ui-react';
 import axios from "axios";
 import { connect } from "react-redux";
-import {setSearchResult} from "./../../actions";
+import { setSearchResult, mostRecentSearch } from "./../../actions";
 import Logo from "./../../images/accordant-logo.png";
 import styles from "./../../styles/TopBar.module.css"
 
@@ -62,8 +62,9 @@ class TopBar extends Component {
         }
 
         onCategorySelect = (e)=>{
-            const query = e.target.innerHTML
-            
+            const query = e.target.innerHTML;
+            this.props.mostRecentSearch(query);
+            // localStorage.setItem("mostRecentSearch", query);
             if(this.teams.includes(query)){
                 this.setState({ queryBenefits: query, querySolution: "", queryPrereq: "" }, this.searchCall)
             } else if(this.solutions.includes(query)) {
@@ -135,4 +136,4 @@ class TopBar extends Component {
     }
 }
 
-export default connect(null, {setSearchResult})(TopBar);
+export default connect(null, {setSearchResult, mostRecentSearch})(TopBar);

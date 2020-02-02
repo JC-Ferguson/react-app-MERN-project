@@ -15,3 +15,11 @@ export const setSearchResult = ( result = "" ) =>{
         payload: result
     }
 }
+
+export const mostRecentSearch = (query = null ) =>{
+    localStorage.setItem("mostRecentSearch", query)
+    return {
+        type: "MOST_RECENT_SEARCH",
+        payload: query
+    }
+}
