@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter, Route, Redirect } from "react-router-dom";
+import { BrowserRouter, Route } from "react-router-dom";
 import { connect } from 'react-redux';
 import { setAuthToken, setSearchResult } from './../actions';
 import axios from "axios";
@@ -51,6 +51,7 @@ class App extends Component {
             })
             .then(data=>{
                 sessionStorage.setItem("learningContent", JSON.stringify(data));
+                console.log(data)
                 // this.history.push("/category");
             })
     }

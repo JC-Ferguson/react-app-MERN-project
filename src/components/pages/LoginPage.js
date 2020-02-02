@@ -9,7 +9,7 @@ class LoginPage extends Component {
             <>
                 <h1>Login</h1>
                 <LoginForm {...this.props} />
-                {/* <Blurb heading="whatever" blurb= "qwertyuihgfdcvbhj" /> */}
+                <Blurb heading="whatever" blurb= "qwertyuihgfdcvbhj" />
                 <Link to='/register'>Register an account</Link>
             </>
         )

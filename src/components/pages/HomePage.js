@@ -26,9 +26,9 @@ class HomePage extends Component {
                     {solutionKeys.map((key, index) => {
                         return (
                             <section>
-                                <Link to="/category" >
+                                {/* <Link to="/category" > */}
                                     <Blurb heading= {solutionKeys[index]} blurb= {solutionsDesc[key]} onCategorySelect={onCategorySelect} />
-                                </Link>
+                                {/* </Link> */}
                             </section>
                         )
                         })

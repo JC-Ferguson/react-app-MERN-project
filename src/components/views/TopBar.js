@@ -30,14 +30,26 @@ class TopBar extends Component {
             "AT Implementation/QA Team", "Leads and Stakeholders", "Product Team", "NA", "Solution Specialists", "AAM Planners",
             "AAM Tech Team", "Data, Team", "Tag Managers", "Analytics Managers", "Implementation Specialists", "Various"
         ]
+        prerequisites=[
+            'has AA',
+            'has AT',
+            'has AAC',
+            'has AdCloud',
+            'has AEM',
+            'has AT Premium',
+            'has DTM',
+            'no AT',
+            'None Required'
+        ]
 
-        state = { querySolution: "", queryBenefits: ""}
+        state = { querySolution: "", queryBenefits: "", queryPrereqs: ""}
 
         searchCall = async ()=>{
-            const { queryBenefits, querySolution } = this.state;
+            const { queryBenefits, querySolution, queryPrereqs} = this.state;
             await axios.post("http://localhost:3001/category", {
                   querySolution,
-                  queryBenefits
+                  queryBenefits,
+                  queryPrereqs
                 })
                 .then(response =>{
                     this.props.setSearchResult(response.data);
@@ -51,11 +63,15 @@ class TopBar extends Component {
 
         onCategorySelect = (e)=>{
             const query = e.target.innerHTML
+            
             if(this.teams.includes(query)){
-                this.setState({ queryBenefits: query, querySolution: "" }, this.searchCall)
-            } else {
+                this.setState({ queryBenefits: query, querySolution: "", queryPrereq: "" }, this.searchCall)
+            } else if(this.solutions.includes(query)) {
                 const shortenedQuery = query.match(/(?<=\().*(?=\))/);
-                this.setState( { querySolution: shortenedQuery, queryBenefits: "" }, this.searchCall )
+                this.setState( { querySolution: shortenedQuery, queryBenefits: "", queryPrereq: "" }, this.searchCall )
+            } else if (this.prerequisites.includes(query)) {
+                console.log(query);
+                this.setState( { querySolution: "", queryBenefits: "", queryPrereqs: query }, this.searchCall )
             }
         }
 
@@ -95,6 +111,16 @@ class TopBar extends Component {
                                     })}
                                     </Dropdown.Menu>
                                 </Dropdown>
+                            </Dropdown.Item>
+                            < Dropdown.Item>
+                                    <Dropdown text = "Prerequisites">
+                                        <Dropdown.Menu >
+                                            <Dropdown.Header>Prerequisites</Dropdown.Header>
+                                            {this.prerequisites.sort().map(element=>{
+                                                return <Dropdown.Item key={element} onClick ={this.onCategorySelect} >{element}</Dropdown.Item>
+                                            })}
+                                        </Dropdown.Menu>
+                                    </Dropdown>
                             </Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown>
