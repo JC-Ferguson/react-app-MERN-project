@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import PDFObject from "pdfobject";
+import styles from "./../../styles/ShowContentPage.module.css";
 
 class PdfViewer extends Component {
 
@@ -22,7 +23,7 @@ class PdfViewer extends Component {
 
         return (
             <>
-                <div id={containerId} style = {{width, height}} /> 
+                <div id={containerId} className={styles.pdfViewer} style = {{width, height}} /> 
           </>
         )
     }
@@ -31,7 +32,7 @@ class PdfViewer extends Component {
 PdfViewer.defaultProps = {
     containerId: 'pdf-viewer',
     width: '75%',
-    height: '75vh',
+    height: '85vh',
 };
 
 export default PdfViewer;
