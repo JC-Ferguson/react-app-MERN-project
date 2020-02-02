@@ -3,7 +3,9 @@ import { Link } from "react-router-dom";
 import { Dropdown, Menu } from 'semantic-ui-react';
 import axios from "axios";
 import { connect } from "react-redux";
-// import setSearchResult from "./../../actions";
+import { setSearchResult, mostRecentSearch } from "./../../actions";
+import Logo from "./../../images/accordant-logo.png";
+import styles from "./../../styles/TopBar.module.css"
 
 
 
@@ -28,32 +30,49 @@ class TopBar extends Component {
             "AT Implementation/QA Team", "Leads and Stakeholders", "Product Team", "NA", "Solution Specialists", "AAM Planners",
             "AAM Tech Team", "Data, Team", "Tag Managers", "Analytics Managers", "Implementation Specialists", "Various"
         ]
+        prerequisites=[
+            'has AA',
+            'has AT',
+            'has AAC',
+            'has AdCloud',
+            'has AEM',
+            'has AT Premium',
+            'has DTM',
+            'no AT',
+            'None Required'
+        ]
 
-        state = { querySolution: "", queryBenefits: ""}
+        state = { querySolution: "", queryBenefits: "", queryPrereqs: ""}
 
         searchCall = async ()=>{
-            const { queryBenefits, querySolution } = this.state;
+            const { queryBenefits, querySolution, queryPrereqs} = this.state;
             await axios.post("http://localhost:3001/category", {
                   querySolution,
-                  queryBenefits
+                  queryBenefits,
+                  queryPrereqs
                 })
                 .then(response =>{
                     this.props.setSearchResult(response.data);
                     return response.data;
                 })
                 .then(data=>{
-                    sessionStorage.setItem("learningContent", JSON.stringify(data));
+                    // sessionStorage.setItem("learningContent", JSON.stringify(data));
                     this.props.history.push("/category");
                 })
         }
 
         onCategorySelect = (e)=>{
-            const query = e.target.innerHTML
+            const query = e.target.innerHTML;
+            this.props.mostRecentSearch(query);
+            // localStorage.setItem("mostRecentSearch", query);
             if(this.teams.includes(query)){
-                this.setState({ queryBenefits: query, querySolution: "" }, this.searchCall)
-            } else {
+                this.setState({ queryBenefits: query, querySolution: "", queryPrereq: "" }, this.searchCall)
+            } else if(this.solutions.includes(query)) {
                 const shortenedQuery = query.match(/(?<=\().*(?=\))/);
-                this.setState( { querySolution: shortenedQuery, queryBenefits: "" }, this.searchCall )
+                this.setState( { querySolution: shortenedQuery, queryBenefits: "", queryPrereq: "" }, this.searchCall )
+            } else if (this.prerequisites.includes(query)) {
+                console.log(query);
+                this.setState( { querySolution: "", queryBenefits: "", queryPrereqs: query }, this.searchCall )
             }
         }
 
@@ -62,48 +81,59 @@ class TopBar extends Component {
         
     render(){
         return (
-            <>
-                <div>
-                    <Link to="/home">Accordant</Link>
+            <section className={styles.topBar}>
+                <div className={styles.logo}>
+                    <Link to="/home"><img src={Logo} alt="Accordant Logo" /></Link>
                 </div>
-                <div>
-                    <Menu>
-                        <Dropdown text='Categories' pointing className='link item'>
-                            <Dropdown.Menu>
-                                <Dropdown.Header>Categories</Dropdown.Header>
-                                <Dropdown.Item ref={this.searchInput}>
-                                    <Dropdown text="Solutions">
-                                        <Dropdown.Menu>
-                                            <Dropdown.Header >Solutions</Dropdown.Header>
-                                            {this.solutions.map(solution =>{
-                                                return(<Dropdown.Item key={solution} onClick = {this.onCategorySelect} >{solution}</Dropdown.Item>)
+                <Menu className={styles.searchMenu}>
+                    <Dropdown text='Categories' pointing className='link item'>
+                        <Dropdown.Menu>
+                            <Dropdown.Header>Categories</Dropdown.Header>
+                            <Dropdown.Item ref={this.searchInput}>
+                                <Dropdown text="Solutions">
+                                    <Dropdown.Menu>
+                                        <Dropdown.Header >Solutions</Dropdown.Header>
+                                        {this.solutions.map(solution =>{
+                                            return(
+                                                // <Link to="/category">
+                                                    <Dropdown.Item key={solution} onClick = {this.onCategorySelect} >{solution}</Dropdown.Item>
+                                                // </Link>
+                                            )
+                                        })}
+                                    </Dropdown.Menu>
+                                </Dropdown>
+                            </Dropdown.Item>
+                            <Dropdown.Item>
+                                <Dropdown text='Teams'>
+                                    <Dropdown.Menu>
+                                    <Dropdown.Header>Teams</Dropdown.Header>
+                                    {this.teams.sort().map(team =>{
+                                        return(<Dropdown.Item key={team} onClick = {this.onCategorySelect} >{team}</Dropdown.Item>)
+                                    })}
+                                    </Dropdown.Menu>
+                                </Dropdown>
+                            </Dropdown.Item>
+                            < Dropdown.Item>
+                                    <Dropdown text = "Prerequisites">
+                                        <Dropdown.Menu >
+                                            <Dropdown.Header>Prerequisites</Dropdown.Header>
+                                            {this.prerequisites.sort().map(element=>{
+                                                return <Dropdown.Item key={element} onClick ={this.onCategorySelect} >{element}</Dropdown.Item>
                                             })}
                                         </Dropdown.Menu>
                                     </Dropdown>
-                                </Dropdown.Item>
-                                <Dropdown.Item>
-                                    <Dropdown text='Teams'>
-                                        <Dropdown.Menu>
-                                        <Dropdown.Header>Teams</Dropdown.Header>
-                                        {this.teams.sort().map(team =>{
-                                            return(<Dropdown.Item key={team} onClick = {this.onCategorySelect} >{team}</Dropdown.Item>)
-                                        })}
-                                        </Dropdown.Menu>
-                                    </Dropdown>
-                                </Dropdown.Item>
-                            </Dropdown.Menu>
-                        </Dropdown>
-                    </Menu>
+                            </Dropdown.Item>
+                        </Dropdown.Menu>
+                    </Dropdown>
+                    <div>Searchbar</div>
+                </Menu>
+                <div className={styles.logout}>
+                    Logout
                 </div>
-            </>
+            </section>
+
         )
     }
 }
 
-const mapDispatchToProps = (dispatch)=>{
-    return {
-        setSearchResult: (result) => dispatch( { type: "SEARCH_RESULT", payload: result })
-    }
-}
-
-export default connect(null, mapDispatchToProps)(TopBar);
+export default connect(null, {setSearchResult, mostRecentSearch})(TopBar);

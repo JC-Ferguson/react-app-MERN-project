@@ -4,12 +4,12 @@ import { connect } from "react-redux";
 
 class CategoryPage extends Component {
     render(){
-        const { learningContent } = this.props;
+        const { learningContent, mostRecentQuery } = this.props;
         return(
             <> 
                 <h1>Category Page</h1>
-                <h2>Showing Search Results for:</h2>
-                {learningContent.map(content =>{
+                <h2>Showing Search Results for: {mostRecentQuery}</h2>
+                {learningContent ? learningContent.map(content =>{
                     return(
                         < SearchResult
                             key ={content.location}
@@ -24,7 +24,7 @@ class CategoryPage extends Component {
                             s3FileName = {content.location}
                         />
                     )
-                })}
+                }): <h1>No Results Found</h1>}
             </>
         )
     }
@@ -33,8 +33,10 @@ class CategoryPage extends Component {
 
 const mapStateToProps = (state)=>{
     const { learningContent } = state.searchResult;
+    const { mostRecentQuery } = state.mostRecentSearch;
     return {
-        learningContent: learningContent
+        learningContent: learningContent,
+        mostRecentQuery: mostRecentQuery
     }
 }
 

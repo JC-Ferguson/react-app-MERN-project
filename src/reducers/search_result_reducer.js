@@ -1,5 +1,5 @@
 const defaultState = {
-    learningContent: JSON.parse(sessionStorage.getItem("learningContent"))
+    learningContent: JSON.parse(localStorage.getItem("learningContent"))
 }
 
 export default (state = defaultState ,action) => {
