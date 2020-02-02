@@ -7,17 +7,24 @@ import { setLastViewed } from "./../../actions";
 
 class SearchResult extends Component {
 
+    state = {
+        lastViewed: this.props.mostRecentDocument
+    }
+
     saveAsViewed = (e)=>{
         for (let content of this.props.learningContent){
             if (content.name===e.target.innerHTML){
                 console.log(content);
                 this.props.setLastViewed(content);
+                this.setState({ lastViewed: content});
+                // this.props.history.push(`/lesson/${content.location}`);
             }
         }
     }
 
     render(){
         const { title, date, solution, proficiency, content, desc, prereq, benefits, s3FileName } = this.props;
+        console.log(this.props.mostRecentDocument);
 
         return(
             <>  
@@ -47,8 +54,10 @@ class SearchResult extends Component {
 
 const mapStateToProps = (state)=>{
     const { learningContent } = state.searchResult;
+    const { mostRecentDocument }= state.lastViewed;
     return {
-        learningContent: learningContent
+        learningContent: learningContent,
+        mostRecentDocument: mostRecentDocument
     }
 }
 

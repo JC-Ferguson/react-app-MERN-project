@@ -5,7 +5,7 @@ import styles from "./../../styles/ShowContentPage.module.css";
 
 class ShowContentPage extends Component {
     render(){
-        const {id: fileName} = this.props.match.params
+        const {id: fileName} = this.props.match.params;
         return(
             <div className= {styles.container}>  
                 < RelatedContent />
