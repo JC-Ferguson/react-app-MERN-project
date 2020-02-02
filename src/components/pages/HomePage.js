@@ -21,7 +21,6 @@ class HomePage extends Component {
         const solutionKeys = Object.keys(solutionsDesc);
 
         const { onCategorySelect, mostRecentDocument, learningContent } = this.props;
-        console.log(mostRecentDocument);
 
         return (
             <>

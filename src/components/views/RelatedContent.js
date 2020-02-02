@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import SearchResult from "./../views/SearchResult";
-// import styles from "./../../styles/ShowContentPage.module.css";
+import style from "./../../styles/ShowContentPage.module.css";
 
 class RelatedContent extends Component {
     getRandomContent(arr, n) {
@@ -45,6 +45,7 @@ class RelatedContent extends Component {
                                 prereq= {content.tags.prerequisites}
                                 benefits = {content.tags.benefits}
                                 s3FileName = {content.location}
+                                styling = {style.destroy}
                             />
                         )
                     })}
