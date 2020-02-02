@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import Carousel from 'react-bootstrap/Carousel';
+// import Carousel from 'react-bootstrap/Carousel';
 import Blurb from '../views/Blurb';
 import styles from "./../../styles/HomePage.module.css";
 import RelatedContent from './../views/RelatedContent';
@@ -27,7 +27,7 @@ class HomePage extends Component {
             <>
                 <h2 className = {styles.title}>Available Solutions</h2>
                 <div className={styles.solutionsContainer}>
-                    <Carousel>
+                    {/* <Carousel> */}
                         {solutionKeys.map((key, index) => {
                             return (
                                 <section>
@@ -43,7 +43,7 @@ class HomePage extends Component {
                             )
                         })
                         }
-                    </Carousel>  
+                    {/* </Carousel>   */}
                 </div>
                 {mostRecentDocument && < section >
                     <h3>Last Viewed</h3>

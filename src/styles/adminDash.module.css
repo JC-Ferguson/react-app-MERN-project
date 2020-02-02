@@ -1,0 +1,13 @@
+.h1 {
+    color: rgb(51, 65, 72);
+    font-family: Helvetica;
+}
+
+.centered {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.link {
+    font-size: 20px;
+}

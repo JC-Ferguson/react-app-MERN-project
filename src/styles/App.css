@@ -1,9 +1,15 @@
-h1, h2, h3, input, label, p {
+h1, h2, h3, input, label, p, th, td {
     font-family: Helvetica;
-    color: rgb(51,65,72);
+    color: rgb(51, 65, 72);
 }
 
-input,label,p {
+input, label, p, th, td {
     font-size: 20px;
     line-height: 1.5;
+}
+
+option, select {
+    font-family: Helvetica;
+    font-size: 14px;
+    line-height: 1.2;
 }

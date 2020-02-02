@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import customAxios from './../../api/customAxios';
 import { connect } from 'react-redux';
+import styles from './../../styles/form.module.css';
 
 const mapStateToProps = (state) => {
     return {
@@ -127,63 +128,65 @@ class AddFilesForm extends Component {
         } = this.state;
 
         return (
-            <>
-                <h1>AddFilesForm</h1>
+            <div>
+                <h1 className={styles.centered}>Add a new file</h1>
                 <form onSubmit={this.onFormSubmit}>
                     <div>
-                        <input type='file' onChange={this.onFileUploadChange} />
+                        <input className={styles.inputFile} type='file' onChange={this.onFileUploadChange} />
                     </div>
                     <div>
-                        <label>Content Name</label>
-                        <input type='text' onChange={this.onInputChange('contentName')} value={contentName} />
+                        <label className={styles.label}>Content Name</label>
+                        <input className={styles.inputFilesForm} type='text' onChange={this.onInputChange('contentName')} value={contentName} />
                     </div>
                     <div>
-                        <label>Solution</label>
-                        <select onChange={this.onInputChange('solution')} value={solution}>
+                        <label className={styles.label}>Solution</label>
+                        <select className={styles.select} onChange={this.onInputChange('solution')} value={solution}>
                             {solutionsList.sort().map((element) => {
                                 return <option key={element} value={element.match(/(?<=\().*(?=\))/)}>{element}</option>
                             })}
                         </select>
                     </div>
                     <div>
-                        <label>Date created</label>
-                        <input type='date' onChange={this.onInputChange('dateCreated')} value={dateCreated} />
+                        <label className={styles.label}>Date created</label>
+                        <input className={styles.inputFilesForm} type='date' onChange={this.onInputChange('dateCreated')} value={dateCreated} />
                     </div>
                     <div>
-                        <label>Lesson Proficiency</label>
-                        <select onChange={this.onInputChange('proficiency')} value={proficiency}>
+                        <label className={styles.label}>Lesson Proficiency</label>
+                        <select className={styles.select} onChange={this.onInputChange('proficiency')} value={proficiency}>
                             {proficiencyList.map((element) => {
                                 return <option key={element} value={element}>{element}</option>
                             })}
                         </select>
                     </div>
                     <div>
-                        <label>Lesson Content</label>
-                        <textarea onChange={this.onInputChange('lessonContent')} value={lessonContent}></textarea>
+                        <label className={styles.label}>Lesson Content</label>
+                        <textarea className={styles.inputFilesForm} onChange={this.onInputChange('lessonContent')} value={lessonContent}></textarea>
                     </div>
                     <div>
-                        <label>Description/goal</label>
-                        <textarea onChange={this.onInputChange('description')} value={description}></textarea>
+                        <label className={styles.label}>Description/goal</label>
+                        <textarea className={styles.inputFilesForm} onChange={this.onInputChange('description')} value={description}></textarea>
                     </div>
                     <div>
-                        <label>Prerequisites</label>
-                        <select multiple={true} onChange={this.onSelectInputChange('prerequisites')} value={prerequisites}>
+                        <label className={styles.label}>Prerequisites</label>
+                        <select className={styles.select} multiple={true} onChange={this.onSelectInputChange('prerequisites')} value={prerequisites}>
                             {prerequisitesList.sort().map((element) => {
                                 return <option key={element} value={element}>{element}</option>
                             })}
                         </select>
                     </div>
                     <div>
-                        <label>Who it benefits</label>
-                        <select multiple={true} onChange={this.onSelectInputChange('whoItBenefits')} value={whoItBenefits}>
+                        <label className={styles.label}>Who it benefits</label>
+                        <select className={styles.select} multiple={true} onChange={this.onSelectInputChange('whoItBenefits')} value={whoItBenefits}>
                             {whoItBenefitsList.sort().map((element) => {
                                 return <option key={element} value={element}>{element}</option>
                             })}
                         </select>
                     </div>
-                    <input type='submit' />
+                    <div className={styles.centered}>
+                        <input className={`${styles.inputSubmit} ${styles.inputSubmitAdmin}`} type='submit' />
+                    </div>
                 </form>
-            </>
+            </div>
         );
     }
 }

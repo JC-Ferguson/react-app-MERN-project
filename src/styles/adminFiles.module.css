@@ -1,0 +1,8 @@
+.centered {
+    text-align: center;
+}
+
+.flex {
+    display: flex;
+    justify-content: space-around;
+}

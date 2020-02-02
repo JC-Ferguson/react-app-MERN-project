@@ -15,8 +15,7 @@ import AdminUsersPage from './pages/AdminUsersPage';
 import AdminFilesPage from './pages/AdminFilesPage';
 import AdminRoute from './AdminRoute';
 import TopBar from "./views/TopBar";
-import "./../styles/App.css";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import './../styles/App.css';
 
 class App extends Component {
     solutions = [

@@ -1,17 +1,15 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import RegisterForm from '../forms/RegisterForm';
 import Blurb from '../views/Blurb';
+import styles from './../../styles/registerLogin.module.css';
 
 class RegisterPage extends Component {
     render() {
         return (
-            <>
-                <h1>Register</h1>
+            <div className={styles.flex}>
+                <Blurb heading ="AccordantHelp" blurb = "The AccordantHelp library is a collection of documents used to train accordant staff and clients on the suite of Adobe products offered at Accordant." />
                 <RegisterForm  {...this.props}/>
-                <Blurb />
-                <Link to='/login'>Already have an account?</Link>
-            </>
+            </div>
         )
     }
 }
