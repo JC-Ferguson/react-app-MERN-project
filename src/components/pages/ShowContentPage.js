@@ -8,7 +8,7 @@ class ShowContentPage extends Component {
         const {id: fileName} = this.props.match.params;
         return(
             <div className= {styles.container}>  
-                < RelatedContent styles ={styles.relatedContainer}/>
+                < RelatedContent styles ={styles.relatedContainer} heading= "Related Content"/>
                 < PdfViewer
                     pdfBlob = {`${fileName}`}
                 />

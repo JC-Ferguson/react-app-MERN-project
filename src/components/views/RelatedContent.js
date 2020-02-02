@@ -19,8 +19,7 @@ class RelatedContent extends Component {
     }
 
     render(){
-        const { learningContent, mostRecentQuery, styles } = this.props;
-
+        const { learningContent, mostRecentQuery, styles, heading } = this.props;
         const unreadContent = learningContent.filter(e => {
             // stringified to compare if two objects are identical
             if (JSON.stringify(e) !== JSON.stringify(this.props.mostRecentDocument)){
@@ -31,7 +30,7 @@ class RelatedContent extends Component {
         const relatedContent = this.getRandomContent(unreadContent, unreadContent.length > 3 ? 3 : unreadContent.length );
         return(
             <div className= {styles}>
-                <h3>BECAUSE YOU SEARCHED FOR: {mostRecentQuery}</h3>
+                {heading?<h3>{heading}</h3> :<h3>BECAUSE YOU SEARCHED FOR: {mostRecentQuery}</h3>}
                     {relatedContent.map(content =>{
                         return(
                             < SearchResult
