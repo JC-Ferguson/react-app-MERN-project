@@ -23,3 +23,11 @@ export const mostRecentSearch = (query = null ) =>{
         payload: query
     }
 }
+
+export const setLastViewed = (content = null) =>{
+    localStorage.setItem("lastViewed", JSON.stringify(content))
+    return {
+        type: "LAST_VIEWED",
+        payload: content
+    }
+}

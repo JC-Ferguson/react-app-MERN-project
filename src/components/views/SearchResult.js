@@ -2,16 +2,28 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import styles from "./../../styles/SearchResult.module.css";
+import { setLastViewed } from "./../../actions";
 
 
 class SearchResult extends Component {
+
+    saveAsViewed = (e)=>{
+        for (let content of this.props.learningContent){
+            if (content.name===e.target.innerHTML){
+                console.log(content);
+                this.props.setLastViewed(content);
+            }
+        }
+    }
+
     render(){
         const { title, date, solution, proficiency, content, desc, prereq, benefits, s3FileName } = this.props;
+
         return(
             <>  
                 <section className={styles.resultContainer}>
                     <div className = {styles.title}> 
-                        <Link to={`/lesson/${s3FileName}`}><h1>{title}</h1></Link><h3>Created On: {date}</h3>
+                        <Link to={`/lesson/${s3FileName}`}><h1 onClick = {this.saveAsViewed} >{title}</h1></Link><h3>Created On: {date}</h3>
                     </div>
                     <div className = {styles.spContainer}>
                         <div><h3>Solution:</h3><p>{solution}</p></div>
@@ -40,4 +52,4 @@ const mapStateToProps = (state)=>{
     }
 }
 
-export default connect(mapStateToProps)(SearchResult);
+export default connect(mapStateToProps , {setLastViewed})(SearchResult);
