@@ -20,7 +20,7 @@ class HomePage extends Component {
 
         const solutionKeys = Object.keys(solutionsDesc);
 
-        const { onCategorySelect, mostRecentDocument } = this.props;
+        const { onCategorySelect, mostRecentDocument, learningContent } = this.props;
         console.log(mostRecentDocument);
 
         return (
@@ -40,7 +40,7 @@ class HomePage extends Component {
                         })
                     }  
                 </div>
-                < section >
+                {mostRecentDocument && < section >
                     <h3>Last Viewed</h3>
                     < SearchResult 
                         title = {mostRecentDocument.name}
@@ -53,10 +53,10 @@ class HomePage extends Component {
                         benefits = {mostRecentDocument.tags.benefits}
                         s3FileName = {mostRecentDocument.location}
                     />   
-                </section>
-                < section >
+                </section>}
+                {learningContent && < section >
                     < RelatedContent styles = {styles.homeContainer} />
-                </section>
+                </section>}
             </>
         )
     }
@@ -64,8 +64,10 @@ class HomePage extends Component {
 
 const mapStateToProps=(state)=>{
     const { mostRecentDocument } = state.lastViewed;
+    const { learningContent } = state.searchResult;
     return {
-        mostRecentDocument: mostRecentDocument
+        mostRecentDocument: mostRecentDocument,
+        learningContent: learningContent
     }
 }
 

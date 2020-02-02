@@ -56,7 +56,7 @@ class TopBar extends Component {
                     return response.data;
                 })
                 .then(data=>{
-                    sessionStorage.setItem("learningContent", JSON.stringify(data));
+                    // sessionStorage.setItem("learningContent", JSON.stringify(data));
                     this.props.history.push("/category");
                 })
         }

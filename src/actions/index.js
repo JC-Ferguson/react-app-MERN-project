@@ -10,6 +10,7 @@ export const setAuthToken = (token = null) => {
 };
 
 export const setSearchResult = ( result = "" ) =>{
+    localStorage.setItem("learningContent", JSON.stringify(result));
     return {
         type: "SEARCH_RESULT",
         payload: result
