@@ -12,34 +12,27 @@ class LoginForm extends Component {
         invalidDetails: false
     };
     
-    // method to control elements
+    // closure used to set state based on fieldName parameter
     onInputChange = (fieldName) => {
-        // function returned, i.e. a closure, so 1 function can handle both the 'email' and 'password' fields
         return (event) => {
-            // state set using the fieldName, which is a string passed in as an argument
-            // which corresponds to the key in state
             this.setState({ [fieldName]: event.target.value });
         }
     }
 
-    // form contents sent to backend
+    // contents of login form sent to express server, JWT received and saved to redux if successful
     onFormSubmit = async (event) => {
-        // preventDefault() stops page reloading
         event.preventDefault();
-        // email and password variables pulled off state
         const { email, password } = this.state;
 
-        // http POST request made using axios to express app, sending email and password
         try {
             const response = await customAxios.post('/login', {
                 email,
                 password
             });
-            // save the JWT into global state using redux
             this.props.setAuthToken(response.data);
-            this.props.history.push('/home');
+            this.props.history.push('/');
         } catch(err) {
-            console.log(err)
+            console.log(err);
             this.setState({ invalidDetails: true });
         }
         

@@ -11,14 +11,7 @@ class RegisterForm extends Component {
         emailAvailable: true,
         password: '',
         confirmPassword: ''
-        
     };
-
-    // send a request to the express server to check if an email is available
-    checkEmailAvailable = async (email) => {
-        const { data } = await customAxios.post('/emailAvailable', { email });
-        return data;
-    }
 
     // axios used to post form contents to /newuser route in backend
     // if unsuccessful use state to display a message to user
