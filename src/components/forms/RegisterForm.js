@@ -11,7 +11,6 @@ class RegisterForm extends Component {
         emailAvailable: true,
         password: '',
         confirmPassword: ''
-        
     };
 
     // axios used to post form contents to /newuser route in backend
