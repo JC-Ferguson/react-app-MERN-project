@@ -1,13 +1,11 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Dropdown, Menu } from 'semantic-ui-react';
-import axios from "axios";
+import customAxios from '../../api/customAxios';
 import { connect } from "react-redux";
 import { setSearchResult, mostRecentSearch } from "./../../actions";
 import Logo from "./../../images/accordant-logo.png";
 import styles from "./../../styles/TopBar.module.css"
-
-
 
 class TopBar extends Component {
         solutions = [
@@ -42,44 +40,70 @@ class TopBar extends Component {
             'None Required'
         ]
 
-        state = { querySolution: "", queryBenefits: "", queryPrereqs: ""}
+        state = { querySolution: "", queryBenefits: "", queryPrereqs: "", admin: false, loaded: false};
 
-        searchCall = async ()=>{
+
+            getAdminStatus = async () => {
+                const { token } = this.props;
+                
+                try {
+                    const response = await customAxios.get('/confirmAdmin', {
+                        headers: {
+                            'Authorization': 'Bearer ' + token
+                        }
+                    });
+
+                    if (response.status === 200) {
+                        this.setState({ admin: true, loaded: true });
+                    } else {
+                        this.setState({ loaded: true });
+                    };
+                } catch(error) {
+                    console.log(error);
+                    this.setState({ loaded: true });
+                };
+            };
+
+        componentDidMount() {
+            this.getAdminStatus();
+        };
+
+        // axios request to express server to query MongoDB for files
+        searchCall = () => {
             const { queryBenefits, querySolution, queryPrereqs} = this.state;
-            await axios.post("http://localhost:3001/category", {
+            customAxios.post("/category", {
                   querySolution,
                   queryBenefits,
                   queryPrereqs
                 })
-                .then(response =>{
+                .then(response => {
                     this.props.setSearchResult(response.data);
                     return response.data;
                 })
-                .then(data=>{
-                    // sessionStorage.setItem("learningContent", JSON.stringify(data));
+                .then(data => {
                     this.props.history.push("/category");
                 })
         }
 
-        onCategorySelect = (e)=>{
+        // saves selection from dropdown menu into state, then runs searchCall method
+        onCategorySelect = (e) => {
             const query = e.target.innerHTML;
             this.props.mostRecentSearch(query);
-            // localStorage.setItem("mostRecentSearch", query);
+
             if(this.teams.includes(query)){
                 this.setState({ queryBenefits: query, querySolution: "", queryPrereq: "" }, this.searchCall)
             } else if(this.solutions.includes(query)) {
                 const shortenedQuery = query.match(/(?<=\().*(?=\))/);
                 this.setState( { querySolution: shortenedQuery, queryBenefits: "", queryPrereq: "" }, this.searchCall )
             } else if (this.prerequisites.includes(query)) {
-                console.log(query);
                 this.setState( { querySolution: "", queryBenefits: "", queryPrereqs: query }, this.searchCall )
             }
         }
 
-
-        
-        
     render(){
+        const { token } = this.props; 
+        const { admin } = this.state;
+
         return (
             <section className={styles.topBar}>
                 <div className={styles.logo}>
@@ -95,9 +119,7 @@ class TopBar extends Component {
                                         <Dropdown.Header >Solutions</Dropdown.Header>
                                         {this.solutions.map(solution =>{
                                             return(
-                                                // <Link to="/category">
-                                                    <Dropdown.Item key={solution} onClick = {this.onCategorySelect} >{solution}</Dropdown.Item>
-                                                // </Link>
+                                                <Dropdown.Item key={solution} onClick = {this.onCategorySelect} >{solution}</Dropdown.Item>
                                             )
                                         })}
                                     </Dropdown.Menu>
@@ -125,10 +147,10 @@ class TopBar extends Component {
                             </Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown>
-                    <div>Searchbar</div>
                 </Menu>
                 <div className={styles.logout}>
-                    Logout
+                    {admin? <Link to='/admin'>Admin</Link> : null}
+                    {token ? 'Logout' : <Link to='/login' >Login</Link> }
                 </div>
             </section>
 
@@ -136,4 +158,11 @@ class TopBar extends Component {
     }
 }
 
-export default connect(null, {setSearchResult, mostRecentSearch})(TopBar);
+const mapStateToProps = (state)=>{
+    const { token } = state.auth;
+    return {
+        token: token
+    }
+}
+
+export default connect(mapStateToProps, { setSearchResult, mostRecentSearch })(TopBar);
