@@ -19,7 +19,7 @@ class RelatedContent extends Component {
     }
 
     render(){
-        const { learningContent, mostRecentQuery, styles, heading } = this.props;
+        const { learningContent, mostRecentQuery, styles, heading, onShowPage } = this.props;
         const unreadContent = learningContent.filter(e => {
             // stringified to compare if two objects are identical
                 return JSON.stringify(e) !== JSON.stringify(this.props.mostRecentDocument);
@@ -42,7 +42,8 @@ class RelatedContent extends Component {
                                 prereq= {content.tags.prerequisites}
                                 benefits = {content.tags.benefits}
                                 s3FileName = {content.location}
-                                styling = {style.destroy}
+                                hideContent = {style.hideContent}
+                                onShowPage = {onShowPage}
                             />
                         )
                     })}

@@ -1,11 +1,12 @@
 .resultContainer {
     margin: 2em 15vw;
     flex-shrink: 1;
-    box-shadow: 10px 10px 10px rgb(51,65,72);
+    box-shadow: 10px 10px 10px 10px rgb(51,65,72);
 }
 
 .resultContainer > div {
     display: flex;
+    padding: 15px;
 }
 
 .spContainer {
@@ -24,7 +25,7 @@
 
 .restContainer {
     justify-content: space-between;
-    margin: 0 4em;
+    margin: 0 10%;
 }
 
 .title {

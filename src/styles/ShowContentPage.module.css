@@ -3,14 +3,21 @@
 }
 
 .relatedContainer {
-    width: 25vw;
     border: solid 2px rgb(0,0,0);
     margin: 0;
-    color: red;
+    padding: 20px
 }
 
 .relatedContainer > section {
     margin: 0;
+}
+
+.relatedContainer > section > div {
+    display: block;
+}
+
+.relatedContainer  {
+    text-align: center;
 }
 
 .hideContent {
@@ -19,8 +26,4 @@
 
 .pdfViewer {
     margin: 0 5vw;
-}
-
-.destroy {
-    display: none;
 }

@@ -42,7 +42,12 @@ class TopBar extends Component {
             'None Required'
         ]
 
-        state = { querySolution: "", queryBenefits: "", queryPrereqs: ""}
+        state = { querySolution: "", queryBenefits: "", queryPrereqs: "", query:[]};
+
+        constructor(props){
+            super(props)
+            this.advSearch = React.createRef();
+        }
 
         searchCall = async ()=>{
             const { queryBenefits, querySolution, queryPrereqs} = this.state;
@@ -53,10 +58,6 @@ class TopBar extends Component {
                 })
                 .then(response =>{
                     this.props.setSearchResult(response.data);
-                    return response.data;
-                })
-                .then(data=>{
-                    // sessionStorage.setItem("learningContent", JSON.stringify(data));
                     this.props.history.push("/category");
                 })
         }
@@ -64,22 +65,29 @@ class TopBar extends Component {
         onCategorySelect = (e)=>{
             const query = e.target.innerHTML;
             this.props.mostRecentSearch(query);
-            // localStorage.setItem("mostRecentSearch", query);
             if(this.teams.includes(query)){
                 this.setState({ queryBenefits: query, querySolution: "", queryPrereq: "" }, this.searchCall)
             } else if(this.solutions.includes(query)) {
                 const shortenedQuery = query.match(/(?<=\().*(?=\))/);
                 this.setState( { querySolution: shortenedQuery, queryBenefits: "", queryPrereq: "" }, this.searchCall )
             } else if (this.prerequisites.includes(query)) {
-                console.log(query);
                 this.setState( { querySolution: "", queryBenefits: "", queryPrereqs: query }, this.searchCall )
             }
         }
 
-
-        
+        testFunction = ()=>{
+            this.setState({query: this.advSearch.current.state.value});
+            console.log(this.state);
+        }
         
     render(){
+        const searchOptions = [...this.solutions, ...this.teams, ...this.prerequisites];
+        // console.log(searchOptions);
+
+        const options=searchOptions.map(search=>{
+            return {key: search, text: search, value: search}
+        })
+        // console.log(searchArr);
         return (
             <section className={styles.topBar}>
                 <div className={styles.logo}>
@@ -125,6 +133,8 @@ class TopBar extends Component {
                             </Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown>
+                    <Dropdown placeholder='Advanced Search' clearable fluid multiple search selection options={options} ref={this.advSearch} onChange={this.testFunction}/>
+                    <button type="submit" onClick ={this.testFunction} >Search</button>
                 </Menu>
                 <div className={styles.logout}>
                     Logout

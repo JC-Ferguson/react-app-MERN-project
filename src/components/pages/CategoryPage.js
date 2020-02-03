@@ -9,7 +9,7 @@ class CategoryPage extends Component {
             <> 
                 <h1>Category Page</h1>
                 <h2>Showing Search Results for: {mostRecentQuery}</h2>
-                {learningContent ? learningContent.map(content =>{
+                {learningContent && (learningContent.length ? learningContent.map(content =>{
                     return(
                         < SearchResult
                             key ={content.location}
@@ -24,7 +24,7 @@ class CategoryPage extends Component {
                             s3FileName = {content.location}
                         />
                     )
-                }): <h1>No Results Found</h1>}
+                }): <h1>No Results Found</h1>)}
             </>
         )
     }
