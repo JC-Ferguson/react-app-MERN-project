@@ -152,7 +152,7 @@ class AddFilesForm extends Component {
         return (
             <div>
                 <h1 className={styles.centered}>Add a new file</h1>
-                {submitted ? <p>File successfully submitted</p> : null}
+                {submitted ? <p className={styles.greenWarning}>File successfully submitted</p> : null}
                 <form onSubmit={this.onFormSubmit}>
                     <div>
                         <input className={styles.inputFile} type='file' onChange={this.onFileUploadChange} ref={this.fileInput} />

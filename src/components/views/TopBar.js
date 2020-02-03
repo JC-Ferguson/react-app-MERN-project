@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Dropdown, Menu } from 'semantic-ui-react';
 import customAxios from '../../api/customAxios';
 import { connect } from "react-redux";
-import { setSearchResult, mostRecentSearch } from "./../../actions";
+import { setSearchResult, mostRecentSearch, setAuthToken } from "./../../actions";
 import Logo from "./../../images/accordant-logo.png";
 import styles from "./../../styles/TopBar.module.css"
 
@@ -16,7 +16,7 @@ class TopBar extends Component {
             "Adobe Campaign (AC)",
             "Adobe Advertising Cloud, Paid Media (AAC/ADCLOUD)",
             "Other"
-        ]
+        ];
         teams = [
             "AT Owners", "Project Managers", "AT Implementation Team", "Content Team", "AEC Owners", "Stakeholders",
             "AdCloud Users", "Optimisation Team", "SEM/Media Team", "Performance Marketing Team", "Advertisers",
@@ -27,7 +27,7 @@ class TopBar extends Component {
             "Teams That Will Engage with PDD", "Tech Implementation Team", "Display/Media Team", "AEM Owners", "Anyone New to Programmatic",
             "AT Implementation/QA Team", "Leads and Stakeholders", "Product Team", "NA", "Solution Specialists", "AAM Planners",
             "AAM Tech Team", "Data, Team", "Tag Managers", "Analytics Managers", "Implementation Specialists", "Various"
-        ]
+        ];
         prerequisites=[
             'has AA',
             'has AT',
@@ -38,31 +38,30 @@ class TopBar extends Component {
             'has DTM',
             'no AT',
             'None Required'
-        ]
+        ];
 
-        state = { querySolution: "", queryBenefits: "", queryPrereqs: "", admin: false, loaded: false};
+        state = { querySolution: "", queryBenefits: "", queryPrereqs: "", admin: false, loaded: false };
 
+        getAdminStatus = async () => {
+            const { token } = this.props;
+            
+            try {
+                const response = await customAxios.get('/confirmAdmin', {
+                    headers: {
+                        'Authorization': 'Bearer ' + token
+                    }
+                });
 
-            getAdminStatus = async () => {
-                const { token } = this.props;
-                
-                try {
-                    const response = await customAxios.get('/confirmAdmin', {
-                        headers: {
-                            'Authorization': 'Bearer ' + token
-                        }
-                    });
-
-                    if (response.status === 200) {
-                        this.setState({ admin: true, loaded: true });
-                    } else {
-                        this.setState({ loaded: true });
-                    };
-                } catch(error) {
-                    console.log(error);
+                if (response.status === 200) {
+                    this.setState({ admin: true, loaded: true });
+                } else {
                     this.setState({ loaded: true });
                 };
+            } catch(error) {
+                console.log(error);
+                this.setState({ loaded: true });
             };
+        };
 
         componentDidMount() {
             this.getAdminStatus();
@@ -98,6 +97,12 @@ class TopBar extends Component {
             } else if (this.prerequisites.includes(query)) {
                 this.setState( { querySolution: "", queryBenefits: "", queryPrereqs: query }, this.searchCall )
             }
+        }
+
+        // sets the token to null in redux
+        onLogout = () => {
+            console.log('logout clicked');
+            this.props.setAuthToken();
         }
 
     render(){
@@ -150,7 +155,7 @@ class TopBar extends Component {
                 </Menu>
                 <div className={styles.logout}>
                     {admin? <Link to='/admin'>Admin</Link> : null}
-                    {token ? 'Logout' : <Link to='/login' >Login</Link>}
+                    {token ? <Link to='/login' onClick={this.onLogout}>Logout</Link> : <Link to='/login' >Login</Link>}
                 </div>
             </section>
 
@@ -165,4 +170,4 @@ const mapStateToProps = (state)=>{
     }
 }
 
-export default connect(mapStateToProps, { setSearchResult, mostRecentSearch })(TopBar);
+export default connect(mapStateToProps, { setSearchResult, mostRecentSearch, setAuthToken })(TopBar);

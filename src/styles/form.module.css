@@ -78,6 +78,11 @@
     line-height: 1.5;
 }
 
+.greenWarning {
+    color: green;
+    line-height: 1.5;
+}
+
 .height {
     height: 5px;
 }
