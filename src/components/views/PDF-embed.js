@@ -6,12 +6,7 @@ class PdfViewer extends Component {
 
     componentDidMount() {
         const {pdfBlob, containerId} = this.props;      
-        // const options = {
-        //         PDFJS_URL: `http://localhost:3001/file/${pdfBlob}`,
-        //         forcePDFJS: true,
-        // }
-
-        PDFObject.embed(`http://localhost:3001/file/${pdfBlob}`, `#${containerId}`)
+        PDFObject.embed(`https://accordanthelp.herokuapp.com/file/${pdfBlob}`, `#${containerId}`)
     }
 
 
