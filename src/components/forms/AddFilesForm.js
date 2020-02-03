@@ -53,7 +53,13 @@ class AddFilesForm extends Component {
         lessonContent: '', 
         description: '',
         prerequisites: [],
-        whoItBenefits: []
+        whoItBenefits: [],
+        submitted: false
+    };
+
+    constructor(props) {
+        super(props)
+        this.fileInput = React.createRef()
     }
     
     onFormSubmit = (event) => {
@@ -86,6 +92,21 @@ class AddFilesForm extends Component {
         // axios post form data only
         customAxios.post('/file/upload', fileData)
             .then(res => console.log(res))
+
+        this.setState({         
+            selectedFile: null,
+            contentName: '',
+            solution: 'AAC/ADCLOUD',
+            dateCreated: '',
+            proficiency: 'NA',
+            lessonContent: '', 
+            description: '',
+            prerequisites: [],
+            whoItBenefits: [],
+            submitted: true
+        });
+
+        this.fileInput.current.value = '';
     }
 
     onInputChange = (fieldName) => {
@@ -124,15 +145,17 @@ class AddFilesForm extends Component {
             lessonContent, 
             description,
             prerequisites,
-            whoItBenefits
+            whoItBenefits,
+            submitted
         } = this.state;
 
         return (
             <div>
                 <h1 className={styles.centered}>Add a new file</h1>
+                {submitted ? <p>File successfully submitted</p> : null}
                 <form onSubmit={this.onFormSubmit}>
                     <div>
-                        <input className={styles.inputFile} type='file' onChange={this.onFileUploadChange} />
+                        <input className={styles.inputFile} type='file' onChange={this.onFileUploadChange} ref={this.fileInput} />
                     </div>
                     <div>
                         <label className={styles.label}>Content Name</label>

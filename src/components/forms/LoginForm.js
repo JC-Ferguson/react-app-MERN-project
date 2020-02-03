@@ -32,7 +32,7 @@ class LoginForm extends Component {
             this.props.setAuthToken(response.data);
             this.props.history.push('/');
         } catch(err) {
-            console.log(err)
+            console.log(err);
             this.setState({ invalidDetails: true });
         }
         

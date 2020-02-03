@@ -107,7 +107,7 @@ class TopBar extends Component {
         return (
             <section className={styles.topBar}>
                 <div className={styles.logo}>
-                    <Link to="/home"><img src={Logo} alt="Accordant Logo" /></Link>
+                    <Link to="/"><img src={Logo} alt="Accordant Logo" /></Link>
                 </div>
                 <Menu className={styles.searchMenu}>
                     <Dropdown text='Categories' pointing className='link item'>
@@ -150,7 +150,7 @@ class TopBar extends Component {
                 </Menu>
                 <div className={styles.logout}>
                     {admin? <Link to='/admin'>Admin</Link> : null}
-                    {token ? 'Logout' : <Link to='/login' >Login</Link> }
+                    {token ? 'Logout' : <Link to='/login' >Login</Link>}
                 </div>
             </section>
 
