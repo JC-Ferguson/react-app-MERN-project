@@ -125,7 +125,6 @@ class TopBar extends Component {
                             </Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown>
-                    <div>Searchbar</div>
                 </Menu>
                 <div className={styles.logout}>
                     Logout

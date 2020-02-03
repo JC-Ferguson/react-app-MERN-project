@@ -6,12 +6,12 @@ class PdfViewer extends Component {
 
     componentDidMount() {
         const {pdfBlob, containerId} = this.props;      
-        const options = {
-                PDFJS_URL: `http://localhost:3001/file/${pdfBlob}`,
-                forcePDFJS: true,
-        }
+        // const options = {
+        //         PDFJS_URL: `http://localhost:3001/file/${pdfBlob}`,
+        //         forcePDFJS: true,
+        // }
 
-        PDFObject.embed(`http://localhost:3001/file/${pdfBlob}`, `#${containerId}`, options)
+        PDFObject.embed(`http://localhost:3001/file/${pdfBlob}`, `#${containerId}`)
     }
 
 

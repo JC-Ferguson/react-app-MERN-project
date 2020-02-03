@@ -82,9 +82,15 @@ class AddFilesForm extends Component {
         fileData.append('prerequisites', prerequisites);
         fileData.append('whoItBenefits', whoItBenefits);
 
+        const { token } = this.props;
+
         // axios post request to express server
         // axios post form data only
-        customAxios.post('/file/upload', fileData)
+        customAxios.post('/file/upload',  fileData, {
+            headers: {
+                "Authorization": "Bearer " + token 
+            }
+        })
             .then(res => console.log(res))
     }
 

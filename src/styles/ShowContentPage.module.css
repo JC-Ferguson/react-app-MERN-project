@@ -9,6 +9,14 @@
     color: red;
 }
 
+.relatedContainer > section {
+    margin: 0;
+}
+
+.hideContent {
+    display: none;
+}
+
 .pdfViewer {
     margin: 0 5vw;
 }

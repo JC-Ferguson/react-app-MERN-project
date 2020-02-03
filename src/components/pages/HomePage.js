@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-// import Carousel from 'react-bootstrap/Carousel';
 import Blurb from '../views/Blurb';
 import styles from "./../../styles/HomePage.module.css";
 import RelatedContent from './../views/RelatedContent';
@@ -21,29 +19,19 @@ class HomePage extends Component {
 
         const solutionKeys = Object.keys(solutionsDesc);
 
-        const { onCategorySelect, mostRecentDocument, learningContent } = this.props;
+        const { mostRecentDocument, learningContent } = this.props;
 
         return (
             <>
                 <h2 className = {styles.title}>Available Solutions</h2>
                 <div className={styles.solutionsContainer}>
-                    {/* <Carousel> */}
-                        {solutionKeys.map((key, index) => {
-                            return (
-                                <section>
-                                    {/* <Link to="/category" > */}
-                                        <Blurb heading= {solutionKeys[index]} blurb= {solutionsDesc[key]} onCategorySelect={onCategorySelect} />
-                                    {/* </Link> */}
-                                        {/* <Carousel.Item>
-                                            <Carousel.Caption>
-                                                 <Blurb heading= {solutionKeys[index]} blurb= {solutionsDesc[key]} onCategorySelect={onCategorySelect} />
-                                            </Carousel.Caption>
-                                        </Carousel.Item> */}
-                                </section>                            
-                            )
-                        })
-                        }
-                    {/* </Carousel>   */}
+                    {solutionKeys.map((key, index) => {
+                        return (
+                            <section key = {key}>
+                                <Blurb heading= {solutionKeys[index]} blurb= {solutionsDesc[key]} />
+                            </section>                            
+                        )
+                    })}
                 </div>
                 {mostRecentDocument && < section >
                     <h3>Last Viewed</h3>

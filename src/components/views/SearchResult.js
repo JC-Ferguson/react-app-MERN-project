@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import styles from "./../../styles/SearchResult.module.css";
+import showContentStyles from "./../../styles/ShowContentPage.module.css";
 import { setLastViewed } from "./../../actions";
 
 
@@ -35,7 +36,7 @@ class SearchResult extends Component {
                         <div><h3>Solution:</h3><p>{solution}</p></div>
                         <div><h3>Proficiency Level:</h3><p>{proficiency}</p></div>
                     </div>
-                    <div className = {styles.restContainer}>
+                    <div className = {`${styles.restContainer} ${showContentStyles.hideContent}`}>
                         <div>
                             <h3>File Content:</h3><p>{content}</p>
                             <h3>Who it Benefits:</h3><p>{benefits.join(", ")}</p>

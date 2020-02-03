@@ -22,9 +22,7 @@ class RelatedContent extends Component {
         const { learningContent, mostRecentQuery, styles, heading } = this.props;
         const unreadContent = learningContent.filter(e => {
             // stringified to compare if two objects are identical
-            if (JSON.stringify(e) !== JSON.stringify(this.props.mostRecentDocument)){
-                return e;
-            }
+                return JSON.stringify(e) !== JSON.stringify(this.props.mostRecentDocument);
         })
 
         const relatedContent = this.getRandomContent(unreadContent, unreadContent.length > 3 ? 3 : unreadContent.length );
