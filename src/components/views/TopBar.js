@@ -49,12 +49,13 @@ class TopBar extends Component {
             this.advSearch = React.createRef();
         }
 
-        searchCall = async ()=>{
-            const { queryBenefits, querySolution, queryPrereqs} = this.state;
-            await axios.post("http://localhost:3001/category", {
+        searchCall = ()=>{
+            const { queryBenefits, querySolution, queryPrereqs, query} = this.state;
+                axios.post("http://localhost:3001/category", {
                   querySolution,
                   queryBenefits,
-                  queryPrereqs
+                  queryPrereqs,
+                  query
                 })
                 .then(response =>{
                     this.props.setSearchResult(response.data);
@@ -76,8 +77,25 @@ class TopBar extends Component {
         }
 
         testFunction = ()=>{
-            this.setState({query: this.advSearch.current.state.value});
+            this.setState( { querySolution: "", queryBenefits: "", queryPrereqs: "", query: this.advSearch.current.state.value});
             console.log(this.state);
+            const {query} = this.state;
+            const solutionsArr = [];
+            const teamsArr = [];
+            const prereqArr = [];
+            query.forEach(tag =>{
+                if(this.solutions.includes(tag)){
+                    solutionsArr.push(tag);
+                }
+            })
+
+            console.log(solutionsArr, teamsArr, prereqArr );
+            axios.post("http://localhost:3001/category", {
+                query,
+                solutionsArr,
+                teamsArr,
+                prereqArr
+            })
         }
         
     render(){
