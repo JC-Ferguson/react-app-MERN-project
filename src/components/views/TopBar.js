@@ -50,8 +50,7 @@ class TopBar extends Component {
                 headers: {
                     'Authorization': 'Bearer ' + token
                 }
-            });
-
+            });            
             if (response.status === 200) {
                 this.setState({ admin: true, loaded: true });
             } else {
@@ -63,28 +62,33 @@ class TopBar extends Component {
         };
     };
 
+    constructor(props){
+        super(props)
+        this.advSearch = React.createRef();
+    }
+
     componentDidMount() {
         this.getAdminStatus();
     };
 
-    // axios request to express server to query MongoDB for files
-    searchCall = () => {
-        const { queryBenefits, querySolution, queryPrereqs} = this.state;
-        customAxios.post("/category", {
-            querySolution,
-            queryBenefits,
-            queryPrereqs
-        })
-        .then(response => {
-            this.props.setSearchResult(response.data);
-            return response.data;
-        })
-        .then(data => {
-            this.props.history.push("/category");
-        })
-    }
+        // axios request to express server to query MongoDB for files
+        searchCall = () => {
+            const { queryBenefits, querySolution, queryPrereqs} = this.state;
+            customAxios.post("/category", {
+                querySolution,
+                queryBenefits,
+                queryPrereqs
+            })
+            .then(response => {
+                this.props.setSearchResult(response.data);
+                return response.data;
+            })
+            .then(data => {
+                this.props.history.push("/category");
+            })
+        }
 
-    // saves selection from dropdown menu into state, then runs searchCall method
+            // saves selection from dropdown menu into state, then runs searchCall method
     onCategorySelect = (e) => {
         const query = e.target.innerHTML;
         this.props.mostRecentSearch(query);
@@ -99,9 +103,33 @@ class TopBar extends Component {
         }
     }
 
-    // sets the token to null in redux
+    testFunction = ()=>{
+        this.setState( { querySolution: "", queryBenefits: "", queryPrereqs: "", query: this.advSearch.current.state.value});
+        console.log(this.state);
+        const {query} = this.state;
+        const solutionsArr = [];
+        const teamsArr = [];
+        const prereqArr = [];
+        query.forEach(tag =>{
+            if(this.solutions.includes(tag)){
+                solutionsArr.push(tag);
+            } else if (this.teams.includes(tag)){
+                teamsArr.push(tag);
+            } else if (this.teams.prerequisites) {
+                prereqArr.push(tag)
+            }
+        })
+
+        console.log(solutionsArr, teamsArr, prereqArr );
+        axios.post(`${process.env.REACT_APP_EXPRESS}/category`, {
+            query,
+            solutionsArr,
+            teamsArr,
+            prereqArr
+        })
+    }
+
     onLogout = () => {
-        console.log('logout clicked');
         this.props.setAuthToken();
     }
 
@@ -109,6 +137,13 @@ class TopBar extends Component {
         const { token } = this.props; 
         const { admin } = this.state;
 
+        const searchOptions = [...this.solutions, ...this.teams, ...this.prerequisites];
+        // console.log(searchOptions);
+
+        const options=searchOptions.map(search=>{
+            return {key: search, text: search, value: search}
+        })
+        
         return (
             <section className={styles.topBar}>
                 <div className={styles.logo}>
@@ -152,6 +187,8 @@ class TopBar extends Component {
                             </Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown>
+                    <Dropdown placeholder='Advanced Search' clearable fluid multiple search selection options={options} ref={this.advSearch} onChange={this.testFunction}/>
+                    <button type="submit" onClick ={this.testFunction} >Search</button>
                 </Menu>
                 <div className={styles.logout}>
                     {admin? <Link to='/admin'>Admin</Link> : null}

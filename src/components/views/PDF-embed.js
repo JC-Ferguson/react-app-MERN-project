@@ -6,12 +6,13 @@ class PdfViewer extends Component {
 
     componentDidMount() {
         const {pdfBlob, containerId} = this.props;      
-        PDFObject.embed(`https://accordanthelp.herokuapp.com/file/${pdfBlob}`, `#${containerId}`)
+        PDFObject.embed(`${process.env.REACT_APP_EXPRESS}/file/${pdfBlob}`, `#${containerId}`)
     }
 
-
-
-
+    componentDidUpdate(){
+        const {pdfBlob, containerId} = this.props;      
+        PDFObject.embed(`${process.env.REACT_APP_EXPRESS}/file/${pdfBlob}`, `#${containerId}`)
+    }
 
     render(){
         const {width, height, containerId} = this.props;

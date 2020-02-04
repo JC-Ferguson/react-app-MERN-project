@@ -19,20 +19,19 @@ class HomePage extends Component {
 
         const solutionKeys = Object.keys(solutionsDesc);
 
-        const { onCategorySelect, mostRecentDocument, learningContent } = this.props;
+        const { mostRecentDocument, learningContent } = this.props;
 
         return (
             <>
                 <h2 className = {styles.title}>Available Solutions</h2>
                 <div className={styles.solutionsContainer}>
-                        {solutionKeys.map((key, index) => {
-                            return (
-                                <section key={key}>
-                                    <Blurb heading= {solutionKeys[index]} blurb= {solutionsDesc[key]} onCategorySelect={onCategorySelect} />
-                                </section>                            
-                            )
-                        })
-                        }
+                    {solutionKeys.map((key, index) => {
+                        return (
+                            <section key = {key}>
+                                <Blurb heading= {solutionKeys[index]} blurb= {solutionsDesc[key]} />
+                            </section>                            
+                        )
+                    })}
                 </div>
                 {mostRecentDocument && < section >
                     <h3>Last Viewed</h3>
