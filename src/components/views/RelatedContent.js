@@ -28,7 +28,7 @@ class RelatedContent extends Component {
         const relatedContent = this.getRandomContent(unreadContent, unreadContent.length > 3 ? 3 : unreadContent.length );
         return(
             <div className= {styles}>
-                {heading?<h3>{heading}</h3> :<h3>BECAUSE YOU SEARCHED FOR: {mostRecentQuery}</h3>}
+                {unreadContent[0] && (heading?<h3>{heading}</h3> :<h3>BECAUSE YOU SEARCHED FOR: {mostRecentQuery}</h3>)}
                     {relatedContent.map(content =>{
                         return(
                             < SearchResult

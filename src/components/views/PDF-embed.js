@@ -7,7 +7,6 @@ class PdfViewer extends Component {
     componentDidMount() {
         const {pdfBlob, containerId} = this.props;      
         PDFObject.embed(`${process.env.REACT_APP_EXPRESS}/file/${pdfBlob}`, `#${containerId}`)
-        console.log(process.env.REACT_APP_EXPRESS);
     }
 
     componentDidUpdate(){

@@ -2,11 +2,8 @@ import React, { Component } from "react";
 import { BrowserRouter, Route } from "react-router-dom";
 import { connect } from 'react-redux';
 import { setAuthToken, setSearchResult } from './../actions';
-import axios from "axios";
 import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
-import PrivatePage from './pages/PrivatePage';
-import PrivateRoute from './PrivateRoute';
 import HomePage from './pages/HomePage';
 import CategoryPage from "./pages/CategoryPage";
 import ShowContentPage from "./pages/ShowContentPage";
@@ -39,47 +36,17 @@ class App extends Component {
         "AAM Tech Team", "Data, Team", "Tag Managers", "Analytics Managers", "Implementation Specialists", "Various"
     ]
 
-    searchCall = async ()=>{
-        const { queryBenefits, querySolution } = this.state;
-        await axios.post(`${process.env.REACT_APP_EXPRESS}/category`, {
-              querySolution,
-              queryBenefits
-            })
-            .then(response =>{
-                this.props.setSearchResult(response.data);
-                return response.data;
-            })
-            .then(data=>{
-                sessionStorage.setItem("learningContent", JSON.stringify(data));
-                console.log(data)
-                // this.history.push("/category");
-            })
-    }
-
-    onCategorySelect = (e)=>{
-        const query = e.target.innerHTML
-        if(this.teams.includes(query)){
-            this.setState({ queryBenefits: query, querySolution: "" }, this.searchCall)
-        } else {
-            const shortenedQuery = query.match(/(?<=\().*(?=\))/);
-            this.setState( { querySolution: shortenedQuery, queryBenefits: "" }, this.searchCall )
-        }
-    }
-
     render(){
         return(
             <BrowserRouter>
                 <div>
                     < Route path = "/" component={TopBar} />
+                    < Route exact path = "/" component={HomePage} />
                     < Route exact path = "/register" render = {(props) => {
                         return <RegisterPage {...props} />
                     }} />
                     < Route exact path = "/login" render = {(props) => {
                         return <LoginPage {...props} />
-                    }} />
-                    < PrivateRoute exact path="/private" component={PrivatePage} />
-                    < Route exact path = "/home" render={ (props)=>{
-                        return <HomePage {...props} onCategorySelect={this.onCategorySelect} />
                     }} />
                     < Route exact path = "/category" render={(props)=>{
                                 return < CategoryPage {...props} />
@@ -92,7 +59,7 @@ class App extends Component {
                     />
                     < AdminRoute exact path = '/admin/' component = {AdminPage} />
                     < AdminRoute exact path = '/admin/users' component = {AdminUsersPage} />
-                    < Route exact path = '/admin/files' component = {AdminFilesPage} />
+                    < AdminRoute exact path = '/admin/files' component = {AdminFilesPage} />
                 </div>
             </BrowserRouter>
         )
