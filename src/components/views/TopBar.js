@@ -40,7 +40,7 @@ class TopBar extends Component {
         'None Required'
     ];
 
-    state = { querySolution: "", queryBenefits: "", queryPrereqs: "", admin: false, loaded: false };
+    state = { querySolution: "", queryBenefits: "", queryPrereqs: "", value: [], admin: false, loaded: false };
 
     getAdminStatus = async () => {
         const { token } = this.props;
@@ -61,11 +61,6 @@ class TopBar extends Component {
             this.setState({ loaded: true });
         };
     };
-
-    constructor(props){
-        super(props)
-        this.advSearch = React.createRef();
-    }
 
     componentDidMount() {
         this.getAdminStatus();
@@ -104,28 +99,33 @@ class TopBar extends Component {
     }
 
     testFunction = ()=>{
-        this.setState( { querySolution: "", queryBenefits: "", queryPrereqs: "", query: this.advSearch.current.state.value});
-        console.log(this.state);
-        const {query} = this.state;
+        const {value} = this.state;
         const solutionsArr = [];
         const teamsArr = [];
         const prereqArr = [];
-        query.forEach(tag =>{
+        value.forEach(tag =>{
             if(this.solutions.includes(tag)){
                 solutionsArr.push(tag);
             } else if (this.teams.includes(tag)){
                 teamsArr.push(tag);
-            } else if (this.teams.prerequisites) {
+            } else if (this.prerequisites.includes(tag)) {
                 prereqArr.push(tag)
             }
         })
 
         console.log(solutionsArr, teamsArr, prereqArr );
-        axios.post(`${process.env.REACT_APP_EXPRESS}/category`, {
-            query,
+        customAxios.post("/category", {
+            value,
             solutionsArr,
             teamsArr,
             prereqArr
+        })
+        .then(response => {
+            this.props.setSearchResult(response.data);
+            return response.data;
+        })
+        .then(data => {
+            this.props.history.push("/category");
         })
     }
 
@@ -133,12 +133,13 @@ class TopBar extends Component {
         this.props.setAuthToken();
     }
 
+    handleChange = (e, { value }) => this.setState({ value });
+
     render(){
         const { token } = this.props; 
-        const { admin } = this.state;
+        const { admin, value } = this.state;
 
         const searchOptions = [...this.solutions, ...this.teams, ...this.prerequisites];
-        // console.log(searchOptions);
 
         const options=searchOptions.map(search=>{
             return {key: search, text: search, value: search}
@@ -187,7 +188,7 @@ class TopBar extends Component {
                             </Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown>
-                    <Dropdown placeholder='Advanced Search' clearable fluid multiple search selection options={options} ref={this.advSearch} onChange={this.testFunction}/>
+                    <Dropdown placeholder='Advanced Search' clearable fluid multiple search selection options={options} onChange={this.handleChange} value={value} />
                     <button type="submit" onClick ={this.testFunction} >Search</button>
                 </Menu>
                 <div className={styles.logout}>
