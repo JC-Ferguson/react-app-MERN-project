@@ -9,6 +9,7 @@ export const setAuthToken = (token = null) => {
     };
 };
 
+// function returns object containing the json of returned search query from database 
 export const setSearchResult = ( result = "" ) =>{
     localStorage.setItem("learningContent", JSON.stringify(result));
     return {
@@ -17,6 +18,7 @@ export const setSearchResult = ( result = "" ) =>{
     }
 }
 
+// function returns object containing most recent search
 export const mostRecentSearch = (query = null ) =>{
     localStorage.setItem("mostRecentSearch", query)
     return {
@@ -25,6 +27,7 @@ export const mostRecentSearch = (query = null ) =>{
     }
 }
 
+// function returns object containing last viewed document
 export const setLastViewed = (content = null) =>{
     localStorage.setItem("lastViewed", JSON.stringify(content))
     return {

@@ -8,7 +8,7 @@ class CategoryPage extends Component {
         return(
             <> 
                 <h1>Category Page</h1>
-                <h2>Showing Search Results for: {mostRecentQuery}</h2>
+                <h2>Showing Search Results for: {(mostRecentQuery && Array.isArray(mostRecentQuery)) ? mostRecentQuery.join(", ") : mostRecentQuery}</h2>
                 {learningContent && (learningContent.length ? learningContent.map(content =>{
                     return(
                         < SearchResult
@@ -30,7 +30,7 @@ class CategoryPage extends Component {
     }
 }
 
-
+// retrieve learning content query and most recent search query from redux sets to props
 const mapStateToProps = (state)=>{
     const { learningContent } = state.searchResult;
     const { mostRecentQuery } = state.mostRecentSearch;

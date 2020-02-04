@@ -31,7 +31,7 @@ class RegisterForm extends Component {
                 this.setState({ emailAvailable: false });
             } else {
                 this.props.setAuthToken(response.data);
-                this.props.history.push('/home');
+                this.props.history.push('/');
             }
         } catch(error) {
             console.log(error);

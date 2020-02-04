@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import SearchResult from "./../views/SearchResult";
-import style from "./../../styles/ShowContentPage.module.css";
 
 class RelatedContent extends Component {
+    
+    // function randomly selects a set number of values from an array provided the number specified is less than the given arrays length 
     getRandomContent(arr, n) {
         let result = new Array(n);
         let len = arr.length;
@@ -19,34 +20,32 @@ class RelatedContent extends Component {
     }
 
     render(){
-        const { learningContent, mostRecentQuery, styles, heading, onShowPage } = this.props;
-        const unreadContent = learningContent.filter(e => {
-            // stringified to compare if two objects are identical
-                return JSON.stringify(e) !== JSON.stringify(this.props.mostRecentDocument);
-        })
+        const { learningContent, styles, heading, onShowPage } = this.props;
 
-        const relatedContent = this.getRandomContent(unreadContent, unreadContent.length > 3 ? 3 : unreadContent.length );
+        // stringified to compare if two objects are identical. unread content is checking search results and filtering out the document that has most recently been read so it is not in related content for itself
+        const unreadContent = learningContent ? learningContent.filter(e => JSON.stringify(e) !== JSON.stringify(this.props.mostRecentDocument)) : null;
+
+        const relatedContent = learningContent ? this.getRandomContent(unreadContent, unreadContent.length > 3 ? 3 : unreadContent.length ) : null;
         return(
             <div className= {styles}>
-                {unreadContent[0] && (heading?<h3>{heading}</h3> :<h3>BECAUSE YOU SEARCHED FOR: {mostRecentQuery}</h3>)}
-                    {relatedContent.map(content =>{
-                        return(
-                            < SearchResult
-                                key ={content.location}
-                                title = {content.name}
-                                date = {content.tags.createdOn}
-                                solution = {content.tags.solution}
-                                proficiency = {content.tags.proficiency}
-                                content = {content.tags.content}
-                                desc = {content.tags.description}
-                                prereq= {content.tags.prerequisites}
-                                benefits = {content.tags.benefits}
-                                s3FileName = {content.location}
-                                hideContent = {style.hideContent}
-                                onShowPage = {onShowPage}
-                            />
-                        )
-                    })}
+                {unreadContent && (heading?<h3>{heading}</h3> :<h3>BASED ON YOUR RECENT SEARCHES</h3>)}
+                        {relatedContent && relatedContent.map(content =>{
+                            return(
+                                < SearchResult
+                                    key ={content.location}
+                                    title = {content.name}
+                                    date = {content.tags.createdOn}
+                                    solution = {content.tags.solution}
+                                    proficiency = {content.tags.proficiency}
+                                    content = {content.tags.content}
+                                    desc = {content.tags.description}
+                                    prereq= {content.tags.prerequisites}
+                                    benefits = {content.tags.benefits}
+                                    s3FileName = {content.location}
+                                    onShowPage = {onShowPage}
+                                />
+                            )
+                        })}
             </div>
         )
     }

@@ -42,6 +42,7 @@ class TopBar extends Component {
 
     state = { querySolution: "", queryBenefits: "", queryPrereqs: "", value: [], admin: false, loaded: false };
 
+    // checks if current user is admin
     getAdminStatus = async () => {
         const { token } = this.props;
         
@@ -83,7 +84,7 @@ class TopBar extends Component {
             })
         }
 
-            // saves selection from dropdown menu into state, then runs searchCall method
+    // saves selection from dropdown menu into state, then runs searchCall method
     onCategorySelect = (e) => {
         const query = e.target.innerHTML;
         this.props.mostRecentSearch(query);
@@ -98,8 +99,9 @@ class TopBar extends Component {
         }
     }
 
-    testFunction = ()=>{
+    advanceSearch = ()=>{
         const {value} = this.state;
+        this.props.mostRecentSearch(value);
         const solutionsArr = [];
         const teamsArr = [];
         const prereqArr = [];
@@ -113,7 +115,6 @@ class TopBar extends Component {
             }
         })
 
-        console.log(solutionsArr, teamsArr, prereqArr );
         customAxios.post("/category", {
             value,
             solutionsArr,
@@ -122,9 +123,6 @@ class TopBar extends Component {
         })
         .then(response => {
             this.props.setSearchResult(response.data);
-            return response.data;
-        })
-        .then(data => {
             this.props.history.push("/category");
         })
     }
@@ -188,8 +186,8 @@ class TopBar extends Component {
                             </Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown>
-                    <Dropdown placeholder='Advanced Search' clearable fluid multiple search selection options={options} onChange={this.handleChange} value={value} />
-                    <button type="submit" onClick ={this.testFunction} >Search</button>
+                    <Dropdown placeholder='Advanced Search' clearable fluid multiple search selection options={options} onChange={this.handleChange} value={value} id={styles.advSearch} />
+                    <button type="submit" onClick ={this.advanceSearch} >Search</button>
                 </Menu>
                 <div className={styles.logout}>
                     {admin? <Link to='/admin'>Admin</Link> : null}

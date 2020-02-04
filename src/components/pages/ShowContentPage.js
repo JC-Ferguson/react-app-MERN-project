@@ -11,6 +11,8 @@ class ShowContentPage extends Component {
                 < RelatedContent styles ={styles.relatedContainer} heading= "Related Content" onShowPage = {true}/>
                 < PdfViewer
                     pdfBlob = {`${fileName}`}
+                    styling = {styles.pdfContainer}
+                    {...this.props}
                 />
             </div>
         )

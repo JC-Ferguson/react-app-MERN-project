@@ -11,13 +11,12 @@ class SearchResult extends Component {
         lastViewed: this.props.mostRecentDocument,
     }
 
+    // function saves the selected file as the last viewed document
     saveAsViewed = (e)=>{
         for (let content of this.props.learningContent){
             if (content.name===e.target.innerHTML){
-                console.log(content);
                 this.props.setLastViewed(content);
                 this.setState({ lastViewed: content});
-                // this.props.history.push(`/lesson/${content.location}`);
             }
         }
     }
@@ -50,6 +49,7 @@ class SearchResult extends Component {
     }
 }
 
+// function stores learning content search return and last viewed document of redux state in props 
 const mapStateToProps = (state)=>{
     const { learningContent } = state.searchResult;
     const { mostRecentDocument }= state.lastViewed;
