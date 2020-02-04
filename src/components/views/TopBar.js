@@ -51,7 +51,7 @@ class TopBar extends Component {
 
         searchCall = ()=>{
             const { queryBenefits, querySolution, queryPrereqs, query} = this.state;
-                axios.post("http://localhost:3001/category", {
+                axios.post(`${process.env.REACT_APP_EXPRESS}/category`, {
                   querySolution,
                   queryBenefits,
                   queryPrereqs,
@@ -86,11 +86,15 @@ class TopBar extends Component {
             query.forEach(tag =>{
                 if(this.solutions.includes(tag)){
                     solutionsArr.push(tag);
+                } else if (this.teams.includes(tag)){
+                    teamsArr.push(tag);
+                } else if (this.teams.prerequisites) {
+                    prereqArr.push(tag)
                 }
             })
 
             console.log(solutionsArr, teamsArr, prereqArr );
-            axios.post("http://localhost:3001/category", {
+            axios.post(`${process.env.REACT_APP_EXPRESS}/category`, {
                 query,
                 solutionsArr,
                 teamsArr,

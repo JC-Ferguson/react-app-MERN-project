@@ -41,7 +41,7 @@ class App extends Component {
 
     searchCall = async ()=>{
         const { queryBenefits, querySolution } = this.state;
-        await axios.post("http://localhost:3001/category", {
+        await axios.post(`${process.env.REACT_APP_EXPRESS}/category`, {
               querySolution,
               queryBenefits
             })
