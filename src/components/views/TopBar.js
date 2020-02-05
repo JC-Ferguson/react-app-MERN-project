@@ -40,25 +40,23 @@ class TopBar extends Component {
         'None Required'
     ];
 
-    state = { querySolution: "", queryBenefits: "", queryPrereqs: "", admin: false, loaded: false };
+    state = { querySolution: "", queryBenefits: "", queryPrereqs: "", admin: null, loaded: false };
 
     getAdminStatus = async () => {
         const { token } = this.props;
         
         try {
-            const response = await customAxios.get('/confirmAdmin', {
+            await customAxios.get('/confirmAdmin', {
                 headers: {
                     'Authorization': 'Bearer ' + token
                 }
-            });            
-            if (response.status === 200) {
-                this.setState({ admin: true, loaded: true });
-            } else {
-                this.setState({ loaded: true });
-            };
+            });
+
+            this.setState({ admin: true, loaded: true });
+           
         } catch(error) {
             console.log(error);
-            this.setState({ loaded: true });
+            this.setState({ loaded: true, admin: false });
         };
     };
 
@@ -68,25 +66,37 @@ class TopBar extends Component {
     }
 
     componentDidMount() {
-        this.getAdminStatus();
+        if(this.props.token && this.state.admin === null) {
+            this.getAdminStatus();
+        }
     };
 
-        // axios request to express server to query MongoDB for files
-        searchCall = () => {
-            const { queryBenefits, querySolution, queryPrereqs} = this.state;
-            customAxios.post("/category", {
-                querySolution,
-                queryBenefits,
-                queryPrereqs
-            })
-            .then(response => {
-                this.props.setSearchResult(response.data);
-                return response.data;
-            })
-            .then(data => {
-                this.props.history.push("/category");
-            })
+    componentDidUpdate() {
+        if(this.props.token && this.state.admin === null) {
+            this.getAdminStatus();
         }
+        
+        if (!this.props.token && this.state.admin !== null) {
+            this.setState({ admin: null });
+        }
+    };
+
+    // axios request to express server to query MongoDB for files
+    searchCall = () => {
+        const { queryBenefits, querySolution, queryPrereqs} = this.state;
+        customAxios.post("/category", {
+            querySolution,
+            queryBenefits,
+            queryPrereqs
+        })
+        .then(response => {
+            this.props.setSearchResult(response.data);
+            return response.data;
+        })
+        .then(data => {
+            this.props.history.push("/category");
+        })
+    }
 
             // saves selection from dropdown menu into state, then runs searchCall method
     onCategorySelect = (e) => {
@@ -103,34 +113,9 @@ class TopBar extends Component {
         }
     }
 
-    testFunction = ()=>{
-        this.setState( { querySolution: "", queryBenefits: "", queryPrereqs: "", query: this.advSearch.current.state.value});
-        console.log(this.state);
-        const {query} = this.state;
-        const solutionsArr = [];
-        const teamsArr = [];
-        const prereqArr = [];
-        query.forEach(tag =>{
-            if(this.solutions.includes(tag)){
-                solutionsArr.push(tag);
-            } else if (this.teams.includes(tag)){
-                teamsArr.push(tag);
-            } else if (this.teams.prerequisites) {
-                prereqArr.push(tag)
-            }
-        })
-
-        console.log(solutionsArr, teamsArr, prereqArr );
-        axios.post(`${process.env.REACT_APP_EXPRESS}/category`, {
-            query,
-            solutionsArr,
-            teamsArr,
-            prereqArr
-        })
-    }
-
     onLogout = () => {
         this.props.setAuthToken();
+        this.setState({ admin: false });
     }
 
     render(){
