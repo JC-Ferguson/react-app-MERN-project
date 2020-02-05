@@ -76,7 +76,7 @@ class TopBar extends Component {
 
     onLogout = () => {
         this.props.setAuthToken();
-        this.setState({ admin: false });
+        this.props.setUser();
     }
 
     render(){
