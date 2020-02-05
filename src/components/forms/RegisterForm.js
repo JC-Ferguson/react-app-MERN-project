@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import customAxios from '../../api/customAxios';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { setAuthToken } from '../../actions';
+import { setAuthToken, setUser } from '../../actions';
 import styles from './../../styles/form.module.css';
 
 class RegisterForm extends Component {
@@ -30,7 +30,9 @@ class RegisterForm extends Component {
             if (response.data === false) {
                 this.setState({ emailAvailable: false });
             } else {
-                this.props.setAuthToken(response.data);
+                const { token, user } = response.data;
+                this.props.setAuthToken(token);
+                this.props.setUser(user);
                 this.props.history.push('/home');
             }
         } catch(error) {
@@ -79,4 +81,4 @@ class RegisterForm extends Component {
     }
 }
 
-export default connect(null, { setAuthToken })(RegisterForm);
+export default connect(null, { setAuthToken, setUser })(RegisterForm);
