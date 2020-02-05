@@ -3,48 +3,13 @@ import { Link } from "react-router-dom";
 import { Dropdown, Menu } from 'semantic-ui-react';
 import customAxios from '../../api/customAxios';
 import { connect } from "react-redux";
-import { setSearchResult, mostRecentSearch, setAuthToken } from "./../../actions";
+import { setSearchResult, mostRecentSearch, setAuthToken, setUser } from "./../../actions";
 import Logo from "./../../images/accordant-logo.png";
 import styles from "./../../styles/TopBar.module.css";
 import {solutions, teams, prerequisites} from "./../../services/category_tags";
 
 class TopBar extends Component {
-    state = { querySolution: "", queryBenefits: "", queryPrereqs: "", value: [], admin: null, loaded: false };
-
-    // checks if current user is admin
-    getAdminStatus = async () => {
-        const { token } = this.props;
-        
-        try {
-            await customAxios.get('/confirmAdmin', {
-                headers: {
-                    'Authorization': 'Bearer ' + token
-                }
-            });
-
-            this.setState({ admin: true, loaded: true });
-           
-        } catch(error) {
-            console.log(error);
-            this.setState({ loaded: true, admin: false });
-        };
-    };
-
-    componentDidMount() {
-        if(this.props.token && this.state.admin === null) {
-            this.getAdminStatus();
-        }
-    };
-
-    componentDidUpdate() {
-        if(this.props.token && this.state.admin === null) {
-            this.getAdminStatus();
-        }
-        
-        if (!this.props.token && this.state.admin !== null) {
-            this.setState({ admin: null });
-        }
-    };
+    state = { querySolution: "", queryBenefits: "", queryPrereqs: "", value: [] };
 
     // axios request to express server to query MongoDB for files
     searchCall = () => {
@@ -106,16 +71,17 @@ class TopBar extends Component {
 
     onLogout = () => {
         this.props.setAuthToken();
-        this.setState({ admin: false });
+        this.props.setUser();
     }
 
     handleChange = (e, { value }) => this.setState({ value });
 
     render(){
-        const { token } = this.props; 
-        const { admin, value } = this.state;
+        const { token, user } = this.props; 
+        // const { admin } = this.state;
 
         const searchOptions = [...solutions, ...teams, ...prerequisites];
+
 
         const options=searchOptions.map(search=>{
             return {key: search, text: search, value: search}
@@ -168,7 +134,7 @@ class TopBar extends Component {
                     <button type="submit" onClick ={this.advanceSearch} >Search</button>
                 </Menu>
                 <div className={styles.logout}>
-                    {admin ? <Link to='/admin'>Admin</Link> : null}
+                    {user && user.admin ? <Link to='/admin'>Admin</Link> : null}
                     {token ? <Link to='/login' onClick={this.onLogout}>Logout</Link> : <Link to='/login' >Login</Link>}
                 </div>
             </section>
@@ -177,10 +143,10 @@ class TopBar extends Component {
 }
 
 const mapStateToProps = (state)=>{
-    const { token } = state.auth;
     return {
-        token: token
+        token: state.auth.token,
+        user: state.currentUser.user
     }
 }
 
-export default connect(mapStateToProps, { setSearchResult, mostRecentSearch, setAuthToken })(TopBar);
+export default connect(mapStateToProps, { setSearchResult, mostRecentSearch, setAuthToken, setUser })(TopBar);

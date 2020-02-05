@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import customAxios from '../../api/customAxios';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { setAuthToken } from '../../actions';
+import { setAuthToken, setUser } from '../../actions';
 import styles from './../../styles/form.module.css';
 
 class LoginForm extends Component {
@@ -29,7 +29,10 @@ class LoginForm extends Component {
                 email,
                 password
             });
-            this.props.setAuthToken(response.data);
+
+            const { token, user } = response.data;
+            this.props.setAuthToken(token);
+            this.props.setUser(user);
             this.props.history.push('/');
         } catch(err) {
             console.log(err);
@@ -64,4 +67,4 @@ class LoginForm extends Component {
     }
 }
 
-export default connect(null, { setAuthToken })(LoginForm);
+export default connect(null, { setAuthToken, setUser })(LoginForm);
