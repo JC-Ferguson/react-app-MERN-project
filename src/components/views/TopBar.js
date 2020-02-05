@@ -78,7 +78,7 @@ class TopBar extends Component {
 
     render(){
         const { token, user } = this.props; 
-        // const { admin } = this.state;
+        const { value } = this.state;
 
         const searchOptions = [...solutions, ...teams, ...prerequisites];
 
