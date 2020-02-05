@@ -68,7 +68,6 @@ class TopBar extends Component {
 
     componentDidUpdate() {
         if(this.props.token && this.state.admin === null) {
-            console.log("2");
             this.getAdminStatus();
         }
         
