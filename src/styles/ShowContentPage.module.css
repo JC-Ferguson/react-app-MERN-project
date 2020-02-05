@@ -3,9 +3,10 @@
 }
 
 .relatedContainer {
-    border: solid 2px rgb(0,0,0);
     margin: 0;
-    padding: 20px
+    padding: 20px;
+    height: 85vh;
+    overflow: scroll;
 }
 
 .relatedContainer > section {
@@ -25,5 +26,10 @@
 }
 
 .pdfViewer {
-    margin: 0 5vw;
+    margin: 0 10vw;
+}
+
+.pdfContainer {
+    width: 75%;
+    text-align: center;
 }

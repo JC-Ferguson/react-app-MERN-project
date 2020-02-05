@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import customAxios from './../../api/customAxios';
 import { connect } from 'react-redux';
 import styles from './../../styles/form.module.css';
+import {solutions, teams, prerequisites} from "./../../services/category_tags";
 
 const mapStateToProps = (state) => {
     return {
@@ -11,42 +12,15 @@ const mapStateToProps = (state) => {
 
 class AddFilesForm extends Component {
     state = {
-        solutionsList: [
-            "Adobe Experience Cloud (AEC)", 
-            "Adobe Analytics, Dynamic Tag Management (AA)", 
-            "Adobe Target (AT)", 
-            "Adobe Audience Member (AAM)", 
-            "Adobe Campaign (AC)",
-            "Adobe Advertising Cloud, Paid Media (AAC/ADCLOUD)",
-            "Other"
-        ],
-        prerequisitesList: [
-            'has AA',
-            'has AT',
-            'has AAC',
-            'has AdCloud',
-            'has AEM',
-            'has AT Premium',
-            'has DTM',
-            'no AT',
-            'None Required'
-        ],
-        whoItBenefitsList: [
-            "AT Owners", "Project Managers", "AT Implementation Team", "Content Team", "AEC Owners", "Stakeholders",
-            "AdCloud Users", "Optimisation Team", "SEM/Media Team", "Performance Marketing Team", "Advertisers",
-            "AEC Technical Team", "Project Teams", "Agile Teams", "Internal Optimisation", "Product Team", "Strategy Team",
-            "Tech Team", "Developers", "AA Analysts", "AA Owners", "AEC Owners and Managers",
-            "AAM Users", "AT Users", "AT Analysts", "AT Performance/Reporting Team", "AA Developers", "Social Media Team", 
-            "AT Recommendations Users", "AT Recommendations Implementation Team", "AA Users", "Tag Specialists", "Teams That Will Engage with Design Team",
-            "Teams That Will Engage with PDD", "Tech Implementation Team", "Display/Media Team", "AEM Owners", "Anyone New to Programmatic",
-            "AT Implementation/QA Team", "Leads and Stakeholders", "NA", "Solution Specialists", "AAM Planners",
-            "AAM Tech Team", "Data, Team", "Tag Managers", "Analytics Managers", "Implementation Specialists", "Various"
-        ],
+        solutionsList: solutions,
+        prerequisitesList: prerequisites,
+        whoItBenefitsList: teams,
         proficiencyList: [
             "NA", "1", "2", "3", "4", "5"
         ],
         selectedFile: null,
         contentName: '',
+        generic: true,
         solution: 'AAC/ADCLOUD',
         dateCreated: '',
         proficiency: 'NA',
@@ -68,6 +42,7 @@ class AddFilesForm extends Component {
         const { 
             selectedFile,
             contentName,
+            generic,
             solution,
             dateCreated,
             proficiency, 
@@ -80,6 +55,7 @@ class AddFilesForm extends Component {
         let fileData = new FormData();
         fileData.append('file', selectedFile);
         fileData.append('name', contentName);
+        fileData.append('generic', generic);
         fileData.append('solution', solution);
         fileData.append('dateCreated', dateCreated);
         fileData.append('proficiency', proficiency);
@@ -150,7 +126,8 @@ class AddFilesForm extends Component {
             description,
             prerequisites,
             whoItBenefits,
-            submitted
+            submitted,
+            generic
         } = this.state;
 
         return (
@@ -164,6 +141,13 @@ class AddFilesForm extends Component {
                     <div>
                         <label className={styles.label}>Content Name</label>
                         <input className={styles.inputFilesForm} type='text' onChange={this.onInputChange('contentName')} value={contentName} />
+                    </div>
+                    <div>
+                        <label className={styles.label}>Content Type</label>
+                        <select className={styles.select} onChange={this.onInputChange('generic')} value={generic}>
+                            <option key="generic" value= {true} >Generic</option>
+                            <option key="non-generic" value= { false } >Non-Generic</option>
+                        </select>
                     </div>
                     <div>
                         <label className={styles.label}>Solution</label>
