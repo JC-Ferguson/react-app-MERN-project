@@ -46,7 +46,7 @@ class TopBar extends Component {
         const { token } = this.props;
         
         try {
-            const response = await customAxios.get('/confirmAdmin', {
+            await customAxios.get('/confirmAdmin', {
                 headers: {
                     'Authorization': 'Bearer ' + token
                 }
@@ -111,32 +111,6 @@ class TopBar extends Component {
         } else if (this.prerequisites.includes(query)) {
             this.setState( { querySolution: "", queryBenefits: "", queryPrereqs: query }, this.searchCall )
         }
-    }
-
-    testFunction = ()=>{
-        this.setState( { querySolution: "", queryBenefits: "", queryPrereqs: "", query: this.advSearch.current.state.value});
-        console.log(this.state);
-        const {query} = this.state;
-        const solutionsArr = [];
-        const teamsArr = [];
-        const prereqArr = [];
-        query.forEach(tag =>{
-            if(this.solutions.includes(tag)){
-                solutionsArr.push(tag);
-            } else if (this.teams.includes(tag)){
-                teamsArr.push(tag);
-            } else if (this.teams.prerequisites) {
-                prereqArr.push(tag)
-            }
-        })
-
-        console.log(solutionsArr, teamsArr, prereqArr );
-        axios.post(`${process.env.REACT_APP_EXPRESS}/category`, {
-            query,
-            solutionsArr,
-            teamsArr,
-            prereqArr
-        })
     }
 
     onLogout = () => {
