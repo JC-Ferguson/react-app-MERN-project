@@ -23,3 +23,7 @@
 .logout {
     margin: 30px 50px;
 } 
+
+.logout a{
+    margin-right: 10px;
+}

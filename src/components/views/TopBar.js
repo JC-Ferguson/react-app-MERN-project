@@ -123,6 +123,7 @@ class TopBar extends Component {
         })
         .then(response => {
             this.props.setSearchResult(response.data);
+            this.setState({value: []})
             this.props.history.push("/category");
         })
     }

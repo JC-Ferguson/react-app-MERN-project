@@ -22,7 +22,7 @@ class PdfViewer extends Component {
 
         return (
             <div className = {styling} >
-                <h1>{mostRecentDocument.location === id ? mostRecentDocument.name:"LESSON NOT FOUND"}</h1>
+                <h1>{mostRecentDocument && (mostRecentDocument.location === id ? mostRecentDocument.name:"LESSON NOT FOUND")}</h1>
                 <div id={containerId} className={styles.pdfViewer} style = {{width, height}} /> 
             </div>
         )

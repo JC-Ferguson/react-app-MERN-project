@@ -5,6 +5,7 @@ import styles from "./../../styles/SearchResult.module.css";
 import { setLastViewed } from "./../../actions";
 
 
+
 class SearchResult extends Component {
 
     state = {
@@ -23,6 +24,7 @@ class SearchResult extends Component {
 
     render(){
         const { title, date, solution, proficiency, content, desc, prereq, benefits, s3FileName, onShowPage } = this.props;
+
         return(
             <>  
                 <section className={ styles.resultContainer }>

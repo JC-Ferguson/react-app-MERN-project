@@ -23,9 +23,9 @@ class RelatedContent extends Component {
         const { learningContent, styles, heading, onShowPage } = this.props;
 
         // stringified to compare if two objects are identical. unread content is checking search results and filtering out the document that has most recently been read so it is not in related content for itself
-        const unreadContent = learningContent ? learningContent.filter(e => JSON.stringify(e) !== JSON.stringify(this.props.mostRecentDocument)) : null;
+        const unreadContent = (learningContent && Array.isArray(learningContent)) ? learningContent.filter(e => JSON.stringify(e) !== JSON.stringify(this.props.mostRecentDocument)) : null;
 
-        const relatedContent = learningContent ? this.getRandomContent(unreadContent, unreadContent.length > 3 ? 3 : unreadContent.length ) : null;
+        const relatedContent = learningContent && unreadContent ? this.getRandomContent(unreadContent, unreadContent.length > 3 ? 3 : unreadContent.length ) : null;
         return(
             <div className= {styles}>
                 {unreadContent && (heading?<h3>{heading}</h3> :<h3>BASED ON YOUR RECENT SEARCHES</h3>)}

@@ -47,6 +47,7 @@ class AddFilesForm extends Component {
         ],
         selectedFile: null,
         contentName: '',
+        generic: true,
         solution: 'AAC/ADCLOUD',
         dateCreated: '',
         proficiency: 'NA',
@@ -68,6 +69,7 @@ class AddFilesForm extends Component {
         const { 
             selectedFile,
             contentName,
+            generic,
             solution,
             dateCreated,
             proficiency, 
@@ -80,6 +82,7 @@ class AddFilesForm extends Component {
         let fileData = new FormData();
         fileData.append('file', selectedFile);
         fileData.append('name', contentName);
+        fileData.append('generic', generic);
         fileData.append('solution', solution);
         fileData.append('dateCreated', dateCreated);
         fileData.append('proficiency', proficiency);
@@ -150,7 +153,8 @@ class AddFilesForm extends Component {
             description,
             prerequisites,
             whoItBenefits,
-            submitted
+            submitted,
+            generic
         } = this.state;
 
         return (
@@ -164,6 +168,13 @@ class AddFilesForm extends Component {
                     <div>
                         <label className={styles.label}>Content Name</label>
                         <input className={styles.inputFilesForm} type='text' onChange={this.onInputChange('contentName')} value={contentName} />
+                    </div>
+                    <div>
+                        <label className={styles.label}>Content Type</label>
+                        <select className={styles.select} onChange={this.onInputChange('generic')} value={generic}>
+                            <option key="generic" value= {true} >Generic</option>
+                            <option key="non-generic" value= { false } >Non-Generic</option>
+                        </select>
                     </div>
                     <div>
                         <label className={styles.label}>Solution</label>
