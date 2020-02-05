@@ -1,8 +1,7 @@
 import axios from 'axios';
 
 const customAxios = axios.create({
-    baseURL: 'http://localhost:3001'
-    // 'https://accordanthelp.herokuapp.com'
+    baseURL: `${process.env.REACT_APP_EXPRESS}`
 });
 
 export default customAxios;
