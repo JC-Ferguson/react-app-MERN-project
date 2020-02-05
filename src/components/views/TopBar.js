@@ -40,7 +40,7 @@ class TopBar extends Component {
         'None Required'
     ];
 
-    state = { querySolution: "", queryBenefits: "", queryPrereqs: "", admin: false, loaded: false };
+    state = { querySolution: "", queryBenefits: "", queryPrereqs: "", admin: null, loaded: false };
 
     getAdminStatus = async () => {
         const { token } = this.props;
@@ -52,19 +52,29 @@ class TopBar extends Component {
                 }
             });
 
-            if (response.status === 200) {
-                this.setState({ admin: true, loaded: true });
-            } else {
-                this.setState({ loaded: true });
-            };
+            this.setState({ admin: true, loaded: true });
+           
         } catch(error) {
             console.log(error);
-            this.setState({ loaded: true });
+            this.setState({ loaded: true, admin: false });
         };
     };
 
     componentDidMount() {
-        this.getAdminStatus();
+        if(this.props.token && this.state.admin === null) {
+            this.getAdminStatus();
+        }
+    };
+
+    componentDidUpdate() {
+        if(this.props.token && this.state.admin === null) {
+            console.log("2");
+            this.getAdminStatus();
+        }
+        
+        if (!this.props.token && this.state.admin !== null) {
+            this.setState({ admin: null });
+        }
     };
 
     // axios request to express server to query MongoDB for files
@@ -101,8 +111,8 @@ class TopBar extends Component {
 
     // sets the token to null in redux
     onLogout = () => {
-        console.log('logout clicked');
         this.props.setAuthToken();
+        this.setState({ admin: false });
     }
 
     render(){

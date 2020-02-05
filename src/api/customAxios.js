@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 const customAxios = axios.create({
-    baseURL: 'https://accordanthelp.herokuapp.com'
+    baseURL: 'http://localhost:3001'
+    // 'https://accordanthelp.herokuapp.com'
 });
 
 export default customAxios;
