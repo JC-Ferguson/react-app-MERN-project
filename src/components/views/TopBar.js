@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Dropdown, Menu } from 'semantic-ui-react';
 import customAxios from '../../api/customAxios';
 import { connect } from "react-redux";
-import { setSearchResult, mostRecentSearch, setAuthToken } from "./../../actions";
+import { setSearchResult, mostRecentSearch, setAuthToken, setUser } from "./../../actions";
 import Logo from "./../../images/accordant-logo.png";
 import styles from "./../../styles/TopBar.module.css"
 
@@ -40,46 +40,7 @@ class TopBar extends Component {
         'None Required'
     ];
 
-    state = { querySolution: "", queryBenefits: "", queryPrereqs: "", admin: null, loaded: false };
-
-    getAdminStatus = async () => {
-        const { token } = this.props;
-        
-        try {
-            await customAxios.get('/confirmAdmin', {
-                headers: {
-                    'Authorization': 'Bearer ' + token
-                }
-            });
-
-            this.setState({ admin: true, loaded: true });
-           
-        } catch(error) {
-            console.log(error);
-            this.setState({ loaded: true, admin: false });
-        };
-    };
-
-    constructor(props){
-        super(props)
-        this.advSearch = React.createRef();
-    }
-
-    componentDidMount() {
-        if(this.props.token && this.state.admin === null) {
-            this.getAdminStatus();
-        }
-    };
-
-    componentDidUpdate() {
-        if(this.props.token && this.state.admin === null) {
-            this.getAdminStatus();
-        }
-        
-        if (!this.props.token && this.state.admin !== null) {
-            this.setState({ admin: null });
-        }
-    };
+    state = { querySolution: "", queryBenefits: "", queryPrereqs: "" };
 
     // axios request to express server to query MongoDB for files
     searchCall = () => {
@@ -98,7 +59,7 @@ class TopBar extends Component {
         })
     }
 
-            // saves selection from dropdown menu into state, then runs searchCall method
+    // saves selection from dropdown menu into state, then runs searchCall method
     onCategorySelect = (e) => {
         const query = e.target.innerHTML;
         this.props.mostRecentSearch(query);
@@ -115,15 +76,14 @@ class TopBar extends Component {
 
     onLogout = () => {
         this.props.setAuthToken();
-        this.setState({ admin: false });
+        this.props.setUser();
     }
 
     render(){
-        const { token } = this.props; 
+        const { token, user } = this.props; 
         const { admin } = this.state;
 
         const searchOptions = [...this.solutions, ...this.teams, ...this.prerequisites];
-        // console.log(searchOptions);
 
         const options=searchOptions.map(search=>{
             return {key: search, text: search, value: search}
@@ -176,20 +136,19 @@ class TopBar extends Component {
                     <button type="submit" onClick ={this.testFunction} >Search</button>
                 </Menu>
                 <div className={styles.logout}>
-                    {admin? <Link to='/admin'>Admin</Link> : null}
+                    {user && user.admin ? <Link to='/admin'>Admin</Link> : null}
                     {token ? <Link to='/login' onClick={this.onLogout}>Logout</Link> : <Link to='/login' >Login</Link>}
                 </div>
             </section>
-
         )
     }
 }
 
 const mapStateToProps = (state)=>{
-    const { token } = state.auth;
     return {
-        token: token
+        token: state.auth.token,
+        user: state.currentUser.user
     }
 }
 
-export default connect(mapStateToProps, { setSearchResult, mostRecentSearch, setAuthToken })(TopBar);
+export default connect(mapStateToProps, { setSearchResult, mostRecentSearch, setAuthToken, setUser })(TopBar);

@@ -9,6 +9,14 @@ export const setAuthToken = (token = null) => {
     };
 };
 
+export const setUser = (user = null) => {
+    sessionStorage.setItem("user", JSON.stringify(user));
+    return {
+        type: "USER",
+        payload: user
+    };
+};
+
 export const setSearchResult = ( result = "" ) =>{
     localStorage.setItem("learningContent", JSON.stringify(result));
     return {
