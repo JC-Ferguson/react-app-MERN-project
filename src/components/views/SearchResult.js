@@ -3,8 +3,13 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import styles from "./../../styles/SearchResult.module.css";
 import { setLastViewed } from "./../../actions";
-
-
+// import dateFlag from "./../../images/icons8-info-64.png";
+// checkIfOutdated(date){
+    //     const yearDiff = new Date().getFullYear() - new Date(date).getFullYear();
+    //     const outOfDate = yearDiff > 1 ? true : false;
+    //     return outOfDate;
+    // }
+    // {this.checkIfOutdated(date) ? <div className={styles.popup}><img className={styles.flaggedImage} src={dateFlag} alt="info flag icon" /><span className = {styles.popuptext} id = "myPopup" >This content is potentially out of date</span></div> : null}
 
 class SearchResult extends Component {
 

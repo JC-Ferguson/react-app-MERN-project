@@ -5,96 +5,72 @@ import customAxios from '../../api/customAxios';
 import { connect } from "react-redux";
 import { setSearchResult, mostRecentSearch, setAuthToken } from "./../../actions";
 import Logo from "./../../images/accordant-logo.png";
-import styles from "./../../styles/TopBar.module.css"
+import styles from "./../../styles/TopBar.module.css";
+import {solutions, teams, prerequisites} from "./../../services/category_tags";
 
 class TopBar extends Component {
-    solutions = [
-        "Adobe Experience Cloud (AEC)", 
-        "Adobe Analytics, Dynamic Tag Management (AA)", 
-        "Adobe Target (AT)", 
-        "Adobe Audience Member (AAM)", 
-        "Adobe Campaign (AC)",
-        "Adobe Advertising Cloud, Paid Media (AAC/ADCLOUD)",
-        "Other"
-    ];
-    teams = [
-        "AT Owners", "Project Managers", "AT Implementation Team", "Content Team", "AEC Owners", "Stakeholders",
-        "AdCloud Users", "Optimisation Team", "SEM/Media Team", "Performance Marketing Team", "Advertisers",
-        "AEC Technical Team", "Project Teams", "Agile Teams", "Internal Optimisation", "Strategy Team",
-        "Tech Team", "Developers", "AA Analysts", "AA Owners", "AEC Owners and Managers",
-        "AAM Users", "AT Users", "AT Analysts", "AT Performance/Reporting Team", "AA Developers", "Social Media Team", 
-        "AT Recommendations Users", "AT Recommendations Implementation Team", "AA Users", "Tag Specialists", "Teams That Will Engage with Design Team",
-        "Teams That Will Engage with PDD", "Tech Implementation Team", "Display/Media Team", "AEM Owners", "Anyone New to Programmatic",
-        "AT Implementation/QA Team", "Leads and Stakeholders", "Product Team", "NA", "Solution Specialists", "AAM Planners",
-        "AAM Tech Team", "Data, Team", "Tag Managers", "Analytics Managers", "Implementation Specialists", "Various"
-    ];
-    prerequisites=[
-        'has AA',
-        'has AT',
-        'has AAC',
-        'has AdCloud',
-        'has AEM',
-        'has AT Premium',
-        'has DTM',
-        'no AT',
-        'None Required'
-    ];
-
-    state = { querySolution: "", queryBenefits: "", queryPrereqs: "", value: [], admin: false, loaded: false };
+    state = { querySolution: "", queryBenefits: "", queryPrereqs: "", value: [], admin: null, loaded: false };
 
     // checks if current user is admin
     getAdminStatus = async () => {
         const { token } = this.props;
         
         try {
-            const response = await customAxios.get('/confirmAdmin', {
+            await customAxios.get('/confirmAdmin', {
                 headers: {
                     'Authorization': 'Bearer ' + token
                 }
-            });            
-            if (response.status === 200) {
-                this.setState({ admin: true, loaded: true });
-            } else {
-                this.setState({ loaded: true });
-            };
+            });
+
+            this.setState({ admin: true, loaded: true });
+           
         } catch(error) {
             console.log(error);
-            this.setState({ loaded: true });
+            this.setState({ loaded: true, admin: false });
         };
     };
 
     componentDidMount() {
-        this.getAdminStatus();
+        if(this.props.token && this.state.admin === null) {
+            this.getAdminStatus();
+        }
     };
 
-        // axios request to express server to query MongoDB for files
-        searchCall = () => {
-            const { queryBenefits, querySolution, queryPrereqs} = this.state;
-            customAxios.post("/category", {
-                querySolution,
-                queryBenefits,
-                queryPrereqs
-            })
-            .then(response => {
-                this.props.setSearchResult(response.data);
-                return response.data;
-            })
-            .then(data => {
-                this.props.history.push("/category");
-            })
+    componentDidUpdate() {
+        if(this.props.token && this.state.admin === null) {
+            this.getAdminStatus();
         }
+        
+        if (!this.props.token && this.state.admin !== null) {
+            this.setState({ admin: null });
+        }
+    };
+
+    // axios request to express server to query MongoDB for files
+    searchCall = () => {
+        const { queryBenefits, querySolution, queryPrereqs} = this.state;
+        customAxios.post("/category", {
+            querySolution,
+            queryBenefits,
+            queryPrereqs
+        })
+        .then(response => {
+            this.props.setSearchResult(response.data);
+            this.props.history.push("/category");
+        })
+    }
 
     // saves selection from dropdown menu into state, then runs searchCall method
     onCategorySelect = (e) => {
         const query = e.target.innerHTML;
         this.props.mostRecentSearch(query);
 
-        if(this.teams.includes(query)){
+        if(teams.includes(query)){
             this.setState({ queryBenefits: query, querySolution: "", queryPrereq: "" }, this.searchCall)
-        } else if(this.solutions.includes(query)) {
+        } else if(solutions.includes(query)) {
             const shortenedQuery = query.match(/(?<=\().*(?=\))/);
             this.setState( { querySolution: shortenedQuery, queryBenefits: "", queryPrereq: "" }, this.searchCall )
-        } else if (this.prerequisites.includes(query)) {
+        } else if (prerequisites.includes(query)) {
             this.setState( { querySolution: "", queryBenefits: "", queryPrereqs: query }, this.searchCall )
         }
     }
@@ -106,11 +82,11 @@ class TopBar extends Component {
         const teamsArr = [];
         const prereqArr = [];
         value.forEach(tag =>{
-            if(this.solutions.includes(tag)){
+            if(solutions.includes(tag)){
                 solutionsArr.push(tag);
-            } else if (this.teams.includes(tag)){
+            } else if (teams.includes(tag)){
                 teamsArr.push(tag);
-            } else if (this.prerequisites.includes(tag)) {
+            } else if (prerequisites.includes(tag)) {
                 prereqArr.push(tag)
             }
         })
@@ -130,6 +106,7 @@ class TopBar extends Component {
 
     onLogout = () => {
         this.props.setAuthToken();
+        this.setState({ admin: false });
     }
 
     handleChange = (e, { value }) => this.setState({ value });
@@ -138,7 +115,7 @@ class TopBar extends Component {
         const { token } = this.props; 
         const { admin, value } = this.state;
 
-        const searchOptions = [...this.solutions, ...this.teams, ...this.prerequisites];
+        const searchOptions = [...solutions, ...teams, ...prerequisites];
 
         const options=searchOptions.map(search=>{
             return {key: search, text: search, value: search}
@@ -157,7 +134,7 @@ class TopBar extends Component {
                                 <Dropdown text="Solutions">
                                     <Dropdown.Menu>
                                         <Dropdown.Header >Solutions</Dropdown.Header>
-                                        {this.solutions.map(solution =>{
+                                        {solutions.map(solution =>{
                                             return(
                                                 <Dropdown.Item key={solution} onClick = {this.onCategorySelect} >{solution}</Dropdown.Item>
                                             )
@@ -169,7 +146,7 @@ class TopBar extends Component {
                                 <Dropdown text='Teams'>
                                     <Dropdown.Menu>
                                     <Dropdown.Header>Teams</Dropdown.Header>
-                                    {this.teams.sort().map(team =>{
+                                    {teams.sort().map(team =>{
                                         return(<Dropdown.Item key={team} onClick = {this.onCategorySelect} >{team}</Dropdown.Item>)
                                     })}
                                     </Dropdown.Menu>
@@ -179,7 +156,7 @@ class TopBar extends Component {
                                     <Dropdown text = "Prerequisites">
                                         <Dropdown.Menu >
                                             <Dropdown.Header>Prerequisites</Dropdown.Header>
-                                            {this.prerequisites.sort().map(element=>{
+                                            {prerequisites.sort().map(element=>{
                                                 return <Dropdown.Item key={element} onClick ={this.onCategorySelect} >{element}</Dropdown.Item>
                                             })}
                                         </Dropdown.Menu>
@@ -191,11 +168,10 @@ class TopBar extends Component {
                     <button type="submit" onClick ={this.advanceSearch} >Search</button>
                 </Menu>
                 <div className={styles.logout}>
-                    {admin? <Link to='/admin'>Admin</Link> : null}
+                    {admin ? <Link to='/admin'>Admin</Link> : null}
                     {token ? <Link to='/login' onClick={this.onLogout}>Logout</Link> : <Link to='/login' >Login</Link>}
                 </div>
             </section>
-
         )
     }
 }
