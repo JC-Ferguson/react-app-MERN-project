@@ -17,7 +17,7 @@ class AdminRoute extends Component {
         return (
             <Route {...rest}
                 render={props => {
-                    return user.admin ? <Component {...props} /> : <Redirect to='/login' />
+                    return (user && user.admin) ? <Component {...props} /> : <Redirect to='/login' />
                 }}
             />
         )
