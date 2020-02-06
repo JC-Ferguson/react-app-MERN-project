@@ -57,7 +57,7 @@ class TopBar extends Component {
                 prereqArr.push(tag)
             }
         })
-
+    
         customAxios.post("/category", {
             value,
             solutionsArr,
@@ -65,6 +65,7 @@ class TopBar extends Component {
             prereqArr
         })
         .then(response => {
+            console.log(response)
             this.props.setSearchResult(response.data);
             this.setState({ value: [] })
             this.props.history.push("/category");
