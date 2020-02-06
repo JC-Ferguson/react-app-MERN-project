@@ -16,6 +16,14 @@
     margin: 14pm 30px;
 }
 
+#advSearch {
+    min-width: 15vw;
+}
+
 .logout {
     margin: 30px 50px;
 } 
+
+.logout a{
+    margin-right: 10px;
+}

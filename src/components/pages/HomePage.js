@@ -34,7 +34,7 @@ class HomePage extends Component {
                     })}
                 </div>
                 {mostRecentDocument && < section >
-                    <h3>Last Viewed</h3>
+                    <h3 className = {styles.title} >Last Viewed</h3>
                     < SearchResult 
                         title = {mostRecentDocument.name}
                         date = {mostRecentDocument.tags.createdOn}
@@ -55,6 +55,7 @@ class HomePage extends Component {
     }
 }
 
+// sets most recent document viewed and search query return to props from redux state
 const mapStateToProps=(state)=>{
     const { mostRecentDocument } = state.lastViewed;
     const { learningContent } = state.searchResult;

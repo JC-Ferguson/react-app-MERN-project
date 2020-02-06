@@ -16,3 +16,13 @@
 .homeContainer {
     width: 100%;
 }
+
+.homeContainer > div {
+    display: flex;
+    overflow: scroll;
+}
+
+.homeContainer > h3 {
+    padding: 1em 0.5em;
+    margin: 0 15vw;
+}

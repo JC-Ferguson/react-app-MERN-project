@@ -7,7 +7,10 @@ class RegisterPage extends Component {
     render() {
         return (
             <div className={styles.flex}>
-                <Blurb heading ="AccordantHelp" blurb = "The AccordantHelp library is a collection of documents used to train accordant staff and clients on the suite of Adobe products offered at Accordant." />
+                <Blurb 
+                    heading ="AccordantHelp" 
+                    blurb = "The AccordantHelp library is a collection of documents used to train accordant staff and clients on the suite of Adobe products offered at Accordant." 
+                />
                 <RegisterForm  {...this.props}/>
             </div>
         )

@@ -1,6 +1,7 @@
 // create a function which returns an object with type: 'AUTH_TOKEN' and a payload token
 // export the function
 
+// action creator for auth token
 export const setAuthToken = (token = null) => {
     sessionStorage.setItem("token", token);
     return {
@@ -9,6 +10,7 @@ export const setAuthToken = (token = null) => {
     };
 };
 
+// action creator for user
 export const setUser = (user = null) => {
     sessionStorage.setItem("user", JSON.stringify(user));
     return {
@@ -17,6 +19,7 @@ export const setUser = (user = null) => {
     };
 };
 
+// action creator for learning content from database
 export const setSearchResult = ( result = "" ) =>{
     localStorage.setItem("learningContent", JSON.stringify(result));
     return {
@@ -25,6 +28,7 @@ export const setSearchResult = ( result = "" ) =>{
     }
 }
 
+// action creator for most recent search query
 export const mostRecentSearch = (query = null ) =>{
     localStorage.setItem("mostRecentSearch", query)
     return {
@@ -33,6 +37,7 @@ export const mostRecentSearch = (query = null ) =>{
     }
 }
 
+// action creator for last viewed document
 export const setLastViewed = (content = null) =>{
     localStorage.setItem("lastViewed", JSON.stringify(content))
     return {
