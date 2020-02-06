@@ -65,7 +65,6 @@ class TopBar extends Component {
             prereqArr
         })
         .then(response => {
-            console.log(response)
             this.props.setSearchResult(response.data);
             this.setState({ value: [] })
             this.props.history.push("/category");
