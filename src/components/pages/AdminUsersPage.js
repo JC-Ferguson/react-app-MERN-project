@@ -30,9 +30,8 @@ class AdminUsersPage extends Component {
                 }
             });
             users = JSON.parse(users);
-            // sort users so pending users are above non-pending
-            // then users that have been waiting the longest for approval should be at the top
-            // then non-pending users are sorted alphabetically by email
+
+            // sort users so pending users are above non-pending, then time, then alphabetical
             users.sort((a, b) => {
                 if (a.pending && b.pending) {
                     return a.dateCreated - b.dateCreated; 
@@ -47,7 +46,6 @@ class AdminUsersPage extends Component {
                 }
             });
 
-            // save users from http request into state
             this.setState({ users: users });
         } catch(error) {
             console.log(error);
@@ -59,7 +57,6 @@ class AdminUsersPage extends Component {
     onCheckboxToggle = (id) => {
         return async () => {
             const { token } = this.props;
-            // post the id and auth header to the /toggleApproval route in the backend
             await customAxios.post('/toggleApproval', { id }, {
                 headers: {
                     'Authorization': 'Bearer ' + token

@@ -5,19 +5,22 @@ import styles from "./../../styles/ShowContentPage.module.css";
 
 class PdfViewer extends Component {
 
-    componentDidMount() {
-        // node package that renders pdf files directly in browser
-        const {pdfBlob, containerId} = this.props;      
+    // renders pdf files directly in browser
+    embedPDF = () => {
+        const { pdfBlob, containerId } = this.props;      
         PDFObject.embed(`${process.env.REACT_APP_EXPRESS}/file/${pdfBlob}`, `#${containerId}`)
+    }
+
+    componentDidMount() {
+        this.embedPDF();
     }
 
     componentDidUpdate(){
-        const {pdfBlob, containerId} = this.props;      
-        PDFObject.embed(`${process.env.REACT_APP_EXPRESS}/file/${pdfBlob}`, `#${containerId}`)
+        this.embedPDF();
     }
 
     render(){
-        const {width, height, containerId, styling, mostRecentDocument} = this.props;
+        const { width, height, containerId, styling, mostRecentDocument } = this.props;
         const { id } = this.props.match.params;
 
         return (

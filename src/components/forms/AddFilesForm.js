@@ -36,9 +36,9 @@ class AddFilesForm extends Component {
         this.fileInput = React.createRef()
     }
     
+    // send data from form to express server using axios
     onFormSubmit = (event) => {
         event.preventDefault();
-        // pull data we need off state
         const { 
             selectedFile,
             contentName,
@@ -89,12 +89,14 @@ class AddFilesForm extends Component {
         this.fileInput.current.value = '';
     }
 
+    // closure used to set state based on fieldName parameter
     onInputChange = (fieldName) => {
         return (event) => {
             this.setState({ [fieldName]: event.target.value });
         }
     }
 
+    // sets state by using an array of all elements selected in select tag
     onSelectInputChange = (fieldName) => {
         return (event) => {
             const options = event.target.options;
@@ -108,6 +110,7 @@ class AddFilesForm extends Component {
         }
     }
 
+    // sets state using the file uploaded
     onFileUploadChange = (event) => {
         this.setState({ selectedFile: event.target.files[0] });
     }

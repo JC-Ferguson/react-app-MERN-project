@@ -14,6 +14,7 @@ class AdminRoute extends Component {
     render() {
         const { user, component: Component, ...rest } = this.props;
 
+        // if user is admin, return a route, else redirect to login
         return (
             <Route {...rest}
                 render={props => {
@@ -24,5 +25,4 @@ class AdminRoute extends Component {
     };
 };
 
-// connect to the redux store
 export default connect(mapStateToProps)(AdminRoute);

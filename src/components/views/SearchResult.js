@@ -48,7 +48,6 @@ class SearchResult extends Component {
     }
 }
 
-// function stores learning content search return and last viewed document of redux state in props 
 const mapStateToProps = (state)=>{
     const { learningContent } = state.searchResult;
     const { mostRecentDocument }= state.lastViewed;

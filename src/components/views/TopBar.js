@@ -33,15 +33,17 @@ class TopBar extends Component {
         if(teams.includes(query)){
             this.setState({ queryBenefits: query, querySolution: "", queryPrereq: "" }, this.searchCall)
         } else if(solutions.includes(query)) {
-            const shortenedQuery = query.match(/(?<=\().*(?=\))/);
+            const shortenedQuery = query.match(/(?<=\().*(?=\))/) || query;
             this.setState( { querySolution: shortenedQuery, queryBenefits: "", queryPrereq: "" }, this.searchCall )
         } else if (prerequisites.includes(query)) {
             this.setState( { querySolution: "", queryBenefits: "", queryPrereqs: query }, this.searchCall )
         }
     }
 
+    // uses array of selected search tags and saves into separate arrays based on category
+    // sends searches to Express server and sets search results in redux
     advanceSearch = ()=>{
-        const {value} = this.state;
+        const { value } = this.state;
         this.props.mostRecentSearch(value);
         const solutionsArr = [];
         const teamsArr = [];
@@ -64,16 +66,18 @@ class TopBar extends Component {
         })
         .then(response => {
             this.props.setSearchResult(response.data);
-            this.setState({value: []})
+            this.setState({ value: [] })
             this.props.history.push("/category");
         })
     }
 
+    // on logout, set auth token and user to null in redux
     onLogout = () => {
         this.props.setAuthToken();
         this.props.setUser();
     }
 
+    // update state based on tags selected in advanced search
     handleChange = (e, { value }) => this.setState({ value });
 
     render(){
