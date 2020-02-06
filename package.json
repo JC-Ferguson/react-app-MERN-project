@@ -44,6 +44,9 @@
     ]
   },
   "devDependencies": {
-    "jest": "^24.9.0"
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
+    "jest": "^24.9.0",
+    "jest-enzyme": "^7.1.2"
   }
 }

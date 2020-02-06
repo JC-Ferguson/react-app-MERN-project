@@ -57,7 +57,7 @@ class TopBar extends Component {
                 prereqArr.push(tag)
             }
         })
-
+    
         customAxios.post("/category", {
             value,
             solutionsArr,
