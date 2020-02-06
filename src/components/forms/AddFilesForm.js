@@ -156,7 +156,7 @@ class AddFilesForm extends Component {
                         <label className={styles.label}>Solution</label>
                         <select className={styles.select} onChange={this.onInputChange('solution')} value={solution}>
                             {solutionsList.sort().map((element) => {
-                                return <option key={element} value={element.match(/(?<=\().*(?=\))/)}>{element}</option>
+                                return <option key={element} value={element.match(/(?<=\().*(?=\))/) || element}>{element}</option>
                             })}
                         </select>
                     </div>
