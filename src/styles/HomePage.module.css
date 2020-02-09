@@ -3,14 +3,15 @@
     margin: 0 15vw;
 }
 
-.solutionsContainer {
+/* .solutionsContainer {
     margin: 2.5em 20vw;
-}
+} */
 
-.solutionsContainer div{
+.solutionsContainer > div{
     margin-bottom: 2.5em;
     padding: 1em;
     max-width: inherit;
+    height: 45vh !important;
 }
 
 .homeContainer {
@@ -26,3 +27,30 @@
     padding: 1em 0.5em;
     margin: 0 15vw;
 }
+
+* {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.gallery {
+    background: rgb(255,255,255);
+}
+
+.galleryCell {
+    width: 66%;
+    height: 40vh;
+    margin-right: 10px;
+    padding: 0.5rem 1rem;
+    background: rgb(0,0,0);
+    counter-increment: galleryCell;
+}
+
+  /* .galleryCell:before {
+    display: block;
+    text-align: center;
+    content: counter(gallery-cell);
+    line-height: 200px;
+    font-size: 80px;
+    color: white;
+  } */

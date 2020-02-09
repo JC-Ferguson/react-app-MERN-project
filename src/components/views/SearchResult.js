@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import styles from "./../../styles/SearchResult.module.css";
 import { setLastViewed } from "./../../actions";
+import infoLogo from "./../../images/icons8-info-64.png";
 
 class SearchResult extends Component {
     state = {
@@ -19,14 +20,26 @@ class SearchResult extends Component {
         }
     }
 
+    checkIfOutdated(date){
+        const yearDiff = new Date().getFullYear() - new Date(date).getFullYear();
+        const outOfDate = yearDiff > 1;
+        return outOfDate
+    }
+
     render(){
         const { title, date, solution, proficiency, content, desc, prereq, benefits, s3FileName, onShowPage } = this.props;
 
+        this.checkIfOutdated(date)
         return(
             <>  
                 <section className={ styles.resultContainer }>
                     <div className = {styles.title}> 
-                        <Link to={`/lesson/${s3FileName}`}><h1 onClick = {this.saveAsViewed} >{title}</h1></Link><h3>Created On: {date}</h3>
+                        <Link to={`/lesson/${s3FileName}`}><h1 onClick = {this.saveAsViewed} >{title}</h1></Link>
+                        <h3>Created On: {date}
+                            {this.checkIfOutdated(date) ? <span title= "This content may be out of date.">
+                                <img className={styles.flaggedImage} src={infoLogo} alt= "info icon"/>
+                            </span> : null }
+                        </h3>
                     </div>
                     <div className = {styles.spContainer}>
                         <div><h3>Solution:</h3><p>{solution}</p></div>

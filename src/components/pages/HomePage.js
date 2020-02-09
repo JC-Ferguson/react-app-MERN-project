@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import Blurb from '../views/Blurb';
 import styles from "./../../styles/HomePage.module.css";
+import "./../../styles/homePage.css";
 import RelatedContent from './../views/RelatedContent';
 import SearchResult from "./../views/SearchResult";
 
@@ -24,10 +25,10 @@ class HomePage extends Component {
         return (
             <>
                 <h2 className = {styles.title}>Available Solutions</h2>
-                <div className={styles.solutionsContainer}>
+                <div className={`${styles.solutionsContainer} ${styles.gallery} js-flickity`} data-flickity-options='{ "wrapAround": true }' >
                     {solutionKeys.map((key, index) => {
                         return (
-                            <section key = {key}>
+                            <section key = {key} className= {styles.galleryCell}>
                                 <Blurb heading= {solutionKeys[index]} blurb= {solutionsDesc[key]} />
                             </section>                            
                         )
