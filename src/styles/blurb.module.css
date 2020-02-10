@@ -1,7 +1,13 @@
 .blurbContainer {
-    max-width: 400px;
+    max-width: 500px;
+    margin: auto;
+}
+
+.p {
+    font-size: 20px;
+    line-height: 1.5;
 }
 
 .h1, .p {
-    color: rgb(0, 174, 239)
-}
+    color: rgb(0, 174, 239);
+} 

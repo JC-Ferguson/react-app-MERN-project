@@ -13,3 +13,7 @@ option, select {
     font-size: 14px;
     line-height: 1.2;
 }
+
+.solutions {
+    text-align: center !important;
+}

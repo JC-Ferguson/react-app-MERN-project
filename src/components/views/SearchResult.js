@@ -20,6 +20,7 @@ class SearchResult extends Component {
         }
     }
 
+    // function checks date content was uploaded/edited with current date
     checkIfOutdated(date){
         const yearDiff = new Date().getFullYear() - new Date(date).getFullYear();
         const outOfDate = yearDiff > 1;
@@ -29,7 +30,6 @@ class SearchResult extends Component {
     render(){
         const { title, date, solution, proficiency, content, desc, prereq, benefits, s3FileName, onShowPage } = this.props;
 
-        this.checkIfOutdated(date)
         return(
             <>  
                 <section className={ styles.resultContainer }>

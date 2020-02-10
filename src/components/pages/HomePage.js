@@ -2,9 +2,12 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import Blurb from '../views/Blurb';
 import styles from "./../../styles/HomePage.module.css";
-import "./../../styles/homePage.css";
 import RelatedContent from './../views/RelatedContent';
 import SearchResult from "./../views/SearchResult";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import "./../../styles/HomePage.css";
 
 
 class HomePage extends Component {
@@ -19,21 +22,33 @@ class HomePage extends Component {
         }
 
         const solutionKeys = Object.keys(solutionsDesc);
+        const settings = {
+            adaptiveHeight: true,
+            autoplay: true,
+            autoplaySpeed: 8000,
+            centreMode: true,
+            className: "solutions",
+            dots: true,
+            infinite: true,
+            speed: 1000,
+            slidesToShow: 1,
+            slidesToScroll: 1
+        }
 
         const { mostRecentDocument, learningContent } = this.props;
 
         return (
             <>
                 <h2 className = {styles.title}>Available Solutions</h2>
-                <div className={`${styles.solutionsContainer} ${styles.gallery} js-flickity`} data-flickity-options='{ "wrapAround": true }' >
+                <Slider {...settings}>
                     {solutionKeys.map((key, index) => {
                         return (
-                            <section key = {key} className= {styles.galleryCell}>
+                            <section key = {key} className= {styles.solution}>
                                 <Blurb heading= {solutionKeys[index]} blurb= {solutionsDesc[key]} />
                             </section>                            
                         )
                     })}
-                </div>
+                </Slider>
                 {mostRecentDocument && < section >
                     <h3 className = {styles.title} >Last Viewed</h3>
                     < SearchResult 
