@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+import customAxios from "./../../api/customAxios";
+import { setSearchResult, mostRecentSearch } from "./../../actions"
 import Blurb from '../views/Blurb';
 import styles from "./../../styles/HomePage.module.css";
 import RelatedContent from './../views/RelatedContent';
@@ -10,6 +13,29 @@ import "slick-carousel/slick/slick-theme.css";
 
 
 class HomePage extends Component {
+    state = { querySolution: "", queryBenefits: "", queryPrereqs: "" };
+
+    onCategorySelect = (query)=>{
+        this.props.mostRecentSearch(query);
+
+        const shortenedQuery = query.match(/(?<=\().*(?=\))/);
+        console.log(shortenedQuery);
+        this.setState( { querySolution: shortenedQuery, queryBenefits: "", queryPrereqs: "" }, this.searchCall );
+    }
+
+    searchCall = () => {
+        const { queryBenefits, querySolution, queryPrereqs} = this.state;
+        customAxios.post("/category", {
+            querySolution,
+            queryBenefits,
+            queryPrereqs
+        })
+        .then(response => {
+            this.props.setSearchResult(response.data);
+            this.props.history.push("/category");
+        })
+    }
+
     render() {
         const solutionsDesc = {
             "Adobe Advertising Cloud, Paid Media (AAC/ADCLOUD)": "Adobe Advertising Cloud is an ad management product and is part of the Adobe Marketing Cloud. It delivers a rules-based bidding solution that improves the performance of search engine marketing campaigns and is integrated with Adobe Analytics.",
@@ -43,8 +69,8 @@ class HomePage extends Component {
                 <Slider {...settings}>
                     {solutionKeys.map((key, index) => {
                         return (
-                            <section key = {key} className= {styles.solution}>
-                                <Blurb heading= {solutionKeys[index]} blurb= {solutionsDesc[key]} />
+                            <section key = {key} className= {styles.solution} onClick = {()=>this.onCategorySelect(key)} >
+                                <Link>< Blurb heading= {solutionKeys[index]} blurb= {solutionsDesc[key]} /></Link>
                             </section>                            
                         )
                     })}
@@ -83,4 +109,4 @@ const mapStateToProps=(state)=>{
     }
 }
 
-export default connect(mapStateToProps)(HomePage);
+export default connect(mapStateToProps, { mostRecentSearch, setSearchResult })(HomePage);

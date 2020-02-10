@@ -10,5 +10,5 @@ export default combineReducers({
     searchResult: searchResultReducer,
     mostRecentSearch: mostRecentSearchReducer,
     lastViewed: lastViewedReducer,
-    currentUser: userReducer
+    currentUser: userReducer,
 });

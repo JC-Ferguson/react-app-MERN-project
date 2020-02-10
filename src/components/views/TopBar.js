@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import { setSearchResult, mostRecentSearch, setAuthToken, setUser } from "./../../actions";
 import Logo from "./../../images/accordant-logo.png";
 import styles from "./../../styles/TopBar.module.css";
-import {solutions, teams, prerequisites} from "./../../services/category_tags";
+import { solutions, teams, prerequisites } from "./../../services/category_tags";
 
 class TopBar extends Component {
     state = { querySolution: "", queryBenefits: "", queryPrereqs: "", value: [] };
@@ -31,10 +31,10 @@ class TopBar extends Component {
         this.props.mostRecentSearch(query);
 
         if(teams.includes(query)){
-            this.setState({ queryBenefits: query, querySolution: "", queryPrereq: "" }, this.searchCall)
+            this.setState({ queryBenefits: query, querySolution: "", queryPrereqs: "" }, this.searchCall)
         } else if(solutions.includes(query)) {
             const shortenedQuery = query.match(/(?<=\().*(?=\))/) || query;
-            this.setState( { querySolution: shortenedQuery, queryBenefits: "", queryPrereq: "" }, this.searchCall )
+            this.setState( { querySolution: shortenedQuery, queryBenefits: "", queryPrereqs: "" }, this.searchCall )
         } else if (prerequisites.includes(query)) {
             this.setState( { querySolution: "", queryBenefits: "", queryPrereqs: query }, this.searchCall )
         }
