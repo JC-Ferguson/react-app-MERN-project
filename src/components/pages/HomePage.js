@@ -7,7 +7,6 @@ import SearchResult from "./../views/SearchResult";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import "./../../styles/HomePage.css";
 
 
 class HomePage extends Component {
@@ -33,13 +32,14 @@ class HomePage extends Component {
             speed: 1000,
             slidesToShow: 1,
             slidesToScroll: 1
-        }
+        };
 
         const { mostRecentDocument, learningContent } = this.props;
 
         return (
             <>
                 <h2 className = {styles.title}>Available Solutions</h2>
+                <span className = {styles.blueLine}></span>
                 <Slider {...settings}>
                     {solutionKeys.map((key, index) => {
                         return (
@@ -51,6 +51,7 @@ class HomePage extends Component {
                 </Slider>
                 {mostRecentDocument && < section >
                     <h3 className = {styles.title} >Last Viewed</h3>
+                    <span className = {styles.blueLine}></span>
                     < SearchResult 
                         title = {mostRecentDocument.name}
                         date = {mostRecentDocument.tags.createdOn}
@@ -64,6 +65,7 @@ class HomePage extends Component {
                     />   
                 </section>}
                 {learningContent && < section >
+                    {learningContent.length > 1 ? <><h3 className = {styles.title} >Based on your recent searches:</h3><span className = {styles.blueLine}></span></> : null}
                     < RelatedContent styles = {styles.homeContainer} />
                 </section>}
             </>

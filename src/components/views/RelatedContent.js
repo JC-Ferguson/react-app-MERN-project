@@ -26,11 +26,11 @@ class RelatedContent extends Component {
         const unreadContent = (learningContent && Array.isArray(learningContent)) ? learningContent.filter(e => JSON.stringify(e) !== JSON.stringify(this.props.mostRecentDocument)) : null;
 
         const relatedContent = learningContent && unreadContent[0] ? this.getRandomContent(unreadContent, unreadContent.length > 3 ? 3 : unreadContent.length ) : null;
-        // relatedContent.length ? relatedContent : null;
+
         return(
             <div className= {styles}>
-                {unreadContent.length && ( heading ? <h3>{heading}</h3> : <h3>BASED ON YOUR RECENT SEARCHES</h3> )}
-                        {relatedContent && relatedContent.map(content =>{
+                { heading ? <h3>{heading}</h3> : null}
+                    {relatedContent &&  relatedContent.map(content =>{
                             return(
                                 < SearchResult
                                     key ={content.location}
@@ -47,8 +47,10 @@ class RelatedContent extends Component {
                                 />
                             )
                         })}
-            </div>
+            </div> 
+        
         )
+        
     }
 }
 

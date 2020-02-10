@@ -7,7 +7,6 @@ class CategoryPage extends Component {
         const { learningContent, mostRecentQuery } = this.props;
         return(
             <> 
-                <h1>Category Page</h1>
                 <h2>Showing Search Results for: {(mostRecentQuery && Array.isArray(mostRecentQuery)) ? mostRecentQuery.join(", ") : mostRecentQuery}</h2>
                 {learningContent && (learningContent.length ? learningContent.map(content =>{
                     return(

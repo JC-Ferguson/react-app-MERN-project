@@ -17,3 +17,7 @@ option, select {
 .solutions {
     text-align: center !important;
 }
+
+.slick-dots {
+    position: static;
+}
