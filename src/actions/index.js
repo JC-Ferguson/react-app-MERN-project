@@ -45,3 +45,11 @@ export const setLastViewed = (content = null) =>{
         payload: content
     }
 }
+
+export const setProgressTracker = (progress = []) =>{
+    localStorage.setItem("progressTracker", JSON.stringify(progress));
+    return {
+        type: "PROGRESS_TRACKER",
+        payload: progress
+    }
+}

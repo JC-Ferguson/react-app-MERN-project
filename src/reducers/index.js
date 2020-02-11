@@ -4,6 +4,7 @@ import searchResultReducer from "./search_result_reducer";
 import mostRecentSearchReducer from "./most_recent_search_reducer";
 import lastViewedReducer from "./last_viewed_reducer";
 import userReducer from './user_reducer';
+import progressTrackerReducer from "./progress_tracker_reducer";
 
 export default combineReducers({
     auth: authReducer,
@@ -11,4 +12,5 @@ export default combineReducers({
     mostRecentSearch: mostRecentSearchReducer,
     lastViewed: lastViewedReducer,
     currentUser: userReducer,
+    progressTracker: progressTrackerReducer
 });

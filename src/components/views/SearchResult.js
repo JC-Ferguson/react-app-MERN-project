@@ -2,20 +2,29 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import styles from "./../../styles/SearchResult.module.css";
-import { setLastViewed } from "./../../actions";
+import { setLastViewed, setProgressTracker } from "./../../actions";
 import infoLogo from "./../../images/icons8-info-64.png";
 
 class SearchResult extends Component {
     state = {
         lastViewed: this.props.mostRecentDocument,
+        viewedContent: this.props.progressTracker
     }
 
     // function saves the selected file as the last viewed document
     saveAsViewed = (e)=>{
         for (let content of this.props.learningContent){
             if (content.name===e.target.innerHTML){
-                this.props.setLastViewed(content);
-                this.setState({ lastViewed: content});
+                const { setLastViewed, setProgressTracker, progressTracker } = this.props;
+                setLastViewed(content);
+                this.setState({ lastViewed: content })
+
+                const viewTracker = [JSON.stringify(content)];
+
+                if (!progressTracker.includes(viewTracker[0])){
+                    setProgressTracker([...progressTracker, ...viewTracker])
+                    this.setState({ viewedContent: this.props.progressTracker });
+                }
             }
         }
     }
@@ -63,11 +72,13 @@ class SearchResult extends Component {
 
 const mapStateToProps = (state)=>{
     const { learningContent } = state.searchResult;
-    const { mostRecentDocument }= state.lastViewed;
+    const { mostRecentDocument } = state.lastViewed;
+    const { progressTracker } = state.progressTracker
     return {
         learningContent: learningContent,
-        mostRecentDocument: mostRecentDocument
+        mostRecentDocument: mostRecentDocument,
+        progressTracker: progressTracker
     }
 }
 
-export default connect(mapStateToProps , {setLastViewed})(SearchResult);
+export default connect(mapStateToProps , {setLastViewed, setProgressTracker})(SearchResult);

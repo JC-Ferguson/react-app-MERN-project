@@ -7,6 +7,7 @@ import Blurb from '../views/Blurb';
 import styles from "./../../styles/HomePage.module.css";
 import RelatedContent from './../views/RelatedContent';
 import SearchResult from "./../views/SearchResult";
+import ProgressionTracker from "./../views/ProgressionTracker";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -19,7 +20,6 @@ class HomePage extends Component {
         this.props.mostRecentSearch(query);
 
         const shortenedQuery = query.match(/(?<=\().*(?=\))/);
-        console.log(shortenedQuery);
         this.setState( { querySolution: shortenedQuery, queryBenefits: "", queryPrereqs: "" }, this.searchCall );
     }
 
@@ -31,9 +31,10 @@ class HomePage extends Component {
             queryPrereqs
         })
         .then(response => {
-            this.props.setSearchResult(response.data);
+            const { setSearchResult } = this.props;
+            setSearchResult(response.data);
             this.props.history.push("/category");
-        })
+        });
     }
 
     render() {
@@ -94,6 +95,7 @@ class HomePage extends Component {
                     {learningContent.length > 1 ? <><h3 className = {styles.title} >Based on your recent searches:</h3><span className = {styles.blueLine}></span></> : null}
                     < RelatedContent styles = {styles.homeContainer} />
                 </section>}
+                < ProgressionTracker />
             </>
         )
     }
@@ -103,9 +105,11 @@ class HomePage extends Component {
 const mapStateToProps=(state)=>{
     const { mostRecentDocument } = state.lastViewed;
     const { learningContent } = state.searchResult;
+    const { mostRecentQuery } = state.mostRecentSearch;
     return {
         mostRecentDocument: mostRecentDocument,
-        learningContent: learningContent
+        learningContent: learningContent,
+        mostRecentQuery: mostRecentQuery,
     }
 }
 
