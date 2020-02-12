@@ -51,3 +51,21 @@
     margin-bottom: 2rem;
     margin-left: 15vw;
 }
+
+.progressionTracker {
+    margin: 3em 10vw;
+}
+
+.head {
+    margin-left: 5vw;
+    margin-bottom: 0;
+}
+
+.indentLeft {
+    margin-left: 5vw;
+}
+
+.logoStyle {
+    float: right;
+    margin: -30px 10px;
+}

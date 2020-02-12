@@ -4,6 +4,7 @@ import { setProgressTracker, setUserViewedTags, setTotalViewedTags } from "./../
 import { Progress } from "semantic-ui-react";
 import customAxios from "./../../api/customAxios";
 import { solutions, teams, prerequisites } from "./../../services/category_tags";
+import refresh from "./../../images/icons8-refresh-16.png";
 
 class ProgressionTracker extends Component {
     state = {
@@ -171,12 +172,12 @@ class ProgressionTracker extends Component {
         totalTagCounter(tagsViewed, this.saveValue, this.state);
 
         const { progress, progressKeys } = this.state;
-        const { styling } = this.props;
+        const { blueStyle, headingStyle, indent, logoStyle } = this.props;
 
         return (
             <>
-                { progressTracker[0] ? <h3 className = {styling} onClick ={() => this.onProgressCheck(usersViewedCounter, createProgressValues)}>Check Lesson Progression</h3> : null }
-                { progressKeys && <button onClick = {() => this.onProgressCheck(usersViewedCounter, createProgressValues)}>Update</button>}
+                { progressTracker[0] ? <><h3 className = { headingStyle } onClick ={ () => this.onProgressCheck(usersViewedCounter, createProgressValues)}>Check Lesson Progression</h3><span className = { `${blueStyle} ${indent}` }></span></>: null }
+                { progressKeys && <img src = {refresh} alt = "refresh icon" onClick = {() => this.onProgressCheck(usersViewedCounter, createProgressValues)} className = {logoStyle} /> }
                 { progressKeys && progressKeys.map(key =>{
                     return (
                             < Progress value= {progress[key][0]} total= {progress[key][1]} progress="ratio" label={key} key = {key} indicating />

@@ -95,7 +95,9 @@ class HomePage extends Component {
                     {learningContent.length > 1 ? <><h3 className = {styles.title} >Based on your recent searches:</h3><span className = {styles.blueLine}></span></> : null}
                     < RelatedContent styles = {styles.homeContainer} />
                 </section>}
-                < ProgressionTracker styling = {styles.title} />
+                <div className = {styles.progressionTracker}>
+                    < ProgressionTracker headingStyle = {styles.head} blueStyle = {styles.blueLine} indent = { styles.indentLeft } logoStyle = {styles.logoStyle} />
+                </div>
             </>
         )
     }
