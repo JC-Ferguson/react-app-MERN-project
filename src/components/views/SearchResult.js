@@ -21,7 +21,7 @@ class SearchResult extends Component {
 
                 const viewTracker = [JSON.stringify(content)];
 
-                if (!progressTracker.includes(viewTracker[0])){
+                if (progressTracker && !progressTracker.includes(viewTracker[0])){
                     setProgressTracker([...progressTracker, ...viewTracker])
                     this.setState({ viewedContent: this.props.progressTracker });
                 }

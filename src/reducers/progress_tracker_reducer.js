@@ -1,11 +1,17 @@
 const defaultState = {
-    progressTracker: JSON.parse(localStorage.getItem("progressTracker"))
+    progressTracker: JSON.parse(localStorage.getItem("progressTracker")),
+    userProgress: JSON.parse(localStorage.getItem("userProgress")),
+    totalProgress: JSON.parse(localStorage.getItem("totalProgress"))
 }
 
 export default (state = defaultState ,action) => {
     switch(action.type){
         case "PROGRESS_TRACKER":
            return { ...state, progressTracker: action.payload }
+        case "USER_VIEWED_TAGS":
+            return { ...state, userProgress: action.payload }
+        case "TOTAL_VIEWED_TAGS":
+            return { ...state, totalProgress: action.payload }
         default:
             return state; 
     };

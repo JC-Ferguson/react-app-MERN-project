@@ -53,3 +53,19 @@ export const setProgressTracker = (progress = []) =>{
         payload: progress
     }
 }
+
+export const setUserViewedTags = ( progress = {} )=> {
+    localStorage.setItem("userProgress", JSON.stringify(progress));
+    return {
+        type: "USER_VIEWED_TAGS",
+        payload: progress
+    }
+}
+
+export const setTotalViewedTags = ( progress = {} ) => {
+    localStorage.setItem("totalProgress", JSON.stringify(progress));
+    return {
+        type: "TOTAL_VIEWED_TAGS",
+        payload: progress
+    }
+}
