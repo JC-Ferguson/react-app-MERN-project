@@ -13,11 +13,17 @@ class TopBar extends Component {
 
     // axios request to express server to query MongoDB for files
     searchCall = () => {
+        const { user } = this.props;
+        const parsedUser = JSON.parse(JSON.stringify(user));
+
+        const generic = parsedUser && parsedUser.approved ? null : {"tags.generic": "true"};
+
         const { queryBenefits, querySolution, queryPrereqs} = this.state;
         customAxios.post("/category", {
             querySolution,
             queryBenefits,
-            queryPrereqs
+            queryPrereqs,
+            generic
         })
         .then(response => {
             this.props.setSearchResult(response.data);
@@ -57,12 +63,18 @@ class TopBar extends Component {
                 prereqArr.push(tag)
             }
         })
+
+        const { user } = this.props;
+        const parsedUser = JSON.parse(JSON.stringify(user));
+
+        const generic = parsedUser && parsedUser.approved ? null : {"tags.generic": "true"};
     
         customAxios.post("/category", {
             value,
             solutionsArr,
             teamsArr,
-            prereqArr
+            prereqArr,
+            generic
         })
         .then(response => {
             this.props.setSearchResult(response.data);
@@ -90,7 +102,7 @@ class TopBar extends Component {
         const options=searchOptions.map(search=>{
             return {key: search, text: search, value: search}
         })
-        
+
         return (
             <section className={styles.topBar}>
                 <div className={styles.logo}>
@@ -139,7 +151,7 @@ class TopBar extends Component {
                 </Menu>
                 <div className={styles.logout}>
                     {user && user.admin ? <Link to='/admin'>Admin</Link> : null}
-                    {token ? <Link to='/login' onClick={this.onLogout}>Logout</Link> : <Link to='/login' >Login</Link>}
+                    {token && token !== "null" ? <Link to='/login' onClick={this.onLogout}>Logout</Link> : <Link to='/login' >Login</Link>}
                 </div>
             </section>
         )

@@ -25,10 +25,16 @@ class HomePage extends Component {
 
     searchCall = () => {
         const { queryBenefits, querySolution, queryPrereqs} = this.state;
+        const { user } = this.props;
+        const parsedUser = JSON.parse(JSON.stringify(user));
+
+        const generic = parsedUser && parsedUser.approved ? null : {"tags.generic": "true"};
+
         customAxios.post("/category", {
             querySolution,
             queryBenefits,
-            queryPrereqs
+            queryPrereqs,
+            generic
         })
         .then(response => {
             const { setSearchResult } = this.props;
@@ -108,10 +114,12 @@ const mapStateToProps=(state)=>{
     const { mostRecentDocument } = state.lastViewed;
     const { learningContent } = state.searchResult;
     const { mostRecentQuery } = state.mostRecentSearch;
+    const { user } = state.currentUser;
     return {
         mostRecentDocument: mostRecentDocument,
         learningContent: learningContent,
         mostRecentQuery: mostRecentQuery,
+        user: user
     }
 }
 

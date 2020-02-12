@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { setProgressTracker, setUserViewedTags, setTotalViewedTags } from "./../../actions";
 import { Progress } from "semantic-ui-react";
 import customAxios from "./../../api/customAxios";
-import { solutions, teams, prerequisites } from "./../../services/category_tags";
 import refresh from "./../../images/icons8-refresh-16.png";
 
 class ProgressionTracker extends Component {

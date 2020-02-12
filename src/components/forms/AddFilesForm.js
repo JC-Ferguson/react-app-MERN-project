@@ -149,7 +149,7 @@ class AddFilesForm extends Component {
                         <label className={styles.label}>Content Type</label>
                         <select className={styles.select} onChange={this.onInputChange('generic')} value={generic}>
                             <option key="generic" value= {true} >Generic</option>
-                            <option key="non-generic" value= { false } >Non-Generic</option>
+                            <option key="non-generic" value= {false} >Non-Generic</option>
                         </select>
                     </div>
                     <div>

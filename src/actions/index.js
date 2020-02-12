@@ -2,7 +2,7 @@
 // export the function
 
 // action creator for auth token
-export const setAuthToken = (token = "") => {
+export const setAuthToken = (token = null) => {
     sessionStorage.setItem("token", token);
     return {
         type: "AUTH_TOKEN",
